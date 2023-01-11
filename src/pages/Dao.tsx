@@ -1,18 +1,18 @@
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { ValidNetwork } from "@daohaus/keychain-utils";
 import {
+  Button,
   DataMd,
   DataSm,
   H2,
   ParMd,
   ProfileAvatar,
   SingleColumnLayout,
+  Link,
 } from "@daohaus/ui";
 // import { useDao } from "../hooks/useDao";
-// import { ReportSelect } from "../components/ReportSelect";
-import { useState } from "react";
-// import { Report } from "../components/Report";
 
 const AvatarBox = styled.div`
   display: flex;
@@ -28,7 +28,9 @@ const Controls = styled.div`
   margin-bottom: 3rem;
 `;
 
-export function Dao({}: {}) {
+export function Dao() {
+  const { daochain, daoid } = useParams();
+
   // const { dao } = useDao({
   //   chainId: daochain as ValidNetwork,
   //   daoId: daoid,
@@ -46,6 +48,10 @@ export function Dao({}: {}) {
         <ProfileAvatar size="xl" address={dao?.id} image={dao?.avatarImg} />
         <H2>{dao?.name}</H2>
       </AvatarBox>
+      <Link href={`/molochv3/${daochain}/${daoid}/create`} type="internal">
+        Create
+      </Link>
+      <ParMd style={{ marginTop: "5rem" }}>some list of tcrs</ParMd>
     </SingleColumnLayout>
   );
 }

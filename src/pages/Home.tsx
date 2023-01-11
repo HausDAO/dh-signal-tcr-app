@@ -5,7 +5,7 @@ import { HausAnimated } from "../components/HausAnimated";
 const LinkBox = styled.div`
   display: flex;
   width: 20%;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export const Home = () => {
@@ -21,9 +21,6 @@ export const Home = () => {
         whatever you want.
       </ParMd>
       <LinkBox>
-        <Link href="/create" linkType="internal">
-          Create
-        </Link>
         <Link href="/explore" linkType="internal">
           Explore
         </Link>

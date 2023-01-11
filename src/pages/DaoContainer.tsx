@@ -1,9 +1,10 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { ValidNetwork } from "@daohaus/keychain-utils";
 import { DHLayout } from "@daohaus/connect";
 
 export function DaoContainer() {
   const { daochain, daoid } = useParams();
+  const location = useLocation();
 
   // TODO: useDao fetch to hydrate the avatar
 
