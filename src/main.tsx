@@ -1,4 +1,3 @@
-import { DHConnectProvider } from "@daohaus/connect";
 import { HausThemeProvider } from "@daohaus/ui";
 import React from "react";
 import ReactDOM from "react-dom/client";
