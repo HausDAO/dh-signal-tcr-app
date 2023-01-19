@@ -5,7 +5,7 @@ export const CuratedList = () => {
     <SingleColumnLayout>
       <H2>TCR</H2>
       <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
-        this is the list page
+        this is the tcr page
       </ParMd>
     </SingleColumnLayout>
   );

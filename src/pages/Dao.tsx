@@ -11,47 +11,86 @@ import {
   ProfileAvatar,
   SingleColumnLayout,
   Link,
+  ParLg,
+  H5,
+  Card,
 } from "@daohaus/ui";
+import { HausAnimated } from "../components/HausAnimated";
+import { TARGET_DAO } from "../targetDao";
+import { ListTcr, useTcrList } from "../hooks/useTcrs";
+import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
 // import { useDao } from "../hooks/useDao";
 
-const AvatarBox = styled.div`
+const LinkBox = styled.div`
   display: flex;
   gap: 2rem;
-  margin-bottom: 3rem;
+  margin: 8rem 0;
 `;
 
-const Controls = styled.div`
-  display: flex;
-  justify-content: center;
+const TcrList = styled.div`
+  margin-top: 5rem;
   width: 100%;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TcrListItem = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 5rem;
 `;
 
 export function Dao() {
-  const { daochain, daoid } = useParams();
-
-  // const { dao } = useDao({
-  //   chainId: daochain as ValidNetwork,
-  //   daoId: daoid,
-  // });
-
-  const dao = {
-    id: "0x3dea7058a19bf6854bb63384707139636efb99ea",
-    name: "Kings of the Goerli TCR",
-    avatarImg: "",
-  };
+  const { data } = useTcrList({ daoId: TARGET_DAO.ADDRESS });
 
   return (
     <SingleColumnLayout>
-      <AvatarBox>
-        <ProfileAvatar size="xl" address={dao?.id} image={dao?.avatarImg} />
-        <H2>{dao?.name}</H2>
-      </AvatarBox>
-      <Link href={`/molochv3/${daochain}/${daoid}/create`} type="internal">
-        Create
-      </Link>
-      <ParMd style={{ marginTop: "5rem" }}>some list of tcrs</ParMd>
+      <H2>Public HAUS Signal TCRs</H2>
+      <HausAnimated />
+      <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
+        2023 is the year of the TCR right?
+      </ParMd>
+      <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}>
+        This is where the Public HAUS members signal on high level objectives
+        for the DAOHaus protocol. Whoopie!
+      </ParMd>
+
+      <TcrList>
+        <H5>Active Signals</H5>
+        {data?.registries &&
+          data.registries.map((tcr: ListTcr, i: number) => {
+            return (
+              <div key={tcr.id}>
+                <TcrListItem>
+                  <ParLg style={{ marginTop: "5rem" }}>
+                    {i + 1}. {getTcrTitle(tcr.details)}
+                  </ParLg>
+                  <Link href={`/tcr/${tcr.id}`} type="internal">
+                    View
+                  </Link>
+                </TcrListItem>
+              </div>
+            );
+          })}
+      </TcrList>
+      <LinkBox>
+        <Link href={`https://publichaus.club/`} type="external">
+          Public HAUS
+        </Link>
+        <Link
+          href={`https://admin.daohaus.club/#/molochv3/${TARGET_DAO.CHAIN_ID}/${TARGET_DAO.ADDRESS}`}
+          type="external"
+        >
+          View DAO
+        </Link>
+        <Link href={`/create`} type="internal">
+          Create TCR
+        </Link>
+      </LinkBox>
     </SingleColumnLayout>
   );
 }
