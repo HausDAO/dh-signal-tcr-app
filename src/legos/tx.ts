@@ -62,29 +62,37 @@ export const TX = {
     },
     actions: [
       {
-        contract: CONTRACT.SELECTED_DAO,
+        contract: CONTRACT.CURRENT_DAO,
         method: "executeAsBaal",
         args: [
-          ".formValues.safeAddress",
+          ".dao.sharesAddress",
           { type: "static", value: "0" },
           { type: "static", value: "0x9711715a" },
         ],
       },
       {
-        contract: CONTRACT.POSTER,
-        method: "post",
+        contract: CONTRACT.CURRENT_DAO,
+        method: "executeAsBaal",
         args: [
+          ".dao.lootAddress",
+          { type: "static", value: "0" },
+          { type: "static", value: "0x9711715a" },
+        ],
+      },
+      {
+        contract: CONTRACT.TCR_FACTORY,
+        method: "summonSignalTCR",
+        args: [
+          ".daoId",
+          ".formValues.endDate",
           {
             type: "JSONDetails",
             jsonSchema: {
               title: `.formValues.title`,
               description: `.formValues.description`,
-              contentURI: `.formValues.link`,
-              contentURIType: { type: "static", value: "url" },
-              proposalType: { type: "static", value: ProposalTypeIds.Signal },
+              link: `.formValues.link`,
             },
           },
-          { type: "static", value: POSTER_TAGS.signalProposal },
         ],
       },
     ],

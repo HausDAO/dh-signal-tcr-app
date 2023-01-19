@@ -2,6 +2,9 @@ import { LOCAL_ABI } from "@daohaus/abis";
 import { ContractLego } from "@daohaus/utils";
 import { CONTRACT_KEYCHAINS } from "@daohaus/keychain-utils";
 
+import TCR_FACTORY_ABI from "./../abis/TcrSummoner.json";
+import { TARGET_DAO } from "../targetDao";
+
 export const CONTRACT: Record<string, ContractLego> = {
   POSTER: {
     type: "static",
@@ -31,12 +34,6 @@ export const CONTRACT: Record<string, ContractLego> = {
     abi: LOCAL_ABI.BAAL,
     targetAddress: ".daoId",
   },
-  SELECTED_DAO: {
-    type: "static",
-    contractName: "Selected DAO (Baal)",
-    abi: LOCAL_ABI.BAAL,
-    targetAddress: ".formValues.daoId",
-  },
   TRIBUTE_MINION: {
     type: "static",
     contractName: "Tribute Minion",
@@ -54,5 +51,15 @@ export const CONTRACT: Record<string, ContractLego> = {
     contractName: "LOOT_ERC20",
     abi: LOCAL_ABI.LOOT,
     targetAddress: ".dao.sharesAddress",
+  },
+  TCR_FACTORY: {
+    type: "static",
+    contractName: "TCR_FACTORY",
+    abi: TCR_FACTORY_ABI,
+    targetAddress: {
+      "0x1": TARGET_DAO.TCR_FACTORY,
+      "0x5": TARGET_DAO.TCR_FACTORY,
+      "0x64": TARGET_DAO.TCR_FACTORY,
+    },
   },
 };

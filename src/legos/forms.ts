@@ -1,8 +1,9 @@
 import { FormLego } from "@daohaus/form-builder";
+import { CustomFormLego } from "./config";
 import { FIELD } from "./fields";
 import { TX } from "./tx";
 
-export const FORM: Record<string, FormLego> = {
+export const FORM: Record<string, CustomFormLego> = {
   SIGNAL: {
     id: "SIGNAL",
     title: "Signal Form",
@@ -22,19 +23,19 @@ export const FORM: Record<string, FormLego> = {
     id: "SUMMON_TCR",
     title: "Create TCR",
     description: "Make a proposal to the DAO to create a Signal TCR",
-    requiredFields: { title: true, daoId: true },
+    requiredFields: { title: true, endDate: true, description: true },
     log: true,
-    tx: TX.POST_SIGNAL,
+    tx: TX.SUMMON_TCR,
     fields: [
-      {
-        id: "daoId",
-        type: "input",
-        label: "DAO Address",
-        placeholder: "0x0...",
-      },
       { ...FIELD.TITLE, label: "TCR Title" },
       { ...FIELD.DESCRIPTION, label: "TCR Description" },
       FIELD.LINK,
+      {
+        id: "endDate",
+        type: "input",
+        label: "End Date/Time (seconds)",
+        placeholder: "0",
+      },
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
