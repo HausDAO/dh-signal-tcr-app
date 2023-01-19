@@ -11,7 +11,9 @@ export const ChoiceIdInput = (props: Buildable<Field>) => {
 
   useEffect(() => {
     if (title && description) {
-      setValue("choiceId", utils.id(`${title} ${description}`));
+      const hashedTitleDesc = utils.id(`${title} ${description}`);
+      const truncatedHash = hashedTitleDesc.substring(0, 14);
+      setValue("choiceId", truncatedHash);
     }
   }, [title, description]);
 
