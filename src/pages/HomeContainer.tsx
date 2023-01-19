@@ -14,10 +14,6 @@ export function HomeContainer() {
     chainId: TARGET_DAO.CHAIN_ID,
   });
 
-  console.log("dao", dao);
-
-  console.log("TARGET_DAO", TARGET_DAO);
-
   return (
     <DHLayout
       pathname={location.pathname}
