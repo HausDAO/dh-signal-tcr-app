@@ -97,4 +97,26 @@ export const TX = {
       },
     ],
   }),
+  ADD_TCR_CHOICE: {
+    id: "POST_SIGNAL",
+    contract: CONTRACT.POSTER,
+    method: "post",
+
+    args: [
+      {
+        type: "JSONDetails",
+        jsonSchema: {
+          title: `.formValues.title`,
+          description: `.formValues.description`,
+          link: `.formValues.link`,
+          daoId: `.daoId`,
+          table: { type: "static", value: "signalTcrChoice" },
+          queryType: { type: "static", value: "list" },
+          tcrId: `.formValues.tcrId`,
+          choiceId: `.formValues.choiceId`,
+        },
+      },
+      { type: "static", value: POSTER_TAGS.daoDatabaseShares },
+    ],
+  },
 };

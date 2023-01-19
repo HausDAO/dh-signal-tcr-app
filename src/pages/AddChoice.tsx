@@ -2,19 +2,20 @@ import { useDHConnect } from "@daohaus/connect";
 import { FormBuilder } from "@daohaus/form-builder";
 import { ParXl, SingleColumnLayout } from "@daohaus/ui";
 import { useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CustomFields } from "../legos/config";
 
 import { FORM } from "../legos/forms";
 import { TARGET_DAO } from "../targetDao";
 
-export const Create = () => {
+export const AddChoice = () => {
   const { chainId } = useDHConnect();
   const navigate = useNavigate();
   const client = useQueryClient();
+  const { tcr } = useParams();
 
   const onFormComplete = () => {
-    navigate(`/`);
+    navigate(`/tcr/${tcr}`);
     client.clear();
   };
 
@@ -25,11 +26,14 @@ export const Create = () => {
       </SingleColumnLayout>
     );
 
+  //TODO: need a custom chocie id arg type...
+
   return (
     <FormBuilder
-      form={FORM.SUMMON_TCR}
+      form={FORM.ADD_TCR_CHOICE}
       targetNetwork={TARGET_DAO.CHAIN_ID}
       onSuccess={onFormComplete}
+      defaultValues={{ tcrId: tcr }}
       customFields={CustomFields}
     />
   );
