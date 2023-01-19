@@ -39,4 +39,23 @@ export const FORM: Record<string, CustomFormLego> = {
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
+  ADD_TCR_CHOICE: {
+    id: "ADD_TCR_CHOICE",
+    title: "Add TCR Choice",
+    description:
+      "Create a choice for this TCR. You must be a member of the DAO to create a choice.",
+    requiredFields: { title: true, description: true },
+    log: true,
+    tx: TX.ADD_TCR_CHOICE,
+    fields: [
+      { ...FIELD.TITLE, label: "Choice Title" },
+      { ...FIELD.DESCRIPTION, label: "Choice Description" },
+      FIELD.LINK,
+      {
+        id: "choiceId",
+        type: "choiceId",
+      },
+      // ...PROPOSAL_SETTINGS_FIELDS,
+    ],
+  },
 };
