@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import hausBlockAnimated from "../assets/hausBlockAnimated.svg";
+import pixelPub from "../assets/pixel_pub.gif";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -10,12 +11,11 @@ const ImageContainer = styled.div`
   margin-bottom: 2rem;
   .img-block {
     display: flex;
-    height: 12rem;
-    width: 12rem;
+    align-items: center;
   }
   img {
-    height: 12rem;
-    width: 12rem;
+    width: 40rem;
+    z-index: -1;
   }
 `;
 
@@ -23,7 +23,7 @@ export const HausAnimated = () => {
   return (
     <ImageContainer>
       <div className="img-block">
-        <img src={hausBlockAnimated} />
+        <img src={pixelPub} />
       </div>
     </ImageContainer>
   );
