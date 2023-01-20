@@ -19,10 +19,11 @@ export type ListTcr = {
 // TODO: need to create types
 export const useTcrList = ({ daoId }: { daoId: string }) => {
   return useQuery("get-tcr-list", async () => {
+    const now = new Date().getTime() / 1000;
     const getRegistries = await graphQLClient.request(
       gql`
-        query registries($daoId: String!) {
-          registries(where: { dao: $daoId }) {
+        query registries($daoId: String!, $now: String!) {
+          registries(where: { dao: $daoId, endDate_gt: $now }) {
             id
             details
             endDate
@@ -31,7 +32,7 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
           }
         }
       `,
-      { daoId }
+      { daoId, now: now.toFixed(0) }
     );
 
     return getRegistries;
@@ -39,8 +40,9 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
   });
 };
 
-export const useTcrData = ({ tcrId }: { tcrId: string }) => {
+export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
   return useQuery("get-tcr", async () => {
+    console.log("tcrId", tcrId);
     const getRegistry = await graphQLClient.request(
       gql`
         query registry($tcrId: ID!) {
@@ -54,14 +56,14 @@ export const useTcrData = ({ tcrId }: { tcrId: string }) => {
             voters {
               address
               balance
-              votes(where: { release: false }) {
+              votes(where: { released: false }) {
                 voteId
                 choiceId
                 amount
                 released
               }
             }
-            votes(where: { release: false }) {
+            votes(where: { released: false }) {
               voteId
               choiceId
               amount
@@ -70,7 +72,7 @@ export const useTcrData = ({ tcrId }: { tcrId: string }) => {
           }
         }
       `,
-      { tcrId }
+      { tcrId: tcrId?.toLowerCase() }
     );
 
     return getRegistry;
