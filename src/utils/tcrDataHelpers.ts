@@ -29,3 +29,12 @@ export const totalStakeForChoice = (votes: any[], choiceId: string): string => {
 
   return total.toString();
 };
+export const voteIdsForChoice = (votes: any[], choiceId: string): string[] => {
+  return votes.reduce((acc: string[], vote: any) => {
+    if (vote.choiceId == parseInt(choiceId)) {
+      acc = [...acc, vote.voteId];
+    }
+
+    return acc;
+  }, []);
+};

@@ -125,6 +125,12 @@ export const TX = {
     method: "claim",
     args: [".memberAddress"],
   },
+  RELEASE: {
+    id: "RELEASE",
+    contract: CONTRACT.TCR,
+    method: "releaseTokens",
+    args: [".voteIds"],
+  },
   STAKE: {
     id: "STAKE",
     contract: CONTRACT.TCR,

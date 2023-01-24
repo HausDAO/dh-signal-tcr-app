@@ -7,10 +7,9 @@ import { Spinner, useToast } from "@daohaus/ui";
 import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
+import { TARGET_DAO } from "../targetDao";
 
 export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
-  const daochain = "0x5";
-
   const { fireTransaction } = useTxBuilder();
   const { chainId, address } = useDHConnect();
   const { tcr } = useParams();
@@ -58,7 +57,7 @@ export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
   };
 
   const isConnectedToDao =
-    chainId === daochain
+    chainId === TARGET_DAO.CHAIN_ID
       ? true
       : "You are not connected to the same network as the DAO";
 

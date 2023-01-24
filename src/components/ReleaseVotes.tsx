@@ -9,12 +9,16 @@ import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
 
-export const UpdateStake = ({
+export const ReleaseVotes = ({
   onSuccess,
-  stakeAmounts,
+  voteIds,
+  label,
+  size = "md",
 }: {
   onSuccess: () => void;
-  stakeAmounts: any;
+  voteIds: string[];
+  label: string;
+  size?: "sm" | "md" | "lg";
 }) => {
   const { fireTransaction } = useTxBuilder();
   const { chainId } = useDHConnect();
@@ -22,25 +26,25 @@ export const UpdateStake = ({
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleClaim = () => {
+  const handleRelease = () => {
     setIsLoading(true);
     fireTransaction({
-      tx: { ...TX.STAKE, staticArgs: [stakeAmounts] } as TXLego,
-      callerState: { tcr },
+      tx: TX.RELEASE as TXLego,
+      callerState: { tcr, voteIds },
       lifeCycleFns: {
         onTxError: (error) => {
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: "Claim Failed", description: errMsg });
+          errorToast({ title: "Release Failed", description: errMsg });
           setIsLoading(false);
         },
         onTxSuccess: () => {
           defaultToast({
-            title: "Claim Success",
+            title: "Release Success",
             description: "Please wait for subgraph to sync",
           });
-          // todo: poll for claim success?
+          // todo: poll for Release success?
           setIsLoading(false);
         },
         onPollError: (error) => {
@@ -52,8 +56,8 @@ export const UpdateStake = ({
         },
         onPollSuccess: () => {
           successToast({
-            title: "Claim Success",
-            description: "Claim success",
+            title: "Release Success",
+            description: "Release success",
           });
           setIsLoading(false);
           onSuccess();
@@ -67,13 +71,18 @@ export const UpdateStake = ({
       ? true
       : "You are not connected to the same network as the DAO";
 
+  if (voteIds?.length === 0) {
+    return null;
+  }
+
   return (
     <GatedButton
       color="secondary"
       rules={[isConnectedToDao]}
-      onClick={handleClaim}
+      onClick={handleRelease}
+      size={size}
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Update Stake"}
+      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
     </GatedButton>
   );
 };
