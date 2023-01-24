@@ -7,6 +7,10 @@ import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
 import { useDHConnect } from "@daohaus/connect";
+import { ClaimBalance } from "../components/ClaimBalance";
+import { useDao } from "../hooks/useDao";
+import { useEffect, useState } from "react";
+import { fromWei } from "@daohaus/utils";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -44,10 +48,39 @@ export const CuratedList = () => {
   // console.log("data", data);
   // console.log("records", records);
 
+  const { dao } = useDao({
+    daoId: TARGET_DAO.ADDRESS,
+    chainId: TARGET_DAO.CHAIN_ID,
+  });
+
+  const [userBalance, setUserBalance] = useState("0");
+
+  // useEffect(() => {
+  //   if (data?.registry?.voters && address) {
+  //     console.log("data.registry.voters", data.registry.voters, address);
+
+  //     const balance = data.registry.voters.find(
+  //       (item: { address: string }) => item.address == address?.toLowerCase()
+  //     );
+  //     setUserBalance(fromWei(balance.balance) || "0");
+  //   }
+  // }, [data, address]);
+
+  // console.log("data", data);
+  // console.log("records", records);
+  // console.log("dao", dao?.sharesAddress);
+
   return (
     <SingleColumnLayout>
       {/* {data?.registry && (
         <>
+          <ClaimBalance
+            lootSnapshot={data?.registry?.lootSnapshotId}
+            sharesSnapshot={data?.registry?.sharesSnapshotId}
+            lootAddress={dao?.lootAddress}
+            sharesAddress={dao?.sharesAddress}
+            userBalance={userBalance} // TODO: get state user balance registry.voters
+          ></ClaimBalance>
           <H2>{getTcrTitle(data.registry.details)}</H2>
           <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
             {getTcrDescription(data.registry.details)}

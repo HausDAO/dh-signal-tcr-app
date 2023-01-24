@@ -3,6 +3,7 @@ import { ContractLego } from "@daohaus/utils";
 import { CONTRACT_KEYCHAINS } from "@daohaus/keychain-utils";
 
 import TCR_FACTORY_ABI from "./../abis/TcrSummoner.json";
+import TCR_ABI from "./../abis/Tcr.json";
 import { TARGET_DAO } from "../targetDao";
 
 export const CONTRACT: Record<string, ContractLego> = {
@@ -61,5 +62,11 @@ export const CONTRACT: Record<string, ContractLego> = {
       "0x5": TARGET_DAO.TCR_FACTORY,
       "0x64": TARGET_DAO.TCR_FACTORY,
     },
+  },
+  TCR: {
+    type: "static",
+    contractName: "TCR_FACTORY",
+    abi: TCR_ABI,
+    targetAddress: ".tcr",
   },
 };
