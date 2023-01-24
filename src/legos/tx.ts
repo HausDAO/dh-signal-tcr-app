@@ -119,4 +119,10 @@ export const TX = {
       { type: "static", value: POSTER_TAGS.daoDatabaseShares },
     ],
   },
+  CLAIM: {
+    id: "CLAIM",
+    contract: CONTRACT.TCR,
+    method: "claim",
+    args: [".memberAddress"],
+  },
 };

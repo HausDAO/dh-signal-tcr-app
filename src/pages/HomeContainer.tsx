@@ -8,7 +8,7 @@ import { TARGET_DAO } from "../targetDao";
 
 export function HomeContainer() {
   const location = useLocation();
-  const { provider } = useDHConnect();
+  const { provider, address } = useDHConnect();
   const { dao } = useDao({
     daoId: TARGET_DAO.ADDRESS,
     chainId: TARGET_DAO.CHAIN_ID,
@@ -25,7 +25,7 @@ export function HomeContainer() {
         chainId={TARGET_DAO.CHAIN_ID}
         daoId={TARGET_DAO.ADDRESS}
         safeId={TARGET_DAO.SAFE_ADDRESS}
-        appState={{ dao }}
+        appState={{ dao, memberAddress: address }}
         rpcs={{
           "0x1": `https://${
             import.meta.env.VITE_RIVET_KEY
