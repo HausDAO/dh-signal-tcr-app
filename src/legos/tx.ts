@@ -125,4 +125,10 @@ export const TX = {
     method: "claim",
     args: [".memberAddress"],
   },
+  RELEASE: {
+    id: "RELEASE",
+    contract: CONTRACT.TCR,
+    method: "RELEASE",
+    args: [".choiceId"],
+  },
 };
