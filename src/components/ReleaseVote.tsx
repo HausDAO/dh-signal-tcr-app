@@ -8,7 +8,7 @@ import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 
-export const Release = ({ onSuccess, choiceId }: { onSuccess: () => void, choiceId: string }) => {
+export const ReleaseVote = ({ onSuccess, voteIDs }: { onSuccess: () => void, voteIDs: string[] }) => {
   const daochain = "0x5";
 
   const { fireTransaction } = useTxBuilder();
@@ -21,7 +21,7 @@ export const Release = ({ onSuccess, choiceId }: { onSuccess: () => void, choice
     setIsLoading(true);
     fireTransaction({
       tx: TX.RELEASE as TXLego,
-      callerState: { tcr },
+      callerState: { tcr, voteIDs },
       lifeCycleFns: {
         onTxError: (error) => {
           const errMsg = handleErrorMessage({

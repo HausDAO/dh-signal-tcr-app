@@ -128,7 +128,7 @@ export const TX = {
   RELEASE: {
     id: "RELEASE",
     contract: CONTRACT.TCR,
-    method: "RELEASE",
-    args: [".choiceId"],
+    method: "ReleaseTokens",
+    args: [".voteIDs"],
   },
 };
