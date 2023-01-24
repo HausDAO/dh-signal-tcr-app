@@ -49,7 +49,10 @@ export const ChoiceItem = ({
       <DataLg>
         Total Stake:{" "}
         {toWholeUnits(
-          totalStakeForChoice(tcrRecord.votes, choice.parsedContent.choiceId)
+          totalStakeForChoice(
+            tcrRecord?.votes || [],
+            choice.parsedContent.choiceId
+          )
         )}
       </DataLg>
       <ParLg>{choice.parsedContent.title}</ParLg>
@@ -57,7 +60,7 @@ export const ChoiceItem = ({
         Your Current Stake:{" "}
         {toWholeUnits(
           totalStakeForChoice(
-            connectedVoter.votes,
+            connectedVoter?.votes || [],
             choice.parsedContent.choiceId
           )
         )}
@@ -66,7 +69,7 @@ export const ChoiceItem = ({
         label="Release"
         size="sm"
         voteIds={voteIdsForChoice(
-          connectedVoter.votes,
+          connectedVoter?.votes || [],
           choice.parsedContent.choiceId
         )}
         onSuccess={() => null}

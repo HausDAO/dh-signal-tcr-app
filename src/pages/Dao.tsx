@@ -1,10 +1,26 @@
 import styled from "styled-components";
+import { Link as RouterLink } from "react-router-dom";
 
-import { H2, ParMd, SingleColumnLayout, Link, ParLg, H5 } from "@daohaus/ui";
+import {
+  H2,
+  ParMd,
+  SingleColumnLayout,
+  Link,
+  ParLg,
+  H5,
+  Theme,
+  border,
+  Bold,
+  DataSm,
+  DataXs,
+} from "@daohaus/ui";
+import { RiArrowRightSLine } from "react-icons/ri/index.js";
+
 import { HausAnimated } from "../components/HausAnimated";
 import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
-import { getTcrTitle } from "../utils/tcrDataHelpers";
+import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
+import { formatShortDateTimeFromSeconds } from "@daohaus/utils";
 
 const LinkBox = styled.div`
   display: flex;
@@ -12,21 +28,50 @@ const LinkBox = styled.div`
   margin: 8rem 0;
 `;
 
-const TcrList = styled.div`
-  margin-top: 5rem;
+const ListItemContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem 0;
+  border-top: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step6}
+    solid;
 `;
 
-const TcrListItem = styled.div`
+const ListItemLink = styled(RouterLink)`
+  text-decoration: none;
   width: 100%;
+  color: unset;
+  :hover {
+    text-decoration: none;
+  }
+`;
+
+const ListItemHoverContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 5rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: ${border.radius};
+
+  :hover {
+    background: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step3};
+  }
+`;
+
+const ListItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  word-wrap: break-word;
+  max-width: 39rem;
+`;
+
+const StyledIcon = styled(RiArrowRightSLine)`
+  fill: ${({ theme }: { theme: Theme }) => theme.primary.step9};
+  font-size: 3rem;
+`;
+
+const Spaced = styled.div`
+  margin-top: 2rem;
 `;
 
 export function Dao() {
@@ -44,24 +89,32 @@ export function Dao() {
         for the DAOHaus protocol. Whoopie!
       </ParMd>
 
-      <TcrList>
-        <H5>Active Signals</H5>
-        {tcrList &&
-          tcrList.map((tcr: ListTcr, i: number) => {
-            return (
-              <div key={tcr.id}>
-                <TcrListItem>
-                  <ParLg style={{ marginTop: "5rem" }}>
-                    {i + 1}. {getTcrTitle(tcr.details)}
-                  </ParLg>
-                  <Link href={`/tcr/${tcr.id}`} type="internal">
-                    View
-                  </Link>
-                </TcrListItem>
-              </div>
-            );
-          })}
-      </TcrList>
+      {tcrList &&
+        tcrList.map((tcr: ListTcr, i: number) => {
+          return (
+            <ListItemContainer key={tcr.id}>
+              <ListItemLink to={`/tcr/${tcr.id}`}>
+                <ListItemHoverContainer>
+                  <ListItem>
+                    <ParLg>
+                      <Bold>{getTcrTitle(tcr.details)}</Bold>
+                    </ParLg>
+                    <DataSm>{getTcrDescription(tcr.details)}</DataSm>
+                    <Spaced>
+                      <DataXs>
+                        <Bold>
+                          Signaling ends on{" "}
+                          {formatShortDateTimeFromSeconds(tcr.endDate)}
+                        </Bold>
+                      </DataXs>
+                    </Spaced>
+                  </ListItem>
+                  <StyledIcon />
+                </ListItemHoverContainer>
+              </ListItemLink>
+            </ListItemContainer>
+          );
+        })}
       <LinkBox>
         <Link href={`https://publichaus.club/`} type="external">
           Public HAUS
