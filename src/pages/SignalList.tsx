@@ -9,6 +9,7 @@ import { TARGET_DAO } from "../targetDao";
 import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
 import { ClaimBalance } from "../components/ClaimBalance";
 import { useDao } from "../hooks/useDao";
+import { ChoiceList } from "../components/ChoiceList";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -66,24 +67,8 @@ export const SignalList = () => {
         </>
       )}
 
-      {records && dao && (
-        <TcrList>
-          <H5>Signal Choices</H5>
+      {tcr && dao && <ChoiceList tcrId={tcr} />}
 
-          {records.map((choice, i: number) => {
-            return (
-              <div key={choice.id}>
-                <TcrListItem>
-                  <ParLg style={{ marginTop: "5rem" }}>
-                    {/* @ts-ignore:next-line */}
-                    {i + 1}. {choice.parsedContent.title}
-                  </ParLg>
-                </TcrListItem>
-              </div>
-            );
-          })}
-        </TcrList>
-      )}
       <Link href={`/tcr/${tcr}/add-choice`} type="internal">
         Add Choice
       </Link>

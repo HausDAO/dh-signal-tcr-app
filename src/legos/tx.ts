@@ -125,4 +125,9 @@ export const TX = {
     method: "claim",
     args: [".memberAddress"],
   },
+  STAKE: {
+    id: "STAKE",
+    contract: CONTRACT.TCR,
+    method: "vote",
+  },
 };
