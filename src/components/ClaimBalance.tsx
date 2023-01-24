@@ -41,13 +41,16 @@ export const ClaimBalance = ({
     rpcs: HAUS_RPC,
   });
 
-
   return (
-    <div>
-      <ParMd>
-        Claimable Balance: {data?.total} <Claim onSuccess={() => null}></Claim>
-        Claimed Balance: {userBalance} 
-      </ParMd>
-    </div>
+    <>
+      {userBalance ? (
+        <ParMd>Claimed Balance: {userBalance}</ParMd>
+      ) : (
+        <ParMd>
+          Claimable Balance: {data?.total}{" "}
+          <Claim onSuccess={() => null}></Claim>
+        </ParMd>
+      )}
+    </>
   );
 };

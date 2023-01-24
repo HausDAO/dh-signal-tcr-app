@@ -1,25 +1,10 @@
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { ValidNetwork } from "@daohaus/keychain-utils";
-import {
-  Button,
-  DataMd,
-  DataSm,
-  H2,
-  ParMd,
-  ProfileAvatar,
-  SingleColumnLayout,
-  Link,
-  ParLg,
-  H5,
-  Card,
-} from "@daohaus/ui";
+import { H2, ParMd, SingleColumnLayout, Link, ParLg, H5 } from "@daohaus/ui";
 import { HausAnimated } from "../components/HausAnimated";
 import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
-import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
-// import { useDao } from "../hooks/useDao";
+import { getTcrTitle } from "../utils/tcrDataHelpers";
 
 const LinkBox = styled.div`
   display: flex;
@@ -45,7 +30,7 @@ const TcrListItem = styled.div`
 `;
 
 export function Dao() {
-  const { data } = useTcrList({ daoId: TARGET_DAO.ADDRESS });
+  const { tcrList } = useTcrList({ daoId: TARGET_DAO.ADDRESS });
 
   return (
     <SingleColumnLayout>
@@ -61,8 +46,8 @@ export function Dao() {
 
       <TcrList>
         <H5>Active Signals</H5>
-        {data?.registries &&
-          data.registries.map((tcr: ListTcr, i: number) => {
+        {tcrList &&
+          tcrList.map((tcr: ListTcr, i: number) => {
             return (
               <div key={tcr.id}>
                 <TcrListItem>
