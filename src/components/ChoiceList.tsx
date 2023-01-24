@@ -63,7 +63,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
               <UpdateStake onSuccess={() => null} stakeAmounts={stakeAmounts} />
               <ReleaseVotes
                 onSuccess={() => null}
-                voteIds={[connectedVoter?.votes.map((v: any) => v.voteId)]}
+                voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
                 label="Release All"
               />
             </ListActions>

@@ -21,7 +21,7 @@ export const ReleaseVotes = ({
   size?: "sm" | "md" | "lg";
 }) => {
   const { fireTransaction } = useTxBuilder();
-  const { chainId, address } = useDHConnect();
+  const { chainId } = useDHConnect();
   const { tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
