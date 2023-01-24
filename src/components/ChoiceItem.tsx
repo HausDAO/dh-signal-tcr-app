@@ -33,7 +33,7 @@ export const ChoiceItem = ({
     if (event.target.value !== "") {
       const newAmount = toBaseUnits(event.target.value);
       setStakeAmounts((prevState: any) => {
-        return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
+        return [...prevState, [choice.parsedContent.choiceId, newAmount]];
       });
     }
   };
@@ -43,12 +43,21 @@ export const ChoiceItem = ({
       <DataLg>{index + 1}. </DataLg>
       <DataLg>
         Total Stake:{" "}
-        {totalStakeForChoice(tcrRecord.votes, choice.parsedContent.choiceId)}
+        {toWholeUnits(
+          totalStakeForChoice(tcrRecord.votes, choice.parsedContent.choiceId)
+        )}
       </DataLg>
       <ParLg>{choice.parsedContent.title}</ParLg>
+      <DataLg>
+        Current Stake:{" "}
+        {toWholeUnits(
+          totalStakeForChoice(tcrRecord.votes, choice.parsedContent.choiceId)
+        )}
+      </DataLg>
+      Add:
       <Input
         id={choice.parsedContent.choiceId}
-        defaultValue={stakeAmounts[choice.parsedContent.choiceId]}
+        defaultValue="0"
         onChange={handleChange}
       />
     </TcrListItem>

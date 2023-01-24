@@ -19,18 +19,13 @@ export const getTcrLink = (details?: string): string | undefined => {
   return detailObj.link;
 };
 
-export const totalStakeForChoice = (votes: any[], choiceId: string) => {
+export const totalStakeForChoice = (votes: any[], choiceId: string): string => {
   const total = votes.reduce((sum: BigNumber, vote: any) => {
-    // console.log("vote.choiceId", vote.choiceId);
-    // console.log("choiceId", choiceId);
-    if (vote.choiceId == BigNumber.from(parseInt(choiceId))) {
-      console.log("sum", sum, parseInt(vote.amount));
-      sum = sum.add(BigNumber.from(parseInt(vote.amount)));
-      return sum;
+    if (vote.choiceId == parseInt(choiceId)) {
+      sum = sum.add(BigNumber.from(vote.amount));
     }
-  }, BigNumber.from(0));
+    return sum;
+  }, BigNumber.from("0"));
 
-  console.log("total", total);
-
-  // return total.toString();
+  return total.toString();
 };

@@ -14,7 +14,7 @@ export type ListTcr = {
   createdAt: string;
 };
 
-// TODO: add types
+// TODO: types
 
 export const useTcrList = ({ daoId }: { daoId: string }) => {
   const now = new Date().getTime() / 1000;

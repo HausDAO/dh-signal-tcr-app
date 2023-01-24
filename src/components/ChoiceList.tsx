@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Button, H5, ParLg } from "@daohaus/ui";
+import React, { useState } from "react";
 import styled from "styled-components";
+
+import { H5 } from "@daohaus/ui";
 import { useRecords } from "../hooks/useRecord";
 import { TARGET_DAO } from "../targetDao";
 import { ChoiceItem } from "./ChoiceItem";
 import { UpdateStake } from "./UpdateStake";
-import { useConnectedAddressVotes } from "../hooks/useTcrs";
 import { useDHConnect } from "@daohaus/connect";
-import { TChoice } from "../utils/types";
-import { totalStakeForChoice } from "../utils/tcrDataHelpers";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -35,29 +33,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
     recordType: "signalTcrChoice",
     tcrId: tcrId,
   });
-  const { connectedVoter } = useConnectedAddressVotes({
-    tcrId,
-    address: address,
-  });
-
-  const [stakeAmounts, setStakeAmounts] = useState({});
-
-  useEffect(() => {
-    if (records && connectedVoter) {
-      console.log("connectedVoter", connectedVoter);
-      const currentStake = records.reduce((acc: any, choice: any) => {
-        acc[choice.parsedContent.choiceId] = totalStakeForChoice(
-          connectedVoter.votes,
-          choice.parsedContent.choiceId
-        );
-        return acc;
-      }, {});
-
-      console.log("currentStake", currentStake);
-
-      setStakeAmounts(currentStake);
-    }
-  }, [records, connectedVoter]);
+  const [stakeAmounts, setStakeAmounts] = useState([]);
 
   return (
     <>
@@ -75,10 +51,6 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
                 <ChoiceItem
                   choice={choice}
                   index={i}
-                  // currentStake={totalStakeForChoice(
-                  //   connectedVoter.votes,
-                  //   choice.parsedContent.choiceId
-                  // )}
                   stakeAmounts={stakeAmounts}
                   setStakeAmounts={setStakeAmounts}
                 />

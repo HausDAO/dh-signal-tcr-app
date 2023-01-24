@@ -18,21 +18,15 @@ export const UpdateStake = ({
   const daochain = "0x5";
 
   const { fireTransaction } = useTxBuilder();
-  const { chainId, address } = useDHConnect();
+  const { chainId } = useDHConnect();
   const { tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleClaim = () => {
-    // const args = [[choiceId, amount], [choiceId, amount]]
-    const args = Object.keys(stakeAmounts).map((choiceId) => {
-      return [choiceId, stakeAmounts[choiceId]];
-    });
-
-    console.log("args", args);
     setIsLoading(true);
     fireTransaction({
-      tx: { ...TX.STAKE, staticArgs: [args] } as TXLego,
+      tx: { ...TX.STAKE, staticArgs: [stakeAmounts] } as TXLego,
       callerState: { tcr },
       lifeCycleFns: {
         onTxError: (error) => {
