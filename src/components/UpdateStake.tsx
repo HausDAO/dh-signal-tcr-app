@@ -9,9 +9,15 @@ import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
 
-export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
+export const UpdateStake = ({
+  onSuccess,
+  stakeAmounts,
+}: {
+  onSuccess: () => void;
+  stakeAmounts: any;
+}) => {
   const { fireTransaction } = useTxBuilder();
-  const { chainId, address } = useDHConnect();
+  const { chainId } = useDHConnect();
   const { tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -19,7 +25,7 @@ export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
   const handleClaim = () => {
     setIsLoading(true);
     fireTransaction({
-      tx: TX.CLAIM as TXLego,
+      tx: { ...TX.STAKE, staticArgs: [stakeAmounts] } as TXLego,
       callerState: { tcr },
       lifeCycleFns: {
         onTxError: (error) => {
@@ -66,9 +72,8 @@ export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
       color="secondary"
       rules={[isConnectedToDao]}
       onClick={handleClaim}
-      // centerAlign
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Claim"}
+      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Update Stake"}
     </GatedButton>
   );
 };

@@ -5,6 +5,7 @@ import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
 import styled from "styled-components";
+import { toWholeUnits } from "@daohaus/utils";
 
 export const HAUS_RPC = {
   "0x1": `https://787b6618b5a34070874c12d7157e6661.eth.rpc.rivet.cloud/`,
@@ -49,7 +50,7 @@ export const ClaimBalance = ({
   return (
     <>
       {userBalance ? (
-        <ParMd>Claimed Balance: {userBalance}</ParMd>
+        <ParMd>Claimed Balance: {toWholeUnits(userBalance)}</ParMd>
       ) : (
         <ClaimSection>
           <ParMd>Claimable Balance: {data?.total || "0"} </ParMd>

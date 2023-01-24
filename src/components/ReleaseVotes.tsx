@@ -7,18 +7,19 @@ import { Spinner, useToast } from "@daohaus/ui";
 import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
+import { TARGET_DAO } from "../targetDao";
 
 export const ReleaseVotes = ({
   onSuccess,
-  voteIDs,
+  voteIds,
   label,
+  size = "md",
 }: {
   onSuccess: () => void;
-  voteIDs: string[];
+  voteIds: string[];
   label: string;
+  size?: "sm" | "md" | "lg";
 }) => {
-  const daochain = "0x5";
-
   const { fireTransaction } = useTxBuilder();
   const { chainId, address } = useDHConnect();
   const { tcr } = useParams();
@@ -29,7 +30,7 @@ export const ReleaseVotes = ({
     setIsLoading(true);
     fireTransaction({
       tx: TX.RELEASE as TXLego,
-      callerState: { tcr, voteIDs },
+      callerState: { tcr, voteIds },
       lifeCycleFns: {
         onTxError: (error) => {
           const errMsg = handleErrorMessage({
@@ -66,16 +67,20 @@ export const ReleaseVotes = ({
   };
 
   const isConnectedToDao =
-    chainId === daochain
+    chainId === TARGET_DAO.CHAIN_ID
       ? true
       : "You are not connected to the same network as the DAO";
+
+  if (voteIds?.length === 0) {
+    return null;
+  }
 
   return (
     <GatedButton
       color="secondary"
       rules={[isConnectedToDao]}
       onClick={handleRelease}
-      // centerAlign
+      size={size}
     >
       {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
     </GatedButton>

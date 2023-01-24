@@ -1,44 +1,18 @@
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 
 import { useDHConnect } from "@daohaus/connect";
-import { H2, H5, Link, ParLg, ParMd, SingleColumnLayout } from "@daohaus/ui";
-import { useRecords } from "../hooks/useRecord";
+import { H2, Link, ParMd, SingleColumnLayout } from "@daohaus/ui";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
 import { ClaimBalance } from "../components/ClaimBalance";
 import { useDao } from "../hooks/useDao";
-
-const TcrList = styled.div`
-  margin: 5rem 0rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const TcrListItem = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 5rem;
-`;
-
-// TODO: how to typeguard parsedContent
+import { ChoiceList } from "../components/ChoiceList";
 
 export const SignalList = () => {
   const { address } = useDHConnect();
   const { tcr } = useParams();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
-  const { records } = useRecords({
-    daoId: TARGET_DAO.ADDRESS,
-    chainId: TARGET_DAO.CHAIN_ID,
-    recordType: "signalTcrChoice",
-    tcrId: tcr,
-  });
   const { connectedVoter } = useConnectedAddressVotes({
     tcrId: tcr,
     address: address,
@@ -66,24 +40,8 @@ export const SignalList = () => {
         </>
       )}
 
-      {records && dao && (
-        <TcrList>
-          <H5>Signal Choices</H5>
+      {tcr && dao && <ChoiceList tcrId={tcr} />}
 
-          {records.map((choice, i: number) => {
-            return (
-              <div key={choice.id}>
-                <TcrListItem>
-                  <ParLg style={{ marginTop: "5rem" }}>
-                    {/* @ts-ignore:next-line */}
-                    {i + 1}. {choice.parsedContent.title}
-                  </ParLg>
-                </TcrListItem>
-              </div>
-            );
-          })}
-        </TcrList>
-      )}
       <Link href={`/tcr/${tcr}/add-choice`} type="internal">
         Add Choice
       </Link>
