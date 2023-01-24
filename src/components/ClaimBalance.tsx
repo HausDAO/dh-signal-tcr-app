@@ -4,7 +4,7 @@ import { ParMd } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
-import { fromWei } from "@daohaus/utils";
+import styled from "styled-components";
 
 export const HAUS_RPC = {
   "0x1": `https://787b6618b5a34070874c12d7157e6661.eth.rpc.rivet.cloud/`,
@@ -15,6 +15,12 @@ export const HAUS_RPC = {
   "0xa4b1": "https://arb1.arbitrum.io/rpc",
   "0xa4ec": "https://forno.celo.org",
 };
+
+const ClaimSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+`;
 
 export const ClaimBalance = ({
   sharesSnapshot,
@@ -29,9 +35,8 @@ export const ClaimBalance = ({
   lootAddress: any;
   userBalance: any;
 }) => {
-  const { chainId, provider, address } = useDHConnect();
-
-  const { isIdle, isLoading, error, data, refetch } = useDaoTokens({
+  const { address } = useDHConnect();
+  const { data } = useDaoTokens({
     sharesAddress: sharesAddress,
     lootAddress: lootAddress,
     sharesSnapshot: sharesSnapshot,
@@ -41,13 +46,16 @@ export const ClaimBalance = ({
     rpcs: HAUS_RPC,
   });
 
-
   return (
-    <div>
-      <ParMd>
-        Claimable Balance: {data?.total} <Claim onSuccess={() => null}></Claim>
-        Claimed Balance: {userBalance} 
-      </ParMd>
-    </div>
+    <>
+      {userBalance ? (
+        <ParMd>Claimed Balance: {userBalance}</ParMd>
+      ) : (
+        <ClaimSection>
+          <ParMd>Claimable Balance: {data?.total || "0"} </ParMd>
+          <Claim onSuccess={() => null}></Claim>
+        </ClaimSection>
+      )}
+    </>
   );
 };
