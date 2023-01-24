@@ -8,7 +8,15 @@ import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 
-export const ReleaseVote = ({ onSuccess, voteIDs }: { onSuccess: () => void, voteIDs: string[] }) => {
+export const ReleaseVotes = ({
+  onSuccess,
+  voteIDs,
+  label,
+}: {
+  onSuccess: () => void;
+  voteIDs: string[];
+  label: string;
+}) => {
   const daochain = "0x5";
 
   const { fireTransaction } = useTxBuilder();
@@ -69,7 +77,7 @@ export const ReleaseVote = ({ onSuccess, voteIDs }: { onSuccess: () => void, vot
       onClick={handleRelease}
       // centerAlign
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Release"}
+      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
     </GatedButton>
   );
 };
