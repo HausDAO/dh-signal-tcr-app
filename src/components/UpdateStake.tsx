@@ -70,7 +70,7 @@ export const UpdateStake = ({
       : "You are not connected to the same network as the DAO";
   return (
     <GatedButton
-      color="secondary"
+      color="primary"
       rules={[isConnectedToDao]}
       onClick={handleClaim}
       disabled={disabled}

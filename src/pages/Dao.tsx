@@ -87,10 +87,9 @@ export function Dao() {
       <SlimParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
         This is where PublicHAUS members signal on High Level Objectives (HILO)
         and ecosystem contribution and output (Retroactive Grading Events).{" "}
-        <Link href={`https://publichaus.club/`} type="external">
-          Learn
+        <Link href={`https://publichaus.club/`} linkType="external">
+          Learn about contributing to PublicHAUS
         </Link>{" "}
-        about contributing to Public Haus.
       </SlimParMd>
       <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}></ParMd>
 
@@ -121,16 +120,16 @@ export function Dao() {
           );
         })}
       <LinkBox>
-        <Link href={`https://publichaus.club/`} type="external">
-          More Public HAUS Info
+        <Link href={`https://publichaus.club/`} linkType="external">
+          More PublicHAUS Info
         </Link>
         <Link
           href={`https://admin.daohaus.club/#/molochv3/${TARGET_DAO.CHAIN_ID}/${TARGET_DAO.ADDRESS}`}
-          type="external"
+          linkType="external"
         >
-          Public HAUS DAO
+          PublicHAUS DAO
         </Link>
-        <Link href={`/create`} type="internal">
+        <Link href={`/create`} linkType="internal">
           Create Signal
         </Link>
       </LinkBox>

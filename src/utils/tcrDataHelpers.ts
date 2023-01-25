@@ -2,9 +2,9 @@ import { isJSON } from "@daohaus/utils";
 import { BigNumber } from "ethers";
 
 export const getTcrTitle = (details?: string): string => {
-  if (!details || !isJSON(details)) return "Unnamed TCR";
+  if (!details || !isJSON(details)) return "Unnamed Signal";
   const detailObj = JSON.parse(details);
-  return detailObj.title || "Unnamed TCR";
+  return detailObj.title || "Unnamed Signal";
 };
 
 export const getTcrDescription = (details?: string): string => {
