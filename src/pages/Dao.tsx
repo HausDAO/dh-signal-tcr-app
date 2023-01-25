@@ -90,7 +90,7 @@ export function Dao() {
         <Link href={`https://publichaus.club/`} type="external">
           Learn
         </Link>{" "}
-        about contributing to Public Haus.
+        about contributing to PublicHAUS.
       </SlimParMd>
       <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}></ParMd>
 
@@ -122,13 +122,13 @@ export function Dao() {
         })}
       <LinkBox>
         <Link href={`https://publichaus.club/`} type="external">
-          More Public HAUS Info
+          More PublicHAUS Info
         </Link>
         <Link
           href={`https://admin.daohaus.club/#/molochv3/${TARGET_DAO.CHAIN_ID}/${TARGET_DAO.ADDRESS}`}
           type="external"
         >
-          Public HAUS DAO
+          PublicHAUS DAO
         </Link>
         <Link href={`/create`} type="internal">
           Create Signal
