@@ -4,6 +4,7 @@ import {
   DataLg,
   DataXl,
   H1,
+  H3,
   H5,
   Input,
   Link,
@@ -12,7 +13,7 @@ import {
   ParXs,
   widthQuery,
 } from "@daohaus/ui";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { totalStakeForChoice, voteIdsForChoice } from "../utils/tcrDataHelpers";
@@ -20,6 +21,7 @@ import { TChoice } from "../utils/types";
 import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
+import { BsPlusLg } from "react-icons/bs";
 
 const TcrListItem = styled.div`
   width: 100%;
@@ -44,9 +46,14 @@ const ProposalCardContainer = styled(Card)`
     height: auto;
     margin-bottom: 2rem;
   }
+
+  /* .short-input {
+    width: 30px;
+  } */
 `;
 
 const LeftCard = styled.div`
+  display: flex;
   width: 60%;
   @media ${widthQuery.sm} {
     width: 100%;
@@ -59,12 +66,25 @@ const RightCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: space-between;
   width: 40%;
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
 
   @media ${widthQuery.sm} {
     max-width: 100%;
     min-width: 0;
   }
+`;
+
+const ChoiceContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 5rem;
 `;
 
 const Spaced = styled.div`
@@ -85,6 +105,7 @@ export const ChoiceItem = ({
     tcrId: tcr,
     address: address,
   });
+  const theme = useTheme();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.value !== "") {
@@ -99,50 +120,65 @@ export const ChoiceItem = ({
     <>
       <ProposalCardContainer>
         <LeftCard>
-          <H1>
-            {toWholeUnits(
-              totalStakeForChoice(
-                tcrRecord?.votes || [],
-                choice.parsedContent.choiceId
-              )
-            )}
-          </H1>
-          <ParSm>Total Points Staked</ParSm>
-          <Spaced>
-            <ParLg>{choice.parsedContent.title}</ParLg>
-            <ParSm>{choice.parsedContent.description}</ParSm>
-          </Spaced>
-          {choice.parsedContent.link && (
+          <div>
+            <ParSm color={theme.secondary.step11}>Total Points Staked</ParSm>
+            <H1>
+              {toWholeUnits(
+                totalStakeForChoice(
+                  tcrRecord?.votes || [],
+                  choice.parsedContent.choiceId
+                )
+              )}
+            </H1>
+          </div>
+          <ChoiceContent>
+            <H3>{choice.parsedContent.title}</H3>
             <Spaced>
-              <Link linkType="external" href={choice.parsedContent.link}>
-                <ParXs>More details</ParXs>
-              </Link>
+              <ParSm>{choice.parsedContent.description}</ParSm>
             </Spaced>
-          )}
+            {choice.parsedContent.link && (
+              <Spaced>
+                <Link linkType="external" href={choice.parsedContent.link}>
+                  <ParXs>More details</ParXs>
+                </Link>
+              </Spaced>
+            )}
+          </ChoiceContent>
         </LeftCard>
         <RightCard>
-          <DataLg>
-            {toWholeUnits(
+          <div className="subsection">
+            <ParSm color={theme.secondary.step11}>Your Points Staked</ParSm>
+            <DataLg>
+              {toWholeUnits(
+                totalStakeForChoice(
+                  connectedVoter?.votes || [],
+                  choice.parsedContent.choiceId
+                )
+              )}
+            </DataLg>
+          </div>
+          <div className="subsection">
+            <ParSm>Add Points</ParSm>
+            <Input
+              id={choice.parsedContent.choiceId}
+              defaultValue="0"
+              onChange={handleChange}
+              className="short-input"
+            />
+          </div>
+          <ReleaseVotes
+            label={`Release ${toWholeUnits(
               totalStakeForChoice(
                 connectedVoter?.votes || [],
                 choice.parsedContent.choiceId
               )
-            )}
-          </DataLg>
-          <ReleaseVotes
-            label="Release"
-            size="sm"
+            )} Points`}
+            // size="sm"
             voteIds={voteIdsForChoice(
               connectedVoter?.votes || [],
               choice.parsedContent.choiceId
             )}
             onSuccess={() => null}
-          />
-          Add:
-          <Input
-            id={choice.parsedContent.choiceId}
-            defaultValue="0"
-            onChange={handleChange}
           />
         </RightCard>
       </ProposalCardContainer>
