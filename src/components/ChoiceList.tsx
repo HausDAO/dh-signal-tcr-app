@@ -36,9 +36,9 @@ const ListActions = styled.div`
 `;
 
 const ListContainer = styled.div`
-  max-height: 60rem;
-  overflow-y: auto;
-  margin-bottom: 5rem;
+  /* max-height: 60rem; */
+  /* overflow-y: auto; */
+  /* margin-bottom: 5rem; */
   padding: 1rem;
 `;
 
