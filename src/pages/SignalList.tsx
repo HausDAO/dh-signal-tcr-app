@@ -46,7 +46,7 @@ export const SignalList = () => {
   return (
     <SingleColumnLayout
       title={getTcrTitle(tcrRecord.details)}
-      subtitle="TCR Signal"
+      subtitle="Signal"
       actions={
         address && (
           <ClaimBalance
