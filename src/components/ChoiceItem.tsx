@@ -157,6 +157,15 @@ export const ChoiceItem = ({
               )}
             </DataLg>
           </div>
+          <ReleaseVotes
+            label={`Release`}
+            size="sm"
+            voteIds={voteIdsForChoice(
+              connectedVoter?.votes || [],
+              choice.parsedContent.choiceId
+            )}
+            onSuccess={() => null}
+          />
           <div className="subsection">
             <ParSm>Add Points</ParSm>
             <Input
@@ -164,22 +173,9 @@ export const ChoiceItem = ({
               defaultValue="0"
               onChange={handleChange}
               className="short-input"
+              disabled={!connectedVoter}
             />
           </div>
-          <ReleaseVotes
-            label={`Release ${toWholeUnits(
-              totalStakeForChoice(
-                connectedVoter?.votes || [],
-                choice.parsedContent.choiceId
-              )
-            )} Points`}
-            // size="sm"
-            voteIds={voteIdsForChoice(
-              connectedVoter?.votes || [],
-              choice.parsedContent.choiceId
-            )}
-            onSuccess={() => null}
-          />
         </RightCard>
       </ProposalCardContainer>
     </>

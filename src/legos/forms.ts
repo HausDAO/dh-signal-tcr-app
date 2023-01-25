@@ -46,6 +46,7 @@ export const FORM: Record<string, CustomFormLego> = {
       "Create a choice for this TCR. You must be a member of the DAO to create a choice.",
     requiredFields: { title: true, description: true },
     log: true,
+    // @ts-expect-error
     tx: TX.ADD_TCR_CHOICE,
     fields: [
       { ...FIELD.TITLE, label: "Choice Title" },
