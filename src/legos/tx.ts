@@ -98,10 +98,9 @@ export const TX = {
     ],
   }),
   ADD_TCR_CHOICE: {
-    id: "POST_SIGNAL",
+    id: "ADD_TCR_CHOICE",
     contract: CONTRACT.POSTER,
     method: "post",
-
     args: [
       {
         type: "JSONDetails",
