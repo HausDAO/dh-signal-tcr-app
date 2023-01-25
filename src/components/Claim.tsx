@@ -69,7 +69,7 @@ export const Claim = ({
 
   return (
     <GatedButton
-      color="secondary"
+      color="success"
       rules={[isConnectedToDao]}
       onClick={handleClaim}
       // centerAlign

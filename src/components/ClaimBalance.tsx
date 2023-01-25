@@ -1,10 +1,10 @@
 import React from "react";
 
-import { ParMd } from "@daohaus/ui";
+import styled from "styled-components";
+import { ParMd, Theme } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
-import styled from "styled-components";
 import { toWholeUnits } from "@daohaus/utils";
 
 export const HAUS_RPC = {
@@ -16,6 +16,16 @@ export const HAUS_RPC = {
   "0xa4b1": "https://arb1.arbitrum.io/rpc",
   "0xa4ec": "https://forno.celo.org",
 };
+
+const BalanceContainer = styled.div`
+  background: ${({ theme }: { theme: Theme }) => theme.success.step9};
+  border-radius: 0.4rem;
+  padding: 1rem;
+  p {
+    font-weight: 700;
+    color: black;
+  }
+`;
 
 export const ClaimBalance = ({
   sharesSnapshot,
@@ -46,10 +56,12 @@ export const ClaimBalance = ({
   return (
     <>
       {userBalance ? (
-        <ParMd>
-          {toWholeUnits(userBalance)} /{" "}
-          {toWholeUnits(connectedVoter?.initialClaim || "0")} Points
-        </ParMd>
+        <BalanceContainer>
+          <ParMd>
+            {toWholeUnits(userBalance)} /{" "}
+            {toWholeUnits(connectedVoter?.initialClaim || "0")} Points
+          </ParMd>
+        </BalanceContainer>
       ) : (
         <>
           {data?.total && +data.total > 0 ? (
@@ -58,7 +70,9 @@ export const ClaimBalance = ({
               label={`Claim ${data?.total} Points`}
             ></Claim>
           ) : (
-            <ParMd>Account not eligble</ParMd>
+            <BalanceContainer>
+              <ParMd>Account not eligible</ParMd>
+            </BalanceContainer>
           )}
         </>
       )}

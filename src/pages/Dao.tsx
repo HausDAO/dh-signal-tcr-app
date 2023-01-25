@@ -74,20 +74,25 @@ const Spaced = styled.div`
   margin-top: 2rem;
 `;
 
+const SlimParMd = styled(ParMd)`
+  width: 70%;
+`;
+
 export function Dao() {
   const { tcrList } = useTcrList({ daoId: TARGET_DAO.ADDRESS });
 
   return (
     <SingleColumnLayout>
-      <H2>Public HAUS Signal TCRs</H2>
-      <HausAnimated />
-      <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
-        2023 is the year of the TCR right?
-      </ParMd>
-      <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}>
-        This is where the Public HAUS members signal on high level objectives
-        for the DAOHaus protocol. Whoopie!
-      </ParMd>
+      <H2>PublicHAUS Signals</H2>
+      <SlimParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
+        This is where PublicHAUS members signal on High Level Objectives (HILO)
+        and ecosystem contribution and output (Retroactive Grading Events).{" "}
+        <Link href={`https://publichaus.club/`} type="external">
+          Learn
+        </Link>{" "}
+        about contributing to Public Haus.
+      </SlimParMd>
+      <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}></ParMd>
 
       {tcrList &&
         tcrList.map((tcr: ListTcr, i: number) => {
@@ -117,16 +122,16 @@ export function Dao() {
         })}
       <LinkBox>
         <Link href={`https://publichaus.club/`} type="external">
-          Public HAUS
+          More Public HAUS Info
         </Link>
         <Link
           href={`https://admin.daohaus.club/#/molochv3/${TARGET_DAO.CHAIN_ID}/${TARGET_DAO.ADDRESS}`}
           type="external"
         >
-          View DAO
+          Public HAUS DAO
         </Link>
         <Link href={`/create`} type="internal">
-          Create TCR
+          Create Signal
         </Link>
       </LinkBox>
     </SingleColumnLayout>
