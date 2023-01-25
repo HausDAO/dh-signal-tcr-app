@@ -3,5 +3,7 @@ export type TChoice = {
   parsedContent: {
     title: string;
     choiceId: string;
+    description: string;
+    link: string;
   };
 };

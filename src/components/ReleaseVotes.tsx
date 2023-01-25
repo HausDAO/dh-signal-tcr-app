@@ -14,11 +14,13 @@ export const ReleaseVotes = ({
   voteIds,
   label,
   size = "md",
+  disabled = false,
 }: {
   onSuccess: () => void;
   voteIds: string[];
   label: string;
   size?: "sm" | "md" | "lg";
+  disabled?: boolean;
 }) => {
   const { fireTransaction } = useTxBuilder();
   const { chainId } = useDHConnect();
@@ -81,6 +83,7 @@ export const ReleaseVotes = ({
       rules={[isConnectedToDao]}
       onClick={handleRelease}
       size={size}
+      disabled={disabled}
     >
       {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
     </GatedButton>
