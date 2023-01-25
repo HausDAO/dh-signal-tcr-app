@@ -9,7 +9,13 @@ import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
 
-export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
+export const Claim = ({
+  onSuccess,
+  label,
+}: {
+  onSuccess: () => void;
+  label: string;
+}) => {
   const { fireTransaction } = useTxBuilder();
   const { chainId, address } = useDHConnect();
   const { tcr } = useParams();
@@ -68,7 +74,7 @@ export const Claim = ({ onSuccess }: { onSuccess: () => void }) => {
       onClick={handleClaim}
       // centerAlign
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Claim"}
+      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
     </GatedButton>
   );
 };

@@ -17,24 +17,20 @@ export const HAUS_RPC = {
   "0xa4ec": "https://forno.celo.org",
 };
 
-const ClaimSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-`;
-
 export const ClaimBalance = ({
   sharesSnapshot,
   lootSnapshot,
   sharesAddress,
   lootAddress,
   userBalance,
+  connectedVoter,
 }: {
   sharesSnapshot: any;
   lootSnapshot: any;
   sharesAddress: any;
   lootAddress: any;
   userBalance: any;
+  connectedVoter: any;
 }) => {
   const { address } = useDHConnect();
   const { data } = useDaoTokens({
@@ -50,12 +46,21 @@ export const ClaimBalance = ({
   return (
     <>
       {userBalance ? (
-        <ParMd>Claimed Balance: {toWholeUnits(userBalance)}</ParMd>
+        <ParMd>
+          {toWholeUnits(userBalance)} /{" "}
+          {toWholeUnits(connectedVoter?.initialClaim || "0")} Points
+        </ParMd>
       ) : (
-        <ClaimSection>
-          <ParMd>Claimable Balance: {data?.total || "0"} </ParMd>
-          <Claim onSuccess={() => null}></Claim>
-        </ClaimSection>
+        <>
+          {data?.total && +data.total > 0 ? (
+            <Claim
+              onSuccess={() => null}
+              label={`Claim ${data?.total} Points`}
+            ></Claim>
+          ) : (
+            <ParMd>Account not eligble</ParMd>
+          )}
+        </>
       )}
     </>
   );

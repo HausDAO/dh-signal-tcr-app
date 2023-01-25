@@ -12,9 +12,11 @@ import { TARGET_DAO } from "../targetDao";
 export const UpdateStake = ({
   onSuccess,
   stakeAmounts,
+  disabled = false,
 }: {
   onSuccess: () => void;
   stakeAmounts: any;
+  disabled?: boolean;
 }) => {
   const { fireTransaction } = useTxBuilder();
   const { chainId } = useDHConnect();
@@ -66,12 +68,12 @@ export const UpdateStake = ({
     chainId === TARGET_DAO.CHAIN_ID
       ? true
       : "You are not connected to the same network as the DAO";
-
   return (
     <GatedButton
       color="secondary"
       rules={[isConnectedToDao]}
       onClick={handleClaim}
+      disabled={disabled}
     >
       {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Update Stake"}
     </GatedButton>

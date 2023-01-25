@@ -60,23 +60,24 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
               <H5>Signal Choices</H5>
             </div>
             <ListActions>
-              <UpdateStake onSuccess={() => null} stakeAmounts={stakeAmounts} />
+              <UpdateStake
+                onSuccess={() => setStakeAmounts([])}
+                stakeAmounts={stakeAmounts}
+                disabled={stakeAmounts.length === 0}
+              />
               <ReleaseVotes
                 onSuccess={() => null}
                 voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
                 label="Release All"
+                disabled={connectedVoter?.votes.length === 0}
               />
             </ListActions>
           </ListHeader>
 
-          {records.map((choice: any, i: number) => {
+          {records.map((choice: any) => {
             return (
               <div key={choice.id}>
-                <ChoiceItem
-                  choice={choice}
-                  index={i}
-                  setStakeAmounts={setStakeAmounts}
-                />
+                <ChoiceItem choice={choice} setStakeAmounts={setStakeAmounts} />
               </div>
             );
           })}
