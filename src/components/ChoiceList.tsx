@@ -35,6 +35,13 @@ const ListActions = styled.div`
   gap: 3rem;
 `;
 
+const ListContainer = styled.div`
+  max-height: 60rem;
+  overflow-y: auto;
+  margin-bottom: 5rem;
+  padding: 1rem;
+`;
+
 export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
   const { address } = useDHConnect();
   const { tcr } = useParams();
@@ -61,24 +68,29 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
             </div>
           </ListHeader>
 
-          {records.map((choice: any) => {
-            return (
-              <div key={choice.id}>
-                <ChoiceItem choice={choice} setStakeAmounts={setStakeAmounts} />
-              </div>
-            );
-          })}
+          <ListContainer>
+            {records.map((choice: any) => {
+              return (
+                <div key={choice.id}>
+                  <ChoiceItem
+                    choice={choice}
+                    setStakeAmounts={setStakeAmounts}
+                  />
+                </div>
+              );
+            })}
+          </ListContainer>
           <ListActions>
-            <UpdateStake
-              onSuccess={() => setStakeAmounts([])}
-              stakeAmounts={stakeAmounts}
-              disabled={!connectedVoter || stakeAmounts.length === 0}
-            />
             <ReleaseVotes
               onSuccess={() => null}
               voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
               label="Release All"
               disabled={!connectedVoter || connectedVoter?.votes.length === 0}
+            />
+            <UpdateStake
+              onSuccess={() => setStakeAmounts([])}
+              stakeAmounts={stakeAmounts}
+              disabled={!connectedVoter || stakeAmounts.length === 0}
             />
           </ListActions>
         </TcrList>
