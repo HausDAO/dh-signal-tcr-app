@@ -38,3 +38,29 @@ export const voteIdsForChoice = (votes: any[], choiceId: string): string[] => {
     return acc;
   }, []);
 };
+
+export const totalPendingStake = (stakeAmounts: {
+  [key: string]: string;
+}): string => {
+  const totalPending = Object.values(stakeAmounts).reduce(
+    (sum: BigNumber, stake: string) => {
+      sum = sum.add(BigNumber.from(stake));
+      return sum;
+    },
+    BigNumber.from("0")
+  );
+  return totalPending.toString();
+};
+export const availableStake = (
+  stakeAmounts: {
+    [key: string]: string;
+  },
+  currentBalance: string
+): string => {
+  const pending = totalPendingStake(stakeAmounts);
+  const avail = BigNumber.from(currentBalance).sub(BigNumber.from(pending));
+  return avail.toString();
+};
+export const isEmpty = (obj: any) => {
+  return Object.keys(obj).length === 0;
+};
