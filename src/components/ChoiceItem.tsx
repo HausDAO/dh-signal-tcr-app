@@ -1,14 +1,11 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from "react";
+import React, { ChangeEvent, Dispatch, SetStateAction, useMemo } from "react";
 import {
   Card,
   DataLg,
-  DataXl,
   H1,
   H3,
-  H5,
   Input,
   Link,
-  ParLg,
   ParSm,
   ParXs,
   widthQuery,
@@ -21,15 +18,6 @@ import { TChoice } from "../utils/types";
 import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
-import { BsPlusLg } from "react-icons/bs";
-
-const TcrListItem = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  gap: 5rem;
-`;
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -75,6 +63,10 @@ const RightCard = styled.div`
     align-items: flex-end;
   }
 
+  .point-input {
+    align-items: flex-start;
+  }
+
   @media ${widthQuery.sm} {
     max-width: 100%;
     min-width: 0;
@@ -91,12 +83,18 @@ const Spaced = styled.div`
   margin-top: 2rem;
 `;
 
+const DataH1 = styled(H1)`
+  font-family: mono;
+`;
+
 export const ChoiceItem = ({
   choice,
   setStakeAmounts,
+  pointsAvailable,
 }: {
   choice: TChoice;
   setStakeAmounts: Dispatch<SetStateAction<any>>;
+  pointsAvailable: string | boolean;
 }) => {
   const { tcr } = useParams();
   const { address } = useDHConnect();
@@ -108,12 +106,13 @@ export const ChoiceItem = ({
   const theme = useTheme();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value !== "") {
-      const newAmount = toBaseUnits(event.target.value);
-      setStakeAmounts((prevState: any) => {
-        return [...prevState, [choice.parsedContent.choiceId, newAmount]];
-      });
-    }
+    const value = event.target.value === "" ? "0" : event.target.value;
+    const newAmount = toBaseUnits(value);
+
+    setStakeAmounts((prevState: any) => {
+      return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
+    });
+    // }
   };
 
   return (
@@ -122,14 +121,14 @@ export const ChoiceItem = ({
         <LeftCard>
           <div>
             <ParSm color={theme.secondary.step11}>Total Points Staked</ParSm>
-            <H1>
+            <DataH1>
               {toWholeUnits(
                 totalStakeForChoice(
                   tcrRecord?.votes || [],
                   choice.parsedContent.choiceId
                 )
               )}
-            </H1>
+            </DataH1>
           </div>
           <ChoiceContent>
             <H3>{choice.parsedContent.title}</H3>
@@ -166,11 +165,16 @@ export const ChoiceItem = ({
             )}
             onSuccess={() => null}
           />
-          <div className="subsection">
-            <ParSm>Add Points</ParSm>
+          <div className="subsection point-input">
+            {pointsAvailable && (
+              <ParSm>Add Points ({pointsAvailable} available)</ParSm>
+            )}
+            {!pointsAvailable && (
+              <ParSm color={theme.warning.step9}>Not enough points</ParSm>
+            )}
             <Input
               id={choice.parsedContent.choiceId}
-              defaultValue="0"
+              placeholder="0"
               onChange={handleChange}
               className="short-input"
               disabled={!connectedVoter}

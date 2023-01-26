@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styled from "styled-components";
 
 import { H5 } from "@daohaus/ui";
@@ -10,6 +10,8 @@ import { useDHConnect } from "@daohaus/connect";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useConnectedAddressVotes } from "../hooks/useTcrs";
 import { useParams } from "react-router-dom";
+import { availableStake, isEmpty } from "../utils/tcrDataHelpers";
+import { toWholeUnits } from "@daohaus/utils";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -56,7 +58,15 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
     tcrId: tcr,
     address: address,
   });
-  const [stakeAmounts, setStakeAmounts] = useState([]);
+  const [stakeAmounts, setStakeAmounts] = useState({});
+
+  const pointsAvailable = useMemo(() => {
+    if (!connectedVoter) {
+      return false;
+    }
+    const available = availableStake(stakeAmounts, connectedVoter.balance);
+    return Number(available) >= 0 ? toWholeUnits(available) : false;
+  }, [connectedVoter, stakeAmounts]);
 
   return (
     <>
@@ -75,6 +85,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
                   <ChoiceItem
                     choice={choice}
                     setStakeAmounts={setStakeAmounts}
+                    pointsAvailable={pointsAvailable}
                   />
                 </div>
               );
@@ -90,7 +101,9 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
             <UpdateStake
               onSuccess={() => setStakeAmounts([])}
               stakeAmounts={stakeAmounts}
-              disabled={!connectedVoter || stakeAmounts.length === 0}
+              disabled={
+                !connectedVoter || isEmpty(stakeAmounts) || !pointsAvailable
+              }
             />
           </ListActions>
         </TcrList>
