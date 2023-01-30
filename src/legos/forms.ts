@@ -21,14 +21,14 @@ export const FORM: Record<string, CustomFormLego> = {
   },
   SUMMON_TCR: {
     id: "SUMMON_TCR",
-    title: "Create TCR",
+    title: "Create Signal",
     description: "Make a proposal to the DAO to create a Signal TCR",
     requiredFields: { title: true, endDate: true, description: true },
     log: true,
     tx: TX.SUMMON_TCR,
     fields: [
-      { ...FIELD.TITLE, label: "TCR Title" },
-      { ...FIELD.DESCRIPTION, label: "TCR Description" },
+      { ...FIELD.TITLE, label: "Signal Title" },
+      { ...FIELD.DESCRIPTION, label: "Signal Description" },
       FIELD.LINK,
       {
         id: "endDate",
@@ -41,9 +41,9 @@ export const FORM: Record<string, CustomFormLego> = {
   },
   ADD_TCR_CHOICE: {
     id: "ADD_TCR_CHOICE",
-    title: "Add TCR Choice",
+    title: "Add Signal Choice",
     description:
-      "Create a choice for this TCR. You must be a member of the DAO to create a choice.",
+      "Create a choice for this Signal. You must be a member of the DAO to create a choice.",
     requiredFields: { title: true, description: true },
     log: true,
     // @ts-expect-error

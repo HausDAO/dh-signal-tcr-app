@@ -78,6 +78,7 @@ export const UpdateStake = ({
       rules={[isConnectedToDao]}
       onClick={handleClaim}
       disabled={disabled}
+      style={{ padding: "1.2rem" }}
     >
       {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : "Update Stake"}
     </GatedButton>

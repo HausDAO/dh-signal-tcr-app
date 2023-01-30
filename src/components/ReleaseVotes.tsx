@@ -84,6 +84,7 @@ export const ReleaseVotes = ({
       onClick={handleRelease}
       size={size}
       disabled={disabled}
+      style={{ padding: "1.2rem" }}
     >
       {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
     </GatedButton>
