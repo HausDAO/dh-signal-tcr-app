@@ -1,8 +1,6 @@
+import { Button, Tooltip } from "@daohaus/ui";
 
-
-import { Button, Tooltip } from '@daohaus/ui';
-
-import React, { ComponentProps, useMemo } from 'react';
+import React, { ComponentProps, useMemo } from "react";
 
 type Rule = true | string;
 
@@ -13,7 +11,7 @@ export const GatedButton = ({
   rules: Rule[];
 } & ComponentProps<typeof Button>) => {
   const error = useMemo(
-    () => rules.find((rule) => typeof rule === 'string'),
+    () => rules.find((rule) => typeof rule === "string"),
     [rules]
   );
 
