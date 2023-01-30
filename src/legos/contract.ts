@@ -58,9 +58,9 @@ export const CONTRACT: Record<string, ContractLego> = {
     contractName: "TCR_FACTORY",
     abi: TCR_FACTORY_ABI,
     targetAddress: {
-      "0x1": TARGET_DAO.TCR_FACTORY,
-      "0x5": TARGET_DAO.TCR_FACTORY,
-      "0x64": TARGET_DAO.TCR_FACTORY,
+      "0x1": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
+      "0x5": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
+      "0x64": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
     },
   },
   TCR: {

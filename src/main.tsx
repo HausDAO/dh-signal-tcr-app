@@ -38,7 +38,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <DHConnectProvider
           web3modalOptions={web3modalOptions}
-          daoChainId={TARGET_DAO.CHAIN_ID}
+          daoChainId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
         >
           <HausThemeProvider>
             <Routes />
