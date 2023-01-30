@@ -69,7 +69,7 @@ export const ReleaseVotes = ({
   };
 
   const isConnectedToDao =
-    chainId === TARGET_DAO.CHAIN_ID
+    chainId === TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
       ? true
       : "You are not connected to the same network as the DAO";
 
@@ -79,7 +79,7 @@ export const ReleaseVotes = ({
 
   return (
     <GatedButton
-      color="secondary"
+      variant="outline"
       rules={[isConnectedToDao]}
       onClick={handleRelease}
       size={size}

@@ -21,6 +21,7 @@ import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
 import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
 import { formatShortDateTimeFromSeconds } from "@daohaus/utils";
+import { useDao } from "../hooks/useDao";
 
 const LinkBox = styled.div`
   display: flex;
@@ -79,17 +80,27 @@ const SlimParMd = styled(ParMd)`
 `;
 
 export function Dao() {
-  const { tcrList } = useTcrList({ daoId: TARGET_DAO.ADDRESS });
+  const { tcrList } = useTcrList({
+    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
+  });
+  const { dao } = useDao({
+    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
+    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+  });
 
   return (
     <SingleColumnLayout>
-      <H2>PublicHAUS Signals</H2>
+      <H2>{dao?.name} Signals</H2>
       <SlimParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
-        This is where PublicHAUS members signal on High Level Objectives (HILO)
-        and ecosystem contribution and output (Retroactive Grading Events).{" "}
-        <Link href={`https://publichaus.club/`} linkType="external">
-          Learn about contributing to PublicHAUS
-        </Link>{" "}
+        {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].HOME_PAR}{" "}
+        {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
+          <Link
+            href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}
+            linkType="external"
+          >
+            Learn more
+          </Link>
+        )}
       </SlimParMd>
       <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}></ParMd>
 
@@ -120,18 +131,25 @@ export function Dao() {
           );
         })}
       <LinkBox>
-        <Link href={`https://publichaus.club/`} linkType="external">
-          More PublicHAUS Info
-        </Link>
+        {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
+          <Link
+            href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}
+            linkType="external"
+          >
+            More {dao?.name} Info
+          </Link>
+        )}
         <Link
-          href={`https://admin.daohaus.club/#/molochv3/${TARGET_DAO.CHAIN_ID}/${TARGET_DAO.ADDRESS}`}
+          href={`https://admin.daohaus.club/#/molochv3/${
+            TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
+          }/${TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS}`}
           linkType="external"
         >
-          PublicHAUS DAO
+          {dao?.name}
         </Link>
-        <Link href={`/create`} linkType="internal">
+        {/* <Link href={`/create`} linkType="internal">
           Create Signal
-        </Link>
+        </Link> */}
       </LinkBox>
     </SingleColumnLayout>
   );

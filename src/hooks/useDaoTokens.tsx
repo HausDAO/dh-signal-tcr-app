@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 
 import { createContract } from "@daohaus/tx-builder";
 import { ValidNetwork, Keychain, HAUS_RPC } from "@daohaus/keychain-utils";
-import { fromWei, nowInSeconds } from "@daohaus/utils";
+import { fromWei } from "@daohaus/utils";
 
 import DaoTokenAbi from "../abis/DaoToken.json";
 import { useDebugValue } from "react";

@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from "react";
+import { useParams, Link as RouterLink } from "react-router-dom";
+
 import styled from "styled-components";
 
-import { H5 } from "@daohaus/ui";
+import { Button, H5 } from "@daohaus/ui";
 import { useRecords } from "../hooks/useRecord";
 import { TARGET_DAO } from "../targetDao";
 import { ChoiceItem } from "./ChoiceItem";
@@ -9,7 +11,6 @@ import { UpdateStake } from "./UpdateStake";
 import { useDHConnect } from "@daohaus/connect";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useConnectedAddressVotes } from "../hooks/useTcrs";
-import { useParams } from "react-router-dom";
 import { availableStake, isEmpty } from "../utils/tcrDataHelpers";
 import { toWholeUnits } from "@daohaus/utils";
 
@@ -41,7 +42,11 @@ const ListContainer = styled.div`
   /* max-height: 60rem; */
   /* overflow-y: auto; */
   /* margin-bottom: 5rem; */
-  padding: 1rem;
+  /* padding: 1rem; */
+`;
+
+const StyledRouterLink = styled(RouterLink)`
+  text-decoration: none;
 `;
 
 export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
@@ -49,8 +54,8 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
   const { tcr } = useParams();
 
   const { records } = useRecords({
-    daoId: TARGET_DAO.ADDRESS,
-    chainId: TARGET_DAO.CHAIN_ID,
+    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
+    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
     recordType: "signalTcrChoice",
     tcrId: tcrId,
   });
@@ -92,6 +97,15 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
             })}
           </ListContainer>
           <ListActions>
+            <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
+              <Button
+                variant="outline"
+                color="secondary"
+                disabled={!connectedVoter}
+              >
+                Add Choice
+              </Button>
+            </StyledRouterLink>
             <ReleaseVotes
               onSuccess={() => null}
               voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
