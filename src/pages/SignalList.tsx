@@ -31,8 +31,8 @@ export const SignalList = () => {
     address: address,
   });
   const { dao } = useDao({
-    daoId: TARGET_DAO.ADDRESS,
-    chainId: TARGET_DAO.CHAIN_ID,
+    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
+    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
   });
 
   if (!tcrRecord || !dao) {
@@ -69,10 +69,6 @@ export const SignalList = () => {
         </Link>
       </DetailsContainer>
       {tcr && dao && <ChoiceList tcrId={tcr} />}
-
-      <Link href={`/tcr/${tcr}/add-choice`} type="internal">
-        Add Choice
-      </Link>
     </SingleColumnLayout>
   );
 };

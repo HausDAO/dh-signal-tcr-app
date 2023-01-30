@@ -1,8 +1,9 @@
 // useRequest.js
 import { useQuery } from "react-query";
 import { GraphQLClient, gql } from "graphql-request";
+import { TARGET_DAO } from "../targetDao";
 
-const API_URL = `https://api.thegraph.com/subgraphs/name/hausdao/dh-signal-tcr-goerli`;
+const API_URL = TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_GRAPH_URL;
 
 const graphQLClient = new GraphQLClient(API_URL);
 

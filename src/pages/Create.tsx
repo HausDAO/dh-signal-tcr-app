@@ -28,7 +28,7 @@ export const Create = () => {
   return (
     <FormBuilder
       form={FORM.SUMMON_TCR}
-      targetNetwork={TARGET_DAO.CHAIN_ID}
+      targetNetwork={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
       onSuccess={onFormComplete}
       customFields={CustomFields}
     />

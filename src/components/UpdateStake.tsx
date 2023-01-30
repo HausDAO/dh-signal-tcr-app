@@ -24,10 +24,14 @@ export const UpdateStake = ({
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const stakeArg = Object.keys(stakeAmounts).map((choiceId) => {
+    return [choiceId, stakeAmounts[choiceId]];
+  });
+
   const handleClaim = () => {
     setIsLoading(true);
     fireTransaction({
-      tx: { ...TX.STAKE, staticArgs: [stakeAmounts] } as TXLego,
+      tx: { ...TX.STAKE, staticArgs: [stakeArg] } as TXLego,
       callerState: { tcr },
       lifeCycleFns: {
         onTxError: (error) => {
@@ -65,7 +69,7 @@ export const UpdateStake = ({
   };
 
   const isConnectedToDao =
-    chainId === TARGET_DAO.CHAIN_ID
+    chainId === TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
       ? true
       : "You are not connected to the same network as the DAO";
   return (
