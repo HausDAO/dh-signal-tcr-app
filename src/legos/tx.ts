@@ -1,4 +1,4 @@
-import { POSTER_TAGS } from "@daohaus/utils";
+import { POSTER_TAGS, ValidArgType, NestedArray } from "@daohaus/utils";
 import { buildMultiCallTX } from "@daohaus/tx-builder";
 import { CONTRACT } from "./contract";
 import { pollLastTcrTX, testLastTcrTX } from "../utils/tcrTxHelpers";
@@ -15,6 +15,13 @@ export enum ProposalTypeIds {
   GuildKick = "GUILDKICK",
   WalletConnect = "WALLETCONNECT",
 }
+
+const nestInArray = (arg: ValidArgType | ValidArgType[]): NestedArray => {
+  return {
+    type: "nestedArray",
+    args: Array.isArray(arg) ? arg : [arg],
+  };
+};
 
 export const TX = {
   POST_SIGNAL: buildMultiCallTX({
@@ -92,6 +99,7 @@ export const TX = {
               title: `.formValues.title`,
               description: `.formValues.description`,
               link: `.formValues.link`,
+              tags: `.formValues.tags`,
             },
           },
         ],
