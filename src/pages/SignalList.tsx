@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import { useDHConnect } from "@daohaus/connect";
 import { Link, ParMd, SingleColumnLayout, Spinner } from "@daohaus/ui";
-import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
+import { useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import {
   getTcrDescription,
@@ -26,10 +26,6 @@ export const SignalList = () => {
   const { address } = useDHConnect();
   const { tcr } = useParams();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
-  const { connectedVoter } = useConnectedAddressVotes({
-    tcrId: tcr,
-    address: address,
-  });
   const { dao } = useDao({
     daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
     chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
@@ -54,8 +50,6 @@ export const SignalList = () => {
             sharesSnapshot={tcrRecord.sharesSnapshotId}
             lootAddress={dao.lootAddress}
             sharesAddress={dao.sharesAddress}
-            userBalance={connectedVoter?.balance}
-            connectedVoter={connectedVoter}
           />
         )
       }

@@ -13,6 +13,7 @@ import { ReleaseVotes } from "./ReleaseVotes";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { availableStake, isEmpty } from "../utils/tcrDataHelpers";
 import { toWholeUnits, formatDistanceToNowFromSeconds } from "@daohaus/utils";
+import { useQueryClient } from "react-query";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -52,6 +53,7 @@ const StyledRouterLink = styled(RouterLink)`
 export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
   const { address } = useDHConnect();
   const { tcr } = useParams();
+  const client = useQueryClient();
 
   const { records } = useRecords({
     daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
@@ -59,10 +61,11 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
     recordType: "signalTcrChoice",
     tcrId: tcrId,
   });
-  const { connectedVoter } = useConnectedAddressVotes({
-    tcrId: tcr,
-    address: address,
-  });
+  const { connectedVoter, refetch: refetchConnectedVoter } =
+    useConnectedAddressVotes({
+      tcrId: tcr,
+      address: address,
+    });
   const { tcrRecord } = useTcrData({ tcrId: tcr });
 
   const [stakeAmounts, setStakeAmounts] = useState({});
@@ -112,13 +115,20 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
           </ListContainer>
           <ListActions>
             <ReleaseVotes
-              onSuccess={() => null}
+              onSuccess={() => {
+                client.clear();
+                refetchConnectedVoter();
+              }}
               voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
               label="Release All"
               disabled={!connectedVoter || connectedVoter?.votes.length === 0}
             />
             <UpdateStake
-              onSuccess={() => setStakeAmounts({})}
+              onSuccess={() => {
+                setStakeAmounts({});
+                client.clear();
+                refetchConnectedVoter();
+              }}
               stakeAmounts={stakeAmounts}
               disabled={
                 !connectedVoter || isEmpty(stakeAmounts) || !pointsAvailable
