@@ -29,12 +29,22 @@ export const FORM: Record<string, CustomFormLego> = {
     fields: [
       { ...FIELD.TITLE, label: "Signal Title" },
       { ...FIELD.DESCRIPTION, label: "Signal Description" },
-      FIELD.LINK,
       {
         id: "endDate",
         type: "input",
         label: "End Date/Time (seconds)",
         placeholder: "0",
+      },
+      FIELD.LINK,
+      {
+        id: "tags",
+        type: "csInput",
+        label: "Tags",
+        placeholder: "comma, separated, tags",
+        itemNoun: {
+          singular: "tag",
+          plural: "tags",
+        },
       },
       // ...PROPOSAL_SETTINGS_FIELDS,
     ],
@@ -44,20 +54,25 @@ export const FORM: Record<string, CustomFormLego> = {
     title: "Add Signal Choice",
     description:
       "Create a choice for this Signal. You must be a member of the DAO to create a choice.",
-    requiredFields: { title: true, description: true },
+    requiredFields: { title: true, description: true, stakeAmount: true },
     log: true,
     // @ts-expect-error
     tx: TX.ADD_TCR_CHOICE,
     fields: [
       { ...FIELD.TITLE, label: "Choice Title" },
       { ...FIELD.DESCRIPTION, label: "Choice Description" },
+      // {
+      //   id: "stakeAmount",
+      //   type: "stakeAmount",
+      //   label: "Add Points",
+      //   placeholder: "0",
+      //   expectType: "number",
+      // },
       FIELD.LINK,
-      // {id: 'stakeAmount', }
       {
         id: "choiceId",
         type: "choiceId",
       },
-      // ...PROPOSAL_SETTINGS_FIELDS,
     ],
   },
 };
