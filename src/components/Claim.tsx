@@ -8,6 +8,7 @@ import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
+import { useQueryClient } from "react-query";
 
 export const Claim = ({
   onSuccess,
@@ -17,10 +18,11 @@ export const Claim = ({
   label: string;
 }) => {
   const { fireTransaction } = useTxBuilder();
-  const { chainId, address } = useDHConnect();
+  const { chainId } = useDHConnect();
   const { tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
+  const client = useQueryClient();
 
   const handleClaim = () => {
     setIsLoading(true);
@@ -57,6 +59,7 @@ export const Claim = ({
           });
           setIsLoading(false);
           onSuccess();
+          client.clear();
         },
       },
     });

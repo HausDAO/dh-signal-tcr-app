@@ -54,6 +54,7 @@ export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
             registry(id: $tcrId) {
               id
               details
+              endDate
               dao
               createdAt
               sharesSnapshotId

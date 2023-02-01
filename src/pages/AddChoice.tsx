@@ -32,7 +32,9 @@ export const AddChoice = () => {
     <FormBuilder
       form={FORM.ADD_TCR_CHOICE}
       targetNetwork={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
-      onSuccess={onFormComplete}
+      lifeCycleFns={{
+        onPollSuccess: onFormComplete,
+      }}
       defaultValues={{ tcrId: tcr }}
       customFields={CustomFields}
     />

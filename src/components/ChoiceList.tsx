@@ -1,18 +1,18 @@
 import React, { useMemo, useState } from "react";
 import { useParams, Link as RouterLink } from "react-router-dom";
-
 import styled from "styled-components";
+import { RiPlayListAddFill } from "react-icons/ri/index.js";
 
-import { Button, H5 } from "@daohaus/ui";
+import { Button, DataMd, Bold } from "@daohaus/ui";
 import { useRecords } from "../hooks/useRecord";
 import { TARGET_DAO } from "../targetDao";
 import { ChoiceItem } from "./ChoiceItem";
 import { UpdateStake } from "./UpdateStake";
 import { useDHConnect } from "@daohaus/connect";
 import { ReleaseVotes } from "./ReleaseVotes";
-import { useConnectedAddressVotes } from "../hooks/useTcrs";
+import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { availableStake, isEmpty } from "../utils/tcrDataHelpers";
-import { toWholeUnits } from "@daohaus/utils";
+import { toWholeUnits, formatDistanceToNowFromSeconds } from "@daohaus/utils";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -27,8 +27,8 @@ const ListHeader = styled.div`
   align-items: baseline;
   justify-content: space-between;
   width: 100%;
-  gap: 5rem;
-  margin-bottom: 3rem;
+  gap: 3rem;
+  margin-bottom: 2rem;
 `;
 
 const ListActions = styled.div`
@@ -63,6 +63,8 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
     tcrId: tcr,
     address: address,
   });
+  const { tcrRecord } = useTcrData({ tcrId: tcr });
+
   const [stakeAmounts, setStakeAmounts] = useState({});
 
   const pointsAvailable = useMemo(() => {
@@ -78,9 +80,21 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
       {records && (
         <TcrList>
           <ListHeader>
-            <div>
-              <H5>Signal Choices</H5>
-            </div>
+            <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
+              <Button
+                variant="ghost"
+                color="secondary"
+                disabled={!connectedVoter}
+                IconLeft={RiPlayListAddFill}
+              >
+                Add Choice
+              </Button>
+            </StyledRouterLink>
+            <DataMd>
+              <Bold>
+                Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+              </Bold>
+            </DataMd>
           </ListHeader>
 
           <ListContainer>
@@ -97,15 +111,6 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
             })}
           </ListContainer>
           <ListActions>
-            <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
-              <Button
-                variant="outline"
-                color="secondary"
-                disabled={!connectedVoter}
-              >
-                Add Choice
-              </Button>
-            </StyledRouterLink>
             <ReleaseVotes
               onSuccess={() => null}
               voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
@@ -113,7 +118,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
               disabled={!connectedVoter || connectedVoter?.votes.length === 0}
             />
             <UpdateStake
-              onSuccess={() => setStakeAmounts([])}
+              onSuccess={() => setStakeAmounts({})}
               stakeAmounts={stakeAmounts}
               disabled={
                 !connectedVoter || isEmpty(stakeAmounts) || !pointsAvailable

@@ -16,11 +16,10 @@ import {
 } from "@daohaus/ui";
 import { RiArrowRightSLine } from "react-icons/ri/index.js";
 
-import { HausAnimated } from "../components/HausAnimated";
 import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
 import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
-import { formatShortDateTimeFromSeconds } from "@daohaus/utils";
+import { formatDistanceToNowFromSeconds } from "@daohaus/utils";
 import { useDao } from "../hooks/useDao";
 
 const LinkBox = styled.div`
@@ -118,8 +117,7 @@ export function Dao() {
                     <Spaced>
                       <DataXs>
                         <Bold>
-                          Signaling ends on{" "}
-                          {formatShortDateTimeFromSeconds(tcr.endDate)}
+                          Ends {formatDistanceToNowFromSeconds(tcr.endDate)}
                         </Bold>
                       </DataXs>
                     </Spaced>

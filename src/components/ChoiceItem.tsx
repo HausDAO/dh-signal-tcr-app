@@ -18,6 +18,7 @@ import { TChoice } from "../utils/types";
 import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
+import { useQueryClient } from "react-query";
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -104,6 +105,7 @@ export const ChoiceItem = ({
     address: address,
   });
   const theme = useTheme();
+  const client = useQueryClient();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? "0" : event.target.value;
@@ -163,7 +165,9 @@ export const ChoiceItem = ({
               connectedVoter?.votes || [],
               choice.parsedContent.choiceId
             )}
-            onSuccess={() => null}
+            onSuccess={() => {
+              client.clear();
+            }}
           />
           <div className="subsection point-input">
             {pointsAvailable && (

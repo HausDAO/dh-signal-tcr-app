@@ -8,6 +8,7 @@ import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
+import { useQueryClient } from "react-query";
 
 export const UpdateStake = ({
   onSuccess,
@@ -23,6 +24,7 @@ export const UpdateStake = ({
   const { tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
+  const client = useQueryClient();
 
   const stakeArg = Object.keys(stakeAmounts).map((choiceId) => {
     return [choiceId, stakeAmounts[choiceId]];
@@ -63,6 +65,7 @@ export const UpdateStake = ({
           });
           setIsLoading(false);
           onSuccess();
+          client.clear();
         },
       },
     });

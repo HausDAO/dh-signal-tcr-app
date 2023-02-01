@@ -1,6 +1,7 @@
 import { POSTER_TAGS } from "@daohaus/utils";
 import { buildMultiCallTX } from "@daohaus/tx-builder";
 import { CONTRACT } from "./contract";
+import { pollLastTcrTX, testLastTcrTX } from "../utils/tcrTxHelpers";
 
 export enum ProposalTypeIds {
   Signal = "SIGNAL",
@@ -123,16 +124,28 @@ export const TX = {
     contract: CONTRACT.TCR,
     method: "claim",
     args: [".memberAddress"],
+    customPoll: {
+      fetch: pollLastTcrTX,
+      test: testLastTcrTX,
+    },
   },
   RELEASE: {
     id: "RELEASE",
     contract: CONTRACT.TCR,
     method: "releaseTokens",
     args: [".voteIds"],
+    customPoll: {
+      fetch: pollLastTcrTX,
+      test: testLastTcrTX,
+    },
   },
   STAKE: {
     id: "STAKE",
     contract: CONTRACT.TCR,
     method: "vote",
+    customPoll: {
+      fetch: pollLastTcrTX,
+      test: testLastTcrTX,
+    },
   },
 };
