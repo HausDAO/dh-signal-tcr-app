@@ -8,7 +8,6 @@ import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
-import { useQueryClient } from "react-query";
 
 export const UpdateStake = ({
   onSuccess,
@@ -24,7 +23,6 @@ export const UpdateStake = ({
   const { tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
-  const client = useQueryClient();
 
   const stakeArg = Object.keys(stakeAmounts).map((choiceId) => {
     return [choiceId, stakeAmounts[choiceId]];
@@ -48,8 +46,6 @@ export const UpdateStake = ({
             title: "Claim Success",
             description: "Please wait for subgraph to sync",
           });
-          // todo: poll for claim success?
-          setIsLoading(false);
         },
         onPollError: (error) => {
           const errMsg = handleErrorMessage({
@@ -63,9 +59,8 @@ export const UpdateStake = ({
             title: "Claim Success",
             description: "Claim success",
           });
-          setIsLoading(false);
           onSuccess();
-          client.clear();
+          setIsLoading(false);
         },
       },
     });

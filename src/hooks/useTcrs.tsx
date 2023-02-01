@@ -123,5 +123,6 @@ export const useConnectedAddressVotes = ({
 
   return {
     connectedVoter: data?.voters[0],
+    ...rest,
   };
 };

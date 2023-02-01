@@ -100,10 +100,11 @@ export const ChoiceItem = ({
   const { tcr } = useParams();
   const { address } = useDHConnect();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
-  const { connectedVoter } = useConnectedAddressVotes({
-    tcrId: tcr,
-    address: address,
-  });
+  const { connectedVoter, refetch: refetchConnectedVoter } =
+    useConnectedAddressVotes({
+      tcrId: tcr,
+      address: address,
+    });
   const theme = useTheme();
   const client = useQueryClient();
 
@@ -114,7 +115,6 @@ export const ChoiceItem = ({
     setStakeAmounts((prevState: any) => {
       return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
     });
-    // }
   };
 
   return (
@@ -167,6 +167,7 @@ export const ChoiceItem = ({
             )}
             onSuccess={() => {
               client.clear();
+              refetchConnectedVoter();
             }}
           />
           <div className="subsection point-input">

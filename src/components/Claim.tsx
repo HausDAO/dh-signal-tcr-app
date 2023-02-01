@@ -42,8 +42,6 @@ export const Claim = ({
             title: "Claim Success",
             description: "Please wait for subgraph to sync",
           });
-          // todo: poll for claim success?
-          setIsLoading(false);
         },
         onPollError: (error) => {
           const errMsg = handleErrorMessage({

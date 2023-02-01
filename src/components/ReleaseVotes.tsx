@@ -46,8 +46,6 @@ export const ReleaseVotes = ({
             title: "Release Success",
             description: "Please wait for subgraph to sync",
           });
-          // todo: poll for Release success?
-          setIsLoading(false);
         },
         onPollError: (error) => {
           const errMsg = handleErrorMessage({
