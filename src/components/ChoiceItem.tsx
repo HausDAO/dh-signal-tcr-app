@@ -122,7 +122,7 @@ export const ChoiceItem = ({
       <ProposalCardContainer>
         <LeftCard>
           <div>
-            <ParSm color={theme.secondary.step11}>Total Points Staked</ParSm>
+            <ParSm color={theme.secondary.step11}>Total Staked</ParSm>
             <DataH1>
               {toWholeUnits(
                 totalStakeForChoice(
@@ -148,7 +148,7 @@ export const ChoiceItem = ({
         </LeftCard>
         <RightCard>
           <div className="subsection">
-            <ParSm color={theme.secondary.step11}>Your Points Staked</ParSm>
+            <ParSm color={theme.secondary.step11}>Your Stake</ParSm>
             <DataLg>
               {toWholeUnits(
                 totalStakeForChoice(
