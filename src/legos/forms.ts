@@ -52,6 +52,7 @@ export const FORM: Record<string, CustomFormLego> = {
       { ...FIELD.TITLE, label: "Choice Title" },
       { ...FIELD.DESCRIPTION, label: "Choice Description" },
       FIELD.LINK,
+      // {id: 'stakeAmount', }
       {
         id: "choiceId",
         type: "choiceId",
