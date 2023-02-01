@@ -3,16 +3,16 @@ import { useParams, Link as RouterLink } from "react-router-dom";
 import styled from "styled-components";
 import { RiPlayListAddFill } from "react-icons/ri/index.js";
 
-import { Button, H5 } from "@daohaus/ui";
+import { Button, DataMd, Bold } from "@daohaus/ui";
 import { useRecords } from "../hooks/useRecord";
 import { TARGET_DAO } from "../targetDao";
 import { ChoiceItem } from "./ChoiceItem";
 import { UpdateStake } from "./UpdateStake";
 import { useDHConnect } from "@daohaus/connect";
 import { ReleaseVotes } from "./ReleaseVotes";
-import { useConnectedAddressVotes } from "../hooks/useTcrs";
+import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { availableStake, isEmpty } from "../utils/tcrDataHelpers";
-import { toWholeUnits } from "@daohaus/utils";
+import { toWholeUnits, formatDistanceToNowFromSeconds } from "@daohaus/utils";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -25,10 +25,10 @@ const ListHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 100%;
   gap: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 `;
 
 const ListActions = styled.div`
@@ -63,6 +63,8 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
     tcrId: tcr,
     address: address,
   });
+  const { tcrRecord } = useTcrData({ tcrId: tcr });
+
   const [stakeAmounts, setStakeAmounts] = useState({});
 
   const pointsAvailable = useMemo(() => {
@@ -88,6 +90,11 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
                 Add Choice
               </Button>
             </StyledRouterLink>
+            <DataMd>
+              <Bold>
+                Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+              </Bold>
+            </DataMd>
           </ListHeader>
 
           <ListContainer>
