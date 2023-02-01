@@ -6,6 +6,9 @@ import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
 import { toWholeUnits } from "@daohaus/utils";
+import { useQueryClient } from "react-query";
+import { useConnectedAddressVotes } from "../hooks/useTcrs";
+import { useParams } from "react-router-dom";
 
 export const HAUS_RPC = {
   "0x1": `https://787b6618b5a34070874c12d7157e6661.eth.rpc.rivet.cloud/`,
@@ -32,17 +35,14 @@ export const ClaimBalance = ({
   lootSnapshot,
   sharesAddress,
   lootAddress,
-  userBalance,
-  connectedVoter,
 }: {
   sharesSnapshot: any;
   lootSnapshot: any;
   sharesAddress: any;
   lootAddress: any;
-  userBalance: any;
-  connectedVoter: any;
 }) => {
   const { address } = useDHConnect();
+  const { tcr } = useParams();
   const { data } = useDaoTokens({
     sharesAddress: sharesAddress,
     lootAddress: lootAddress,
@@ -52,13 +52,18 @@ export const ClaimBalance = ({
     chainId: "0x5",
     rpcs: HAUS_RPC,
   });
+  const { connectedVoter, refetch } = useConnectedAddressVotes({
+    tcrId: tcr,
+    address: address,
+  });
+  const client = useQueryClient();
 
   return (
     <>
-      {userBalance ? (
+      {connectedVoter?.balance ? (
         <BalanceContainer>
           <ParMd>
-            {toWholeUnits(userBalance)} /{" "}
+            {toWholeUnits(connectedVoter?.balance)} /{" "}
             {toWholeUnits(connectedVoter?.initialClaim || "0")} Points
           </ParMd>
         </BalanceContainer>
@@ -66,7 +71,9 @@ export const ClaimBalance = ({
         <>
           {data?.total && +data.total > 0 ? (
             <Claim
-              onSuccess={() => null}
+              onSuccess={() => {
+                client.clear();
+              }}
               label={`Claim ${data?.total} Points`}
             ></Claim>
           ) : (
