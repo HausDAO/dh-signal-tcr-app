@@ -80,6 +80,11 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
       {records && (
         <TcrList>
           <ListHeader>
+            <DataMd>
+              <Bold>
+                Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+              </Bold>
+            </DataMd>
             <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
               <Button
                 variant="ghost"
@@ -90,11 +95,6 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
                 Add Choice
               </Button>
             </StyledRouterLink>
-            <DataMd>
-              <Bold>
-                Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
-              </Bold>
-            </DataMd>
           </ListHeader>
 
           <ListContainer>
