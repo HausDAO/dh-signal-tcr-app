@@ -131,7 +131,7 @@ export const ChoiceItem = ({
       setStakeAmounts((prevState: any) => {
         const newObj = { ...prevState };
         delete newObj[choice.parsedContent.choiceId];
-        return;
+        return newObj;
       });
     }
   };
