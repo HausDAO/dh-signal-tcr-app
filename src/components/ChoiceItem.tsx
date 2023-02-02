@@ -1,4 +1,11 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useMemo } from "react";
+import React, {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import {
   Card,
   DataLg,
@@ -13,12 +20,15 @@ import {
 import styled, { useTheme } from "styled-components";
 import { useParams } from "react-router-dom";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
-import { totalStakeForChoice, voteIdsForChoice } from "../utils/tcrDataHelpers";
+import {
+  isEmpty,
+  totalStakeForChoice,
+  voteIdsForChoice,
+} from "../utils/tcrDataHelpers";
 import { TChoice } from "../utils/types";
 import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
-import { useQueryClient } from "react-query";
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -91,10 +101,12 @@ const DataH1 = styled(H1)`
 export const ChoiceItem = ({
   choice,
   setStakeAmounts,
+  stakeAmounts,
   pointsAvailable,
 }: {
   choice: TChoice;
   setStakeAmounts: Dispatch<SetStateAction<any>>;
+  stakeAmounts: any;
   pointsAvailable: string | boolean;
 }) => {
   const { tcr } = useParams();
@@ -106,16 +118,32 @@ export const ChoiceItem = ({
       address: address,
     });
   const theme = useTheme();
-  const client = useQueryClient();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? "0" : event.target.value;
     const newAmount = toBaseUnits(value);
 
-    setStakeAmounts((prevState: any) => {
-      return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
-    });
+    if (Number(newAmount)) {
+      setStakeAmounts((prevState: any) => {
+        return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
+      });
+    } else {
+      setStakeAmounts((prevState: any) => {
+        const newObj = { ...prevState };
+        delete newObj[choice.parsedContent.choiceId];
+        return;
+      });
+    }
   };
+
+  const pointInput = useRef(null);
+
+  useEffect(() => {
+    if (isEmpty(stakeAmounts) && pointInput.current) {
+      // @ts-ignore-error
+      pointInput.current.value = "";
+    }
+  }, [stakeAmounts]);
 
   return (
     <>
@@ -166,7 +194,6 @@ export const ChoiceItem = ({
               choice.parsedContent.choiceId
             )}
             onSuccess={() => {
-              client.clear();
               refetchConnectedVoter();
             }}
           />
@@ -183,6 +210,7 @@ export const ChoiceItem = ({
               onChange={handleChange}
               className="short-input"
               disabled={!connectedVoter}
+              ref={pointInput}
             />
           </div>
         </RightCard>
