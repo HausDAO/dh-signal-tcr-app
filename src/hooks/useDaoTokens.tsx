@@ -52,7 +52,7 @@ const fetchUserBalance = async ({
     return {
       sharesAt: sharesAt,
       lootAt: lootAt,
-      total: fromWei((parseInt(sharesAt) + parseInt(lootAt)).toString()),
+      total: fromWei((BigInt(sharesAt) + BigInt(lootAt)).toString()),
       // memberAlocs: memberAlocs,
     };
   } catch (error: any) {
