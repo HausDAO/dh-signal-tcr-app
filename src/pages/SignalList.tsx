@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import { useDHConnect } from "@daohaus/connect";
 import { Link, ParMd, SingleColumnLayout, Spinner } from "@daohaus/ui";
-import { useTcrData } from "../hooks/useTcrs";
+import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import {
   getTcrDescription,

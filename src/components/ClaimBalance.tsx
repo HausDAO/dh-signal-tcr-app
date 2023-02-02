@@ -6,7 +6,6 @@ import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
 import { toWholeUnits } from "@daohaus/utils";
-import { useQueryClient } from "react-query";
 import { useConnectedAddressVotes } from "../hooks/useTcrs";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
@@ -50,11 +49,10 @@ export const ClaimBalance = ({
       "0x64": HAUS_RPC["0x64"],
     },
   });
-  const { connectedVoter, refetch } = useConnectedAddressVotes({
+  const { connectedVoter, remove, refetch } = useConnectedAddressVotes({
     tcrId: tcr,
     address: address,
   });
-  const client = useQueryClient();
 
   return (
     <>
@@ -70,7 +68,8 @@ export const ClaimBalance = ({
           {data?.total && +data.total > 0 ? (
             <Claim
               onSuccess={() => {
-                client.clear();
+                remove();
+                refetch();
               }}
               label={`Claim ${data?.total} Points`}
             ></Claim>

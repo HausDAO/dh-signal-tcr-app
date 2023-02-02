@@ -62,7 +62,6 @@ const ListItem = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   word-wrap: break-word;
-  max-width: 39rem;
 `;
 
 const StyledIcon = styled(RiArrowRightSLine)`
