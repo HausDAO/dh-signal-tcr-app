@@ -53,7 +53,7 @@ const StyledRouterLink = styled(RouterLink)`
 export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
   const { address } = useDHConnect();
   const { tcr } = useParams();
-  const client = useQueryClient();
+  // const client = useQueryClient();
 
   const { records } = useRecords({
     daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
@@ -107,6 +107,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
                   <ChoiceItem
                     choice={choice}
                     setStakeAmounts={setStakeAmounts}
+                    stakeAmounts={stakeAmounts}
                     pointsAvailable={pointsAvailable}
                   />
                 </div>
@@ -116,7 +117,6 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
           <ListActions>
             <ReleaseVotes
               onSuccess={() => {
-                client.clear();
                 refetchConnectedVoter();
               }}
               voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
@@ -126,7 +126,6 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
             <UpdateStake
               onSuccess={() => {
                 setStakeAmounts({});
-                client.clear();
                 refetchConnectedVoter();
               }}
               stakeAmounts={stakeAmounts}

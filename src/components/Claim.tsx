@@ -57,7 +57,7 @@ export const Claim = ({
           });
           setIsLoading(false);
           onSuccess();
-          client.clear();
+          // client.clear();
         },
       },
     });

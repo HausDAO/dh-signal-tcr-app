@@ -2,10 +2,12 @@
 import { useQuery } from "react-query";
 import { GraphQLClient, gql } from "graphql-request";
 import { TARGET_DAO } from "../targetDao";
+import { DEFAULT_GRAPH_URL, TCR_GRAPH_URL } from "../utils/tcrContracts";
 
-const API_URL = TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_GRAPH_URL;
+const API_URL =
+  TCR_GRAPH_URL[TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID];
 
-const graphQLClient = new GraphQLClient(API_URL);
+const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
 
 export type ListTcr = {
   id: string;
@@ -41,6 +43,7 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
 
   return {
     tcrList: data?.registries,
+    ...rest,
   };
 };
 
@@ -85,6 +88,7 @@ export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
 
   return {
     tcrRecord: data?.registry,
+    ...rest,
   };
 };
 
