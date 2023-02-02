@@ -9,6 +9,8 @@ import { toWholeUnits } from "@daohaus/utils";
 import { useQueryClient } from "react-query";
 import { useConnectedAddressVotes } from "../hooks/useTcrs";
 import { useParams } from "react-router-dom";
+import { TARGET_DAO } from "../targetDao";
+import { ValidNetwork } from "@daohaus/keychain-utils";
 
 export const HAUS_RPC = {
   "0x1": `https://787b6618b5a34070874c12d7157e6661.eth.rpc.rivet.cloud/`,
@@ -49,7 +51,7 @@ export const ClaimBalance = ({
     sharesSnapshot: sharesSnapshot,
     lootSnapshot: lootSnapshot,
     userAddress: address,
-    chainId: "0x5",
+    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
     rpcs: {
       "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
       "0x5": `https://${
