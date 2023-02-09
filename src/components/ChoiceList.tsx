@@ -11,9 +11,14 @@ import { UpdateStake } from "./UpdateStake";
 import { useDHConnect } from "@daohaus/connect";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
-import { availableStake, isEmpty } from "../utils/tcrDataHelpers";
+import {
+  availableStake,
+  isEmpty,
+  totalStakeForChoice,
+} from "../utils/tcrDataHelpers";
 import { toWholeUnits, formatDistanceToNowFromSeconds } from "@daohaus/utils";
 import { useQueryClient } from "react-query";
+import { TChoice } from "../utils/types";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -50,10 +55,15 @@ const StyledRouterLink = styled(RouterLink)`
   text-decoration: none;
 `;
 
-export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
+export const ChoiceList = ({
+  tcrId,
+  hasEnded = true,
+}: {
+  tcrId: string;
+  hasEnded?: boolean;
+}) => {
   const { address } = useDHConnect();
   const { tcr } = useParams();
-  // const client = useQueryClient();
 
   const { records } = useRecords({
     daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
@@ -70,6 +80,27 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
 
   const [stakeAmounts, setStakeAmounts] = useState({});
 
+  const sortedRecords = useMemo(() => {
+    if (records && tcrRecord) {
+      // @ts-ignore-error
+      return records.sort((a: TChoice, b: TChoice) => {
+        const aTotal = totalStakeForChoice(
+          tcrRecord.votes || [],
+          a.parsedContent.choiceId
+        );
+
+        const bTotal = totalStakeForChoice(
+          tcrRecord.votes || [],
+          b.parsedContent.choiceId
+        );
+
+        return Number(bTotal) - Number(aTotal);
+      });
+    }
+
+    return [];
+  }, [records, tcrRecord]);
+
   const pointsAvailable = useMemo(() => {
     if (!connectedVoter) {
       return false;
@@ -84,15 +115,22 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
         <TcrList>
           <ListHeader>
             <DataMd>
-              <Bold>
-                Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
-              </Bold>
+              {hasEnded && (
+                <Bold>
+                  Ended {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+                </Bold>
+              )}
+              {!hasEnded && (
+                <Bold>
+                  Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+                </Bold>
+              )}
             </DataMd>
             <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
               <Button
                 variant="ghost"
                 color="secondary"
-                disabled={!connectedVoter}
+                disabled={!connectedVoter || hasEnded}
                 IconLeft={RiPlayListAddFill}
               >
                 Add Choice
@@ -101,7 +139,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
           </ListHeader>
 
           <ListContainer>
-            {records.map((choice: any) => {
+            {sortedRecords.map((choice: any) => {
               return (
                 <div key={choice.id}>
                   <ChoiceItem
@@ -109,6 +147,7 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
                     setStakeAmounts={setStakeAmounts}
                     stakeAmounts={stakeAmounts}
                     pointsAvailable={pointsAvailable}
+                    hasEnded={hasEnded}
                   />
                 </div>
               );
@@ -121,7 +160,11 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
               }}
               voteIds={connectedVoter?.votes.map((v: any) => v.voteId)}
               label="Release All"
-              disabled={!connectedVoter || connectedVoter?.votes.length === 0}
+              disabled={
+                !connectedVoter ||
+                hasEnded ||
+                connectedVoter?.votes.length === 0
+              }
             />
             <UpdateStake
               onSuccess={() => {
@@ -130,7 +173,10 @@ export const ChoiceList = ({ tcrId }: { tcrId: string }) => {
               }}
               stakeAmounts={stakeAmounts}
               disabled={
-                !connectedVoter || isEmpty(stakeAmounts) || !pointsAvailable
+                !connectedVoter ||
+                hasEnded ||
+                isEmpty(stakeAmounts) ||
+                !pointsAvailable
               }
             />
           </ListActions>

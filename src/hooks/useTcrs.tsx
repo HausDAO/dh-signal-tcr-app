@@ -27,7 +27,11 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
       graphQLClient.request(
         gql`
           query registries($daoId: String!, $now: String!) {
-            registries(where: { dao: $daoId, endDate_gt: $now }) {
+            registries(
+              where: { dao: $daoId }
+              orderBy: endDate
+              orderDirection: desc
+            ) {
               id
               details
               endDate

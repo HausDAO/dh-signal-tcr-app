@@ -1,76 +1,16 @@
 import styled from "styled-components";
-import { Link as RouterLink } from "react-router-dom";
 
-import {
-  H2,
-  ParMd,
-  SingleColumnLayout,
-  Link,
-  ParLg,
-  H5,
-  Theme,
-  border,
-  Bold,
-  DataSm,
-  DataXs,
-} from "@daohaus/ui";
-import { RiArrowRightSLine } from "react-icons/ri/index.js";
+import { H2, ParMd, SingleColumnLayout, Link, Theme } from "@daohaus/ui";
 
 import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
-import { getTcrDescription, getTcrTitle } from "../utils/tcrDataHelpers";
-import { formatDistanceToNowFromSeconds } from "@daohaus/utils";
 import { useDao } from "../hooks/useDao";
+import { SignalItem } from "../components/SignalItem";
 
 const LinkBox = styled.div`
   display: flex;
   gap: 2rem;
   margin: 8rem 0;
-`;
-
-const ListItemContainer = styled.div`
-  width: 100%;
-  padding: 1rem 0;
-  border-top: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step6}
-    solid;
-`;
-
-const ListItemLink = styled(RouterLink)`
-  text-decoration: none;
-  width: 100%;
-  color: unset;
-  :hover {
-    text-decoration: none;
-  }
-`;
-
-const ListItemHoverContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 1rem;
-  border-radius: ${border.radius};
-
-  :hover {
-    background: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step3};
-  }
-`;
-
-const ListItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  word-wrap: break-word;
-`;
-
-const StyledIcon = styled(RiArrowRightSLine)`
-  fill: ${({ theme }: { theme: Theme }) => theme.primary.step9};
-  font-size: 3rem;
-`;
-
-const Spaced = styled.div`
-  margin-top: 2rem;
 `;
 
 const SlimParMd = styled(ParMd)`
@@ -104,28 +44,7 @@ export function Dao() {
 
       {tcrList &&
         tcrList.map((tcr: ListTcr, i: number) => {
-          return (
-            <ListItemContainer key={tcr.id}>
-              <ListItemLink to={`/tcr/${tcr.id}`}>
-                <ListItemHoverContainer>
-                  <ListItem>
-                    <ParLg>
-                      <Bold>{getTcrTitle(tcr.details)}</Bold>
-                    </ParLg>
-                    <DataSm>{getTcrDescription(tcr.details)}</DataSm>
-                    <Spaced>
-                      <DataXs>
-                        <Bold>
-                          Ends {formatDistanceToNowFromSeconds(tcr.endDate)}
-                        </Bold>
-                      </DataXs>
-                    </Spaced>
-                  </ListItem>
-                  <StyledIcon />
-                </ListItemHoverContainer>
-              </ListItemLink>
-            </ListItemContainer>
-          );
+          return <SignalItem tcr={tcr} key={i} />;
         })}
       <LinkBox>
         {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
