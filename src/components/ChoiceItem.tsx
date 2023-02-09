@@ -103,11 +103,13 @@ export const ChoiceItem = ({
   setStakeAmounts,
   stakeAmounts,
   pointsAvailable,
+  hasEnded,
 }: {
   choice: TChoice;
   setStakeAmounts: Dispatch<SetStateAction<any>>;
   stakeAmounts: any;
   pointsAvailable: string | boolean;
+  hasEnded: boolean;
 }) => {
   const { tcr } = useParams();
   const { address } = useDHConnect();
@@ -121,9 +123,9 @@ export const ChoiceItem = ({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? "0" : event.target.value;
-    const newAmount = toBaseUnits(value);
 
-    if (Number(newAmount)) {
+    if (Number(value)) {
+      const newAmount = toBaseUnits(value);
       setStakeAmounts((prevState: any) => {
         return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
       });
@@ -204,14 +206,16 @@ export const ChoiceItem = ({
             {!pointsAvailable && (
               <ParSm color={theme.warning.step9}>Not enough points</ParSm>
             )}
-            <Input
-              id={choice.parsedContent.choiceId}
-              placeholder="0"
-              onChange={handleChange}
-              className="short-input"
-              disabled={!connectedVoter}
-              ref={pointInput}
-            />
+            {!hasEnded && (
+              <Input
+                id={choice.parsedContent.choiceId}
+                placeholder="0"
+                onChange={handleChange}
+                className="short-input"
+                disabled={!connectedVoter}
+                ref={pointInput}
+              />
+            )}
           </div>
         </RightCard>
       </ProposalCardContainer>

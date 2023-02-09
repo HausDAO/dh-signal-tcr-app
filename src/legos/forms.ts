@@ -10,7 +10,7 @@ export const FORM: Record<string, CustomFormLego> = {
     subtitle: "Signal Proposal",
     description: "Ratify on-chain using a DAO proposal.",
     requiredFields: { title: true, description: true },
-    log: true,
+    log: false,
     tx: TX.POST_SIGNAL,
     fields: [
       FIELD.TITLE,
@@ -24,7 +24,7 @@ export const FORM: Record<string, CustomFormLego> = {
     title: "Create Signal",
     description: "Make a proposal to the DAO to create a Signal TCR",
     requiredFields: { title: true, endDate: true, description: true },
-    log: true,
+    log: false,
     tx: TX.SUMMON_TCR,
     fields: [
       { ...FIELD.TITLE, label: "Signal Title" },
@@ -55,7 +55,7 @@ export const FORM: Record<string, CustomFormLego> = {
     description:
       "Create a choice for this Signal. You must be a member of the DAO to create a choice.",
     requiredFields: { title: true, description: true, stakeAmount: true },
-    log: true,
+    log: false,
     // @ts-expect-error
     tx: TX.ADD_TCR_CHOICE,
     fields: [

@@ -13,6 +13,7 @@ import { ClaimBalance } from "../components/ClaimBalance";
 import { useDao } from "../hooks/useDao";
 import { ChoiceList } from "../components/ChoiceList";
 import styled from "styled-components";
+import { useMemo } from "react";
 
 const DetailsContainer = styled.div`
   display: flex;
@@ -31,6 +32,14 @@ export const SignalList = () => {
     chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
   });
 
+  const hasEnded = useMemo(() => {
+    if (tcrRecord) {
+      const now = new Date().getTime() / 1000;
+      return Number(tcrRecord.endDate) < now;
+    }
+    return undefined;
+  }, [tcrRecord]);
+
   if (!tcrRecord || !dao) {
     return (
       <SingleColumnLayout>
@@ -44,7 +53,8 @@ export const SignalList = () => {
       title={getTcrTitle(tcrRecord.details)}
       subtitle="Signal"
       actions={
-        address && (
+        address &&
+        !hasEnded && (
           <ClaimBalance
             lootSnapshot={tcrRecord.lootSnapshotId}
             sharesSnapshot={tcrRecord.sharesSnapshotId}
@@ -62,7 +72,7 @@ export const SignalList = () => {
           More details
         </Link>
       </DetailsContainer>
-      {tcr && dao && <ChoiceList tcrId={tcr} />}
+      {tcr && dao && <ChoiceList tcrId={tcr} hasEnded={hasEnded} />}
     </SingleColumnLayout>
   );
 };
