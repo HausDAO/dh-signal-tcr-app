@@ -44,4 +44,11 @@ export const TARGET_DAO: {
     DAO_INFO_URL: `https://en.wikipedia.org/wiki/Amaro_(liqueur)`,
     HOME_PAR: `Test out some signal TCRs below!`,
   },
+  "0xe11f": {
+    ADDRESS: "0xe11f0eb60de58f62b77bda48bbda23056b2a5170",
+    SAFE_ADDRESS: "0x4db5161f20572d44d09a034b601d85db7e809ae8",
+    CHAIN_ID: "0x64",
+    TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
+    HOME_PAR: `AUTOMATON ENGAGE`,
+  },
 };

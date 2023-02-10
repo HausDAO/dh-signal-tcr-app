@@ -74,6 +74,7 @@ export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
                   choiceId
                   amount
                   released
+                  voterAddress
                 }
               }
               votes(where: { released: false }) {
@@ -81,6 +82,7 @@ export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
                 choiceId
                 amount
                 released
+                voterAddress
               }
             }
           }
