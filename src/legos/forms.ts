@@ -51,16 +51,16 @@ export const FORM: Record<string, CustomFormLego> = {
   },
   ADD_TCR_CHOICE: {
     id: "ADD_TCR_CHOICE",
-    title: "Add Signal Choice",
+    title: "Add New HILO",
     description:
-      "Create a choice for this Signal. You must be a member of the DAO to create a choice.",
+      "Create a new High Level Objective (HILO). You must be a member of the DAO to create a HILO.",
     requiredFields: { title: true, description: true, stakeAmount: true },
     log: false,
     // @ts-expect-error
     tx: TX.ADD_TCR_CHOICE,
     fields: [
-      { ...FIELD.TITLE, label: "Choice Title" },
-      { ...FIELD.DESCRIPTION, label: "Choice Description" },
+      { ...FIELD.TITLE, label: "HILO Title" },
+      { ...FIELD.DESCRIPTION, label: "HILO Description" },
       // {
       //   id: "stakeAmount",
       //   type: "stakeAmount",

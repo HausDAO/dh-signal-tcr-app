@@ -152,7 +152,7 @@ export const ChoiceItem = ({
       <ProposalCardContainer>
         <LeftCard>
           <div>
-            <ParSm color={theme.secondary.step11}>Total Staked</ParSm>
+            <ParSm color={theme.secondary.step11}>Total PUB Points Staked</ParSm>
             <DataH1>
               {toWholeUnits(
                 totalStakeForChoice(
@@ -178,7 +178,7 @@ export const ChoiceItem = ({
         </LeftCard>
         <RightCard>
           <div className="subsection">
-            <ParSm color={theme.secondary.step11}>Your Stake</ParSm>
+            <ParSm color={theme.secondary.step11}>Your PUB Points Staked</ParSm>
             <DataLg>
               {toWholeUnits(
                 totalStakeForChoice(
@@ -201,7 +201,7 @@ export const ChoiceItem = ({
           />
           <div className="subsection point-input">
             {pointsAvailable && (
-              <ParSm>Add Points ({pointsAvailable} available)</ParSm>
+              <ParSm>Add PUB Points ({pointsAvailable} available)</ParSm>
             )}
             {!pointsAvailable && (
               <ParSm color={theme.warning.step9}>Not enough points</ParSm>

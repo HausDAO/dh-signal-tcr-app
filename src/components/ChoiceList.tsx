@@ -3,7 +3,7 @@ import { useParams, Link as RouterLink } from "react-router-dom";
 import styled from "styled-components";
 import { RiPlayListAddFill } from "react-icons/ri/index.js";
 
-import { Button, DataMd, Bold } from "@daohaus/ui";
+import { Button, DataMd, Bold, Tooltip, LgTooltipIcon, SingleColumnLayout, Divider } from "@daohaus/ui";
 import { useRecords } from "../hooks/useRecord";
 import { TARGET_DAO } from "../targetDao";
 import { ChoiceItem } from "./ChoiceItem";
@@ -19,6 +19,7 @@ import {
 import { toWholeUnits, formatDistanceToNowFromSeconds } from "@daohaus/utils";
 import { useQueryClient } from "react-query";
 import { TChoice } from "../utils/types";
+import { ClaimBalance } from "./ClaimBalance";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -34,6 +35,16 @@ const ListHeader = styled.div`
   justify-content: space-between;
   width: 100%;
   gap: 3rem;
+  margin-bottom: 2rem;
+`;
+
+const ListTitle = styled.div`
+  text-align: left;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 50%;
+  gap: 3rem;
+  font-size: 3rem;
   margin-bottom: 2rem;
 `;
 
@@ -111,21 +122,27 @@ export const ChoiceList = ({
 
   return (
     <>
+      <Divider margin="30px">
+
+      </Divider>
       {records && (
         <TcrList>
           <ListHeader>
+
             <DataMd>
               {hasEnded && (
                 <Bold>
-                  Ended {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+                  Signaling Ended {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
                 </Bold>
               )}
               {!hasEnded && (
                 <Bold>
-                  Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
+                  Signaling Ends {formatDistanceToNowFromSeconds(tcrRecord.endDate)}
                 </Bold>
               )}
             </DataMd>
+
+            
             <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
               <Button
                 variant="ghost"
@@ -133,9 +150,15 @@ export const ChoiceList = ({
                 disabled={!connectedVoter || hasEnded}
                 IconLeft={RiPlayListAddFill}
               >
-                Add Choice
+                Add New HILO
+                <Tooltip
+                  content="HILOs or High Level Objectives are proposals for what the DAO should prioritize during the current quarter." 
+                  triggerEl={<LgTooltipIcon />}
+                />
               </Button>
+              
             </StyledRouterLink>
+            
           </ListHeader>
 
           <ListContainer>
