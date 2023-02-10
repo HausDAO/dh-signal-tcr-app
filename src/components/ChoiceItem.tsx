@@ -7,14 +7,19 @@ import React, {
   useRef,
 } from "react";
 import {
+  Button,
   Card,
   DataLg,
+  Dialog,
+  DialogContent,
+  DialogTrigger,
   H1,
   H3,
   Input,
   Link,
   ParSm,
   ParXs,
+  useBreakpoint,
   widthQuery,
 } from "@daohaus/ui";
 import styled, { useTheme } from "styled-components";
@@ -29,6 +34,7 @@ import { TChoice } from "../utils/types";
 import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
+import { VoterList } from "./VoterList";
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -98,6 +104,10 @@ const DataH1 = styled(H1)`
   font-family: mono;
 `;
 
+const VotesButton = styled(Button)`
+  min-width: 10.6rem;
+`;
+
 export const ChoiceItem = ({
   choice,
   setStakeAmounts,
@@ -120,6 +130,7 @@ export const ChoiceItem = ({
       address: address,
     });
   const theme = useTheme();
+  const isMobile = useBreakpoint(widthQuery.sm);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? "0" : event.target.value;
@@ -161,6 +172,26 @@ export const ChoiceItem = ({
                 )
               )}
             </DataH1>
+            <Dialog>
+              <DialogTrigger asChild>
+                <VotesButton color="secondary" size="sm">
+                  Stakers
+                </VotesButton>
+              </DialogTrigger>
+              <DialogContent
+                alignButtons="end"
+                rightButton={{
+                  closeDialog: true,
+                  fullWidth: isMobile,
+                }}
+                title="Stakers"
+              >
+                <VoterList
+                  voters={tcrRecord?.voters}
+                  choiceId={choice.parsedContent.choiceId}
+                />
+              </DialogContent>
+            </Dialog>
           </div>
           <ChoiceContent>
             <H3>{choice.parsedContent.title}</H3>

@@ -64,3 +64,14 @@ export const availableStake = (
 export const isEmpty = (obj: any) => {
   return Object.keys(obj).length === 0;
 };
+
+export const totalVoterVotesForChoice = (votes: any[], choiceId: string) => {
+  const total = votes.reduce((sum: BigNumber, vote: any) => {
+    if (vote.choiceId == parseInt(choiceId)) {
+      sum = sum.add(BigNumber.from(vote.amount));
+    }
+    return sum;
+  }, BigNumber.from("0"));
+
+  return total.toString();
+};
