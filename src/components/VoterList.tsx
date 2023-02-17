@@ -3,10 +3,14 @@ import styled from "styled-components";
 import { toWholeUnits } from "@daohaus/utils";
 import { ValidNetwork } from "@daohaus/keychain-utils";
 
-import { DataMd, MemberCard, ParMd, widthQuery } from "@daohaus/ui";
+import { DataMd, MemberCard, ParMd, Tooltip, widthQuery } from "@daohaus/ui";
 
 import { totalVoterVotesForChoice } from "../utils/tcrDataHelpers";
 import { useMemo } from "react";
+
+import {
+  RiMedalFill,
+} from 'react-icons/ri';
 
 const MainContainer = styled.div`
   display: flex;
@@ -41,9 +45,10 @@ const Spacer = styled.div`
 type VoteListProps = {
   voters: any[];
   choiceId: string;
+  champions: any[] | undefined;
 };
 
-export const VoterList = ({ voters, choiceId }: VoteListProps) => {
+export const VoterList = ({ voters, choiceId, champions }: VoteListProps) => {
   const { daochain } = useParams();
 
   const choiceVoters = useMemo(() => {
@@ -69,7 +74,17 @@ export const VoterList = ({ voters, choiceId }: VoteListProps) => {
                   address: voter.address,
                 }}
               />
-              <DataMd>{toWholeUnits(voter.votesForChoice)}</DataMd>
+
+              <DataMd>
+                <>
+                  {champions?.includes(voter.address) && (
+                    <Tooltip 
+                    triggerEl={<RiMedalFill color="hsla(50, 100%, 58%, 1)" size="2rem"/>}
+                    content="DAO Elected Champion" />
+                  )}{" "}
+                  {toWholeUnits(voter.votesForChoice)}
+                </>
+              </DataMd>
             </VoteContainer>
           </div>
         ))}
