@@ -35,6 +35,10 @@ import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
 import { VoterList } from "./VoterList";
+import { useChampionRegistry } from "../hooks/useChampionRegistry";
+import { TARGET_DAO } from "../targetDao";
+import { HAUS_RPC } from "@daohaus/keychain-utils";
+
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -124,6 +128,16 @@ export const ChoiceItem = ({
   const { tcr } = useParams();
   const { address } = useDHConnect();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
+  const { data } = useChampionRegistry({ 
+    registryAddress: "0x76095061f675F4CcD86094b8ac9018fD96a70Fa3",
+    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    rpcs: {
+      "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
+      "0x5": `https://${
+        import.meta.env.VITE_RIVET_KEY
+      }.goerli.rpc.rivet.cloud/`,
+      "0x64": HAUS_RPC["0x64"],
+    } });
   const { connectedVoter, refetch: refetchConnectedVoter } =
     useConnectedAddressVotes({
       tcrId: tcr,
@@ -189,6 +203,7 @@ export const ChoiceItem = ({
                 <VoterList
                   voters={tcrRecord?.voters}
                   choiceId={choice.parsedContent.choiceId}
+                  champions={data?.champions}
                 />
               </DialogContent>
             </Dialog>
