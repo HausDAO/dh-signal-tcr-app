@@ -17,7 +17,7 @@ export const TARGET_DAO: {
     TCR_FACTORY: "0x017eD0e82bCD242C7Cd89F02c2Eee9826BEaBC67",
     DAO_INFO_URL: `https://publichaus.club/`,
     HOME_PAR:
-      "This is where members signal on High Level Objectives (HILO) and ecosystem contribution and output (Retroactive Grading Events).",
+      "This is where PublicHAUS members create and signal support for High Level Objectives (HILOs).",
   },
   "0xf844": {
     ADDRESS: "0xf844b98df9ccdfbe5d460d0d7bdca232cf9da923",
@@ -26,7 +26,7 @@ export const TARGET_DAO: {
     TCR_FACTORY: "0x8E7d5b1EB2d2d212574eF363168e5B2ba750b20e",
     DAO_INFO_URL: `https://publichaus.club/`,
     HOME_PAR:
-      "This is where members signal on High Level Objectives (HILO) and ecosystem contribution and output (Retroactive Grading Events).",
+      "This is where PublicHAUS members create and signal support for High Level Objectives (HILOs).",
   },
   "0xaf52": {
     ADDRESS: "0xaf52e108fe716261c35051517ce235a1e67c695a",
@@ -34,7 +34,7 @@ export const TARGET_DAO: {
     CHAIN_ID: "0x5",
     TCR_FACTORY: "0x017eD0e82bCD242C7Cd89F02c2Eee9826BEaBC67",
     DAO_INFO_URL: `https://en.wikipedia.org/wiki/Amaro_(liqueur)`,
-    HOME_PAR: `We love Amaro! We also can't ever remember all of the names and types. As 2023 is the year of the TCR, we've dedicated ourselves to curating a list of Amaro varieties. You can watch the list grow right here.`,
+    HOME_PAR: `This is where PublicHAUS members create and signal support for High Level Objectives (HILOs).`,
   },
   "0x1490": {
     ADDRESS: "0x1490062bcc6e421ef77568be9fa6f8b175e1d603",
@@ -42,7 +42,7 @@ export const TARGET_DAO: {
     CHAIN_ID: "0x5",
     TCR_FACTORY: "0x017eD0e82bCD242C7Cd89F02c2Eee9826BEaBC67",
     DAO_INFO_URL: `https://en.wikipedia.org/wiki/Amaro_(liqueur)`,
-    HOME_PAR: `Test out some signal TCRs below!`,
+    HOME_PAR: `This is where PublicHAUS members create and signal support for High Level Objectives (HILOs).`,
   },
   "0xe11f": {
     ADDRESS: "0xe11f0eb60de58f62b77bda48bbda23056b2a5170",

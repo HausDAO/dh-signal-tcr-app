@@ -1,7 +1,7 @@
 import React from "react";
 
 import styled from "styled-components";
-import { ParMd, Theme } from "@daohaus/ui";
+import { ParMd, Theme, Tooltip, LgTooltipIcon } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
@@ -57,25 +57,42 @@ export const ClaimBalance = ({
   return (
     <>
       {connectedVoter?.balance ? (
+        <div style={{display: "flex", alignItems: "center"}}>
         <BalanceContainer>
           <ParMd>
             {toWholeUnits(connectedVoter?.balance)} /{" "}
-            {toWholeUnits(connectedVoter?.initialClaim || "0")} Points
+            {toWholeUnits(connectedVoter?.initialClaim || "0")} PUB Points
           </ParMd>
+          
         </BalanceContainer>
+        <Tooltip
+              content="PUB Points represent the amount of PUB you held when this Strategic Signal Session began. You can use PUB Points to signal your support for HILOs." 
+              triggerEl={<LgTooltipIcon />}
+            />
+        </div>
       ) : (
         <>
           {data?.total && +data.total > 0 ? (
-            <Claim
-              onSuccess={() => {
-                remove();
-                refetch();
-              }}
-              label={`Claim ${data?.total} Points`}
-            ></Claim>
+            <>
+              <Claim
+                onSuccess={() => {
+                  remove();
+                  refetch();
+                }}
+                label={`Claim ${data?.total} PUB Points`}
+              / >
+              <Tooltip
+                content="Claim your PUB Points to Signal on HILOs below. PUB Points represent the number of PUB you held when this Signal Session began." 
+                triggerEl={<LgTooltipIcon />}
+              />
+            </>
           ) : (
             <BalanceContainer>
               <ParMd>Account not eligible</ParMd>
+              <Tooltip
+                content="You must be a Citizen and hold PUB to participate in Strategic Signal Sessions." 
+                triggerEl={<LgTooltipIcon />}
+              />
             </BalanceContainer>
           )}
         </>

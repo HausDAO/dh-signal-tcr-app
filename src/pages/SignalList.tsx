@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useDHConnect } from "@daohaus/connect";
-import { Link, ParMd, SingleColumnLayout, Spinner } from "@daohaus/ui";
+import { Link, ParMd, SingleColumnLayout, Spinner, Tooltip, LgTooltipIcon } from "@daohaus/ui";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import {
@@ -51,7 +51,7 @@ export const SignalList = () => {
   return (
     <SingleColumnLayout
       title={getTcrTitle(tcrRecord.details)}
-      subtitle="Signal"
+      subtitle="Nominate new HILOs or use PUB Points to signal your support for HILOs"
       actions={
         address &&
         !hasEnded && (
@@ -64,10 +64,15 @@ export const SignalList = () => {
         )
       }
     >
+      
       <DetailsContainer>
         <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
-          {getTcrDescription(tcrRecord.details)}
+          {getTcrDescription(tcrRecord.details)} <Tooltip
+              content="PublicHAUS Citizens may signal support for High Level Objectives (HILOs) or create new HILOs." 
+              triggerEl={<LgTooltipIcon />}
+            />
         </ParMd>
+        
         <Link linkType="external" href={getTcrLink(tcrRecord.details)}>
           More details
         </Link>
