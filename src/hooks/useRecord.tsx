@@ -32,6 +32,7 @@ const fetchRecords = async ({
       filter: { dao: daoId, table: recordType },
       paging: { pageSize, offset },
     });
+
     if (tcrId) {
       return data.items.filter(
         (item: any) => item?.parsedContent?.tcrId === tcrId
@@ -50,7 +51,7 @@ export const useRecords = ({
   daoId,
   chainId,
   recordType,
-  pageSize = 20,
+  pageSize = 500,
   offset = 0,
   graphApiKeys = defaultGraphApiKeys,
   tcrId,
@@ -64,7 +65,7 @@ export const useRecords = ({
   tcrId?: string;
 }) => {
   const { data, error, ...rest } = useQuery(
-    [tcrId || recordType, { daoId, chainId }],
+    [`${tcrId}_${recordType}`, { daoId, chainId }],
     () =>
       fetchRecords({
         daoId,

@@ -18,7 +18,7 @@ const providerOptions: IProviderOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        1: `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
+        1: `https://${process.env.NX_RIVET_KEY}.eth.rpc.rivet.cloud/`,
         5: `https://${import.meta.env.VITE_RIVET_KEY}.goerli.rpc.rivet.cloud/`,
         100: HAUS_RPC["0x64"],
       },
