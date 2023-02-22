@@ -2,17 +2,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { toWholeUnits } from "@daohaus/utils";
 import { MemberDisplay } from "@daohaus/moloch-v3-macro-ui";
-import { Keychain, KeychainList, ValidNetwork } from "@daohaus/keychain-utils";
-
-import {
-  DataMd,
-  MemberCard,
-  MemberCardCopyAddress,
-  MemberCardExplorerLink,
-  ParMd,
-  Tooltip,
-  widthQuery,
-} from "@daohaus/ui";
+import { ValidNetwork } from "@daohaus/keychain-utils";
+import { DataMd, Tooltip, widthQuery } from "@daohaus/ui";
 
 import { totalVoterVotesForChoice } from "../utils/tcrDataHelpers";
 import { useMemo } from "react";
@@ -75,22 +66,11 @@ export const VoterList = ({ voters, choiceId, champions }: VoteListProps) => {
         {choiceVoters?.map((voter: any) => (
           <div key={voter.address}>
             <VoteContainer>
-              <MemberCard
-                variant="ghost"
-                profile={{
-                  address: voter.address,
-                }}
-              >
-                <MemberCardExplorerLink
-                  explorerNetworkId={daochain as keyof Keychain}
-                  profileAddress={voter.address}
-                >
-                  View on Etherscan
-                </MemberCardExplorerLink>
-                <MemberCardCopyAddress profileAddress={voter.addresss}>
-                  Copy Address
-                </MemberCardCopyAddress>
-              </MemberCard>
+              <MemberDisplay
+                memberAddress={voter.address}
+                daoChain={daochain as ValidNetwork}
+                includeLinks={false}
+              />
 
               <DataMd>
                 <>
