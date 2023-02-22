@@ -56,7 +56,7 @@ export function Dao() {
         >
           {dao?.name}
         </Link>
-        {/* <Link href={`/create`} linkType="internal">
+        {/* <Link href={`/create`}>
           Create Signal
         </Link> */}
       </LinkBox>

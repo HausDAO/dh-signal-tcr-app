@@ -39,7 +39,6 @@ import { useChampionRegistry } from "../hooks/useChampionRegistry";
 import { TARGET_DAO } from "../targetDao";
 import { HAUS_RPC } from "@daohaus/keychain-utils";
 
-
 const ProposalCardContainer = styled(Card)`
   display: flex;
   gap: 3rem;
@@ -128,7 +127,7 @@ export const ChoiceItem = ({
   const { tcr } = useParams();
   const { address } = useDHConnect();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
-  const { data } = useChampionRegistry({ 
+  const { data } = useChampionRegistry({
     registryAddress: "0x76095061f675F4CcD86094b8ac9018fD96a70Fa3",
     chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
     rpcs: {
@@ -137,7 +136,8 @@ export const ChoiceItem = ({
         import.meta.env.VITE_RIVET_KEY
       }.goerli.rpc.rivet.cloud/`,
       "0x64": HAUS_RPC["0x64"],
-    } });
+    },
+  });
   const { connectedVoter, refetch: refetchConnectedVoter } =
     useConnectedAddressVotes({
       tcrId: tcr,
@@ -215,7 +215,7 @@ export const ChoiceItem = ({
             </Spaced>
             {choice.parsedContent.link && (
               <Spaced>
-                <Link linkType="external" href={choice.parsedContent.link}>
+                <Link href={choice.parsedContent.link}>
                   <ParXs>More details</ParXs>
                 </Link>
               </Spaced>
