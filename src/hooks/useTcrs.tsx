@@ -20,13 +20,12 @@ export type ListTcr = {
 // TODO: types
 
 export const useTcrList = ({ daoId }: { daoId: string }) => {
-  const now = new Date().getTime() / 1000;
   const { data, ...rest } = useQuery(
     ["get-tcr-list", { daoId }],
     () =>
       graphQLClient.request(
         gql`
-          query registries($daoId: String!, $now: String!) {
+          query registries($daoId: String!) {
             registries(
               where: { dao: $daoId }
               orderBy: endDate
@@ -40,7 +39,7 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
             }
           }
         `,
-        { daoId: daoId?.toLowerCase(), now: now.toFixed() }
+        { daoId: daoId?.toLowerCase() }
       ),
     { enabled: !!daoId }
   );

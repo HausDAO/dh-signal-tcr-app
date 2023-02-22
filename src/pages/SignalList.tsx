@@ -68,9 +68,7 @@ export const SignalList = () => {
         <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
           {getTcrDescription(tcrRecord.details)}
         </ParMd>
-        <Link linkType="external" href={getTcrLink(tcrRecord.details)}>
-          More details
-        </Link>
+        <Link href={getTcrLink(tcrRecord.details)}>More details</Link>
       </DetailsContainer>
       {tcr && dao && <ChoiceList tcrId={tcr} hasEnded={hasEnded} />}
     </SingleColumnLayout>

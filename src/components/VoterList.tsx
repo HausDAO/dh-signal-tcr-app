@@ -1,16 +1,23 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { toWholeUnits } from "@daohaus/utils";
-import { ValidNetwork } from "@daohaus/keychain-utils";
+import { MemberDisplay } from "@daohaus/moloch-v3-macro-ui";
+import { Keychain, KeychainList, ValidNetwork } from "@daohaus/keychain-utils";
 
-import { DataMd, MemberCard, ParMd, Tooltip, widthQuery } from "@daohaus/ui";
+import {
+  DataMd,
+  MemberCard,
+  MemberCardCopyAddress,
+  MemberCardExplorerLink,
+  ParMd,
+  Tooltip,
+  widthQuery,
+} from "@daohaus/ui";
 
 import { totalVoterVotesForChoice } from "../utils/tcrDataHelpers";
 import { useMemo } from "react";
 
-import {
-  RiMedalFill,
-} from 'react-icons/ri';
+import { RiMedalFill } from "react-icons/ri";
 
 const MainContainer = styled.div`
   display: flex;
@@ -27,6 +34,7 @@ const VotesContainer = styled.div`
   }
   overflow: auto;
   padding-right: 1rem;
+  gap: 2rem;
 `;
 
 const VoteContainer = styled.div`
@@ -68,19 +76,34 @@ export const VoterList = ({ voters, choiceId, champions }: VoteListProps) => {
           <div key={voter.address}>
             <VoteContainer>
               <MemberCard
-                explorerNetworkId={daochain as ValidNetwork}
-                minWidth="4rem"
+                variant="ghost"
                 profile={{
                   address: voter.address,
                 }}
-              />
+              >
+                <MemberCardExplorerLink
+                  explorerNetworkId={daochain as keyof Keychain}
+                  profileAddress={voter.address}
+                >
+                  View on Etherscan
+                </MemberCardExplorerLink>
+                <MemberCardCopyAddress profileAddress={voter.addresss}>
+                  Copy Address
+                </MemberCardCopyAddress>
+              </MemberCard>
 
               <DataMd>
                 <>
                   {champions?.includes(voter.address) && (
-                    <Tooltip 
-                    triggerEl={<RiMedalFill color="hsla(50, 100%, 58%, 1)" size="2rem"/>}
-                    content="DAO Elected Champion" />
+                    <Tooltip
+                      triggerEl={
+                        <RiMedalFill
+                          color="hsla(50, 100%, 58%, 1)"
+                          size="2rem"
+                        />
+                      }
+                      content="DAO Elected Champion"
+                    />
                   )}{" "}
                   {toWholeUnits(voter.votesForChoice)}
                 </>

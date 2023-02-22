@@ -32,10 +32,7 @@ export function Dao() {
       <SlimParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
         {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].HOME_PAR}{" "}
         {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
-          <Link
-            href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}
-            linkType="external"
-          >
+          <Link href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}>
             Learn more
           </Link>
         )}
@@ -48,10 +45,7 @@ export function Dao() {
         })}
       <LinkBox>
         {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
-          <Link
-            href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}
-            linkType="external"
-          >
+          <Link href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}>
             More {dao?.name} Info
           </Link>
         )}
@@ -59,7 +53,6 @@ export function Dao() {
           href={`https://admin.daohaus.club/#/molochv3/${
             TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
           }/${TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS}`}
-          linkType="external"
         >
           {dao?.name}
         </Link>
