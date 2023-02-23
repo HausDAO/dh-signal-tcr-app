@@ -172,6 +172,14 @@ export const ChoiceItem = ({
     }
   }, [stakeAmounts]);
 
+  // console.log(toWholeUnits(
+  //   totalStakeForChoice(
+  //     tcrRecord?.votes || [],
+  //     choice.parsedContent.choiceId
+  //   )
+  // ),
+  // choice.parsedContent.title)
+
   return (
     <>
       <ProposalCardContainer>
