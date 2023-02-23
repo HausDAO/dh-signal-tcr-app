@@ -15,7 +15,7 @@
     "@daohaus/form-builder": "^0.1.19",
     "@daohaus/keychain-utils": "^0.1.19",
     "@daohaus/moloch-v3-data": "^0.1.19",
-    "@daohaus/moloch-v3-hooks": "^0.0.4",
+    "@daohaus/moloch-v3-hooks": "^0.0.5",
     "@daohaus/moloch-v3-macro-ui": "^0.0.2",
     "@daohaus/tx-builder": "^0.1.19",
     "@daohaus/ui": "^0.1.19",
