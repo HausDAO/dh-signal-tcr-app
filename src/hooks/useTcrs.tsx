@@ -68,7 +68,7 @@ export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
               voters {
                 address
                 balance
-                votes(where: { released: false }) {
+                votes(first: 999, where: { released: false }) {
                   voteId
                   choiceId
                   amount
@@ -76,7 +76,7 @@ export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
                   voterAddress
                 }
               }
-              votes(where: { released: false }) {
+              votes(first: 999, where: { released: false }) {
                 voteId
                 choiceId
                 amount
@@ -116,7 +116,7 @@ export const useConnectedAddressVotes = ({
               balance
               address
               initialClaim
-              votes(where: { released: false }) {
+              votes(first: 999, where: { released: false }) {
                 voteId
                 choiceId
                 amount
