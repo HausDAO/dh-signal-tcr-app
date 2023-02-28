@@ -18,6 +18,8 @@ export const Create = () => {
     client.clear();
   };
 
+  console.log("chainId", chainId);
+
   if (!chainId)
     return (
       <SingleColumnLayout>
