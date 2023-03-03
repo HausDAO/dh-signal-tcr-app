@@ -26,6 +26,8 @@ export function Dao() {
     chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
   });
 
+  console.log("tcrList", tcrList);
+
   return (
     <SingleColumnLayout>
       <H2>{dao?.name} Signals</H2>
