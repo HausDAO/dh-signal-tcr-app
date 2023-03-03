@@ -8,6 +8,7 @@ export const TARGET_DAO: {
     TCR_FACTORY: string;
     HOME_PAR: string;
     DAO_INFO_URL?: string;
+    HIDE_LIST?: string;
   };
 } = {
   "0xc035": {
@@ -51,11 +52,12 @@ export const TARGET_DAO: {
     TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
     HOME_PAR: `AUTOMATON ENGAGE`,
   },
-  "0xe160ba2cb286888d54cf51a8b3fc01ecce8ccb44": {
-    ADDRESS: "0xe160ba2cb286888d54cf51a8b3fc01ecce8ccb44",
-    SAFE_ADDRESS: "0xcfbda71c58d9864e196f21b8530d7a4a66a0eda0",
+  "0xc17f71ecd0c9d8a5ecc455c56ec553d14505d769": {
+    ADDRESS: "0xc17f71ecd0c9d8a5ecc455c56ec553d14505d769",
+    SAFE_ADDRESS: "0x96b0d2077f740c861cc7ed322ae20153ea80da74",
     CHAIN_ID: "0x64",
     TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
     HOME_PAR: `We make lists of beers!`,
+    HIDE_LIST: "0x2cf1bdc2d0267d1790a50672acefece59d48305d",
   },
 };

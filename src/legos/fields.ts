@@ -1,4 +1,3 @@
-import { FieldLego } from "@daohaus/form-builder";
 import { CustomFieldLego } from "./config";
 
 export const FIELD: Record<string, CustomFieldLego> = {
@@ -20,5 +19,11 @@ export const FIELD: Record<string, CustomFieldLego> = {
     label: "Link",
     placeholder: "http://",
     expectType: "url",
+  },
+  TEST_FIELD: {
+    id: "test",
+    type: "input",
+    label: "Test Field",
+    placeholder: "Enter something",
   },
 };
