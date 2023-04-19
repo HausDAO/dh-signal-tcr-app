@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
-import { H2, ParMd, SingleColumnLayout, Link, Theme } from "@daohaus/ui";
+import { H2, ParMd, SingleColumnLayout, Link, Theme, Button } from "@daohaus/ui";
 
 import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
 import { useDao } from "../hooks/useDao";
 import { SignalItem } from "../components/SignalItem";
+import { NavLink } from "react-router-dom";
 
 const LinkBox = styled.div`
   display: flex;
@@ -58,10 +59,13 @@ export function Dao() {
         >
           {dao?.name}
         </Link>
-        {/* <Link href={`/create`}>
-          Create Signal
-        </Link> */}
+        
       </LinkBox>
+      <NavLink to={`/create`}>
+        <Button>
+          Create Signal
+        </Button>
+        </NavLink> 
     </SingleColumnLayout>
   );
 }
