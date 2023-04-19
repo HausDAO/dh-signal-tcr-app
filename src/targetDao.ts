@@ -52,11 +52,21 @@ export const TARGET_DAO: {
     TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
     HOME_PAR: `AUTOMATON ENGAGE`,
   },
-    "0xfbddea58ca7dd83e03fd16f3eeee94d4eeea6632": {
-      ADDRESS: "0xfbddea58ca7dd83e03fd16f3eeee94d4eeea6632",
-      SAFE_ADDRESS: "0x9dd0ef4a97825a77f35e03aefd412adf848d5341",
-      CHAIN_ID: "0x64",
-      TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
-      HOME_PAR: `We make lists of beers!`,
-    },
+  "0xc17f71ecd0c9d8a5ecc455c56ec553d14505d769": {
+    ADDRESS: "0xc17f71ecd0c9d8a5ecc455c56ec553d14505d769",
+    SAFE_ADDRESS: "0x96b0d2077f740c861cc7ed322ae20153ea80da74",
+    CHAIN_ID: "0x64",
+    TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
+    HOME_PAR: `We make lists of beers!`,
+    HIDE_LIST: "0x2cf1bdc2d0267d1790a50672acefece59d48305d",
+  },
+  "0xfbddea58ca7dd83e03fd16f3eeee94d4eeea6632": {
+    ADDRESS: "0xfbddea58ca7dd83e03fd16f3eeee94d4eeea6632",
+    SAFE_ADDRESS: "0x9dd0ef4a97825a77f35e03aefd412adf848d5341",
+    CHAIN_ID: "0x64",
+    TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
+    DAO_INFO_URL: `https://eli5dao.com/`,
+    HOME_PAR:
+      "This is where members signal for ELI5s, and vote on the best ELI5s.",
+  },
 };
