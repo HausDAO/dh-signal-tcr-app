@@ -69,4 +69,14 @@ export const TARGET_DAO: {
     HOME_PAR:
       "This is where members signal for ELI5s, and vote on the best ELI5s.",
   },
+  "0x7ca3494cc9b31afa05c2f51ba5a2aa5affb3b659": {
+    ADDRESS: "0x7ca3494cc9b31afa05c2f51ba5a2aa5affb3b659",
+    SAFE_ADDRESS: "0xd3acdd0211b30407825370621e34fec53bf3d288",
+    CHAIN_ID: "0x64",
+    TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
+    DAO_INFO_URL: `https://eli5dao.com/`,
+    HOME_PAR:
+      "This is where members signal for ELI5s, and vote on the best ELI5s.",
+  },
+  
 };
