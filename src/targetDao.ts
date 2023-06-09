@@ -60,4 +60,12 @@ export const TARGET_DAO: {
     HOME_PAR: `We make lists of beers!`,
     HIDE_LIST: "0x2cf1bdc2d0267d1790a50672acefece59d48305d",
   },
+  "0xf5d6b637a9185707f52d40d452956ca49018247a": {
+    ADDRESS: "0xf5d6b637a9185707f52d40d452956ca49018247a",
+    SAFE_ADDRESS: "0xf84f1ad490029716d8a599613bb8671f56bfbbdc",
+    CHAIN_ID: "0xa",
+    TCR_FACTORY: "0x29FF7b9C945158CCD973B7c190a73AB9e110Fc74",
+    DAO_INFO_URL: `https://publichaus.club/`,
+    HOME_PAR: `OP PublicHAUS Signal Sessions`,
+  },
 };

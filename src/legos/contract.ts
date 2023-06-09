@@ -61,6 +61,7 @@ export const CONTRACT: Record<string, ContractLego> = {
       "0x1": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
       "0x5": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
       "0x64": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
+      "0xa": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
     },
   },
   TCR: {
