@@ -5,5 +5,7 @@ export type TChoice = {
     choiceId: string;
     description: string;
     link: string;
+    imgur: string;
+    youtube: string;
   };
 };

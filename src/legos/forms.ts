@@ -69,6 +69,8 @@ export const FORM: Record<string, CustomFormLego> = {
       //   expectType: "number",
       // },
       FIELD.LINK,
+      FIELD.YOUTUBE,
+      FIELD.IMGUR,
       {
         id: "choiceId",
         type: "choiceId",

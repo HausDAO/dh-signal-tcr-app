@@ -4,6 +4,7 @@ import { GraphQLClient, gql } from "graphql-request";
 import { TARGET_DAO } from "../targetDao";
 import { DEFAULT_GRAPH_URL, TCR_GRAPH_URL } from "../utils/tcrContracts";
 
+console.log(TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID)
 const API_URL =
   TCR_GRAPH_URL[TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID];
 
