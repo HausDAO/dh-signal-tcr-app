@@ -20,6 +20,20 @@ export const FIELD: Record<string, CustomFieldLego> = {
     placeholder: "http://",
     expectType: "url",
   },
+  YOUTUBE: {
+    id: "youtube",
+    type: "input",
+    label: "YouTube (share link)",
+    placeholder: "https://youtu.be/lgjguiFxtps",
+    expectType: "url",
+  },
+  IMGUR: {
+    id: "imgur",
+    type: "input",
+    label: "Imgur (Link to image png, jpg, gif)",
+    placeholder: "https://i.imgur.com/OAMDIRE.png",
+    expectType: "url",
+  },
   TEST_FIELD: {
     id: "test",
     type: "input",

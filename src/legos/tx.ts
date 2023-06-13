@@ -117,6 +117,8 @@ export const TX = {
           title: `.formValues.title`,
           description: `.formValues.description`,
           link: `.formValues.link`,
+          youtube: `.formValues.youtube`,
+          imgur: `.formValues.imgur`,
           daoId: `.daoId`,
           table: { type: "static", value: "signalTcrChoice" },
           queryType: { type: "static", value: "list" },

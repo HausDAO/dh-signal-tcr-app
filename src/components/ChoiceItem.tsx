@@ -38,6 +38,7 @@ import { VoterList } from "./VoterList";
 import { useChampionRegistry } from "../hooks/useChampionRegistry";
 import { TARGET_DAO } from "../targetDao";
 import { HAUS_RPC } from "@daohaus/keychain-utils";
+import YoutubeEmbed from "./YouTubeEmbed";
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -180,6 +181,8 @@ export const ChoiceItem = ({
   // ),
   // choice.parsedContent.title)
 
+  console.log("choice", choice);
+
   return (
     <>
       <ProposalCardContainer>
@@ -222,6 +225,16 @@ export const ChoiceItem = ({
             <Spaced>
               <ParSm>{choice.parsedContent.description}</ParSm>
             </Spaced>
+            {choice.parsedContent.imgur && (
+              <Spaced>
+                <img src={choice.parsedContent.imgur} width="200px" />
+              </Spaced>
+            )}
+            {choice.parsedContent.youtube && (
+              <Spaced>
+                <YoutubeEmbed embedId={choice.parsedContent.youtube} />
+              </Spaced>
+            )}
             {choice.parsedContent.link && (
               <Spaced>
                 <Link href={choice.parsedContent.link}>
