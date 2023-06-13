@@ -20,6 +20,7 @@ const providerOptions: IProviderOptions = {
       rpc: {
         1: `https://${process.env.NX_RIVET_KEY}.eth.rpc.rivet.cloud/`,
         5: `https://${import.meta.env.VITE_RIVET_KEY}.goerli.rpc.rivet.cloud/`,
+        10: `https://mainnet.optimism.io`,
         100: HAUS_RPC["0x64"],
       },
     },
