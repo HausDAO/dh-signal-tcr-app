@@ -46,6 +46,7 @@ export const ClaimBalance = ({
       "0x5": `https://${
         import.meta.env.VITE_RIVET_KEY
       }.goerli.rpc.rivet.cloud/`,
+      "0xa": `https://mainnet.optimism.io`,
       "0x64": HAUS_RPC["0x64"],
     },
   });

@@ -33,11 +33,13 @@ export function HomeContainer() {
           "0x5": `https://${
             import.meta.env.VITE_RIVET_KEY
           }.goerli.rpc.rivet.cloud/`,
+          "0xa": `https://mainnet.optimism.io`,
           "0x64": HAUS_RPC["0x64"],
         }}
         explorerKeys={{
           "0x1": import.meta.env.VITE_EXPLORER_KEY,
           "0x5": import.meta.env.VITE_EXPLORER_KEY,
+          "0xa": import.meta.env.VITE_EXPLORER_KEY,
         }}
         graphApiKeys={{
           "0x1": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
