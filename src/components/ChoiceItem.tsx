@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogTrigger,
   H1,
+  H2,
   H3,
   Input,
   Link,
@@ -108,6 +109,10 @@ const DataH1 = styled(H1)`
   font-family: mono;
 `;
 
+const DataH2 = styled(H2)`
+  font-family: mono;
+`;
+
 const VotesButton = styled(Button)`
   min-width: 10.6rem;
 `;
@@ -189,14 +194,14 @@ export const ChoiceItem = ({
         <LeftCard>
           <div>
             <ParSm color={theme.secondary.step11}>Total Staked</ParSm>
-            <DataH1>
-              {toWholeUnits(
+            <DataH2>
+              {Number(toWholeUnits(
                 totalStakeForChoice(
                   tcrRecord?.votes || [],
                   choice.parsedContent.choiceId
                 )
-              )}
-            </DataH1>
+              )).toFixed(1)}
+            </DataH2>
             <Dialog>
               <DialogTrigger asChild>
                 <VotesButton color="secondary" size="sm">
