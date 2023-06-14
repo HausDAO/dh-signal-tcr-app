@@ -33,6 +33,12 @@ export const FIELD: Record<string, CustomFieldLego> = {
     label: "Imgur (Link to image png, jpg, gif)",
     placeholder: "https://i.imgur.com/OAMDIRE.png",
     expectType: "url",
+    rules: {
+      pattern: new RegExp(
+        "^https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpg|gif|png)$"
+      ),
+    },
+
   },
   TEST_FIELD: {
     id: "test",
