@@ -41,6 +41,7 @@ import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
 import { VoterList } from "./VoterList";
 import YoutubeEmbed from "./YouTubeEmbed";
+import ReactMarkdown from "react-markdown";
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
@@ -53,6 +54,13 @@ const ProposalCardContainer = styled(Card)`
   padding: 2.3rem 2.5rem;
   border: none;
   min-height: 23.8rem;
+`;
+
+const ReactMarkdownContainer = styled(Card)`
+  brder: 1px solid #000;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  font-size: 1.5rem;
 `;
 
 const StakeSection = styled.div`
@@ -255,7 +263,10 @@ export const ChoiceItem = ({
           </div>
         </StakeSection>
         <ChoiceContent>
-          <ParSm>{choice.parsedContent.description}</ParSm>
+          <ReactMarkdownContainer>
+            <ReactMarkdown>{choice.parsedContent.description}</ReactMarkdown>
+          </ReactMarkdownContainer>
+
           {choice.parsedContent.imgur && (
             <Spaced>
               <img src={choice.parsedContent.imgur} width="200px" />
