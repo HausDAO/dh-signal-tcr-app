@@ -65,7 +65,7 @@ export const SignalList = () => {
       }
     >
       <DetailsContainer>
-        <ParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
+        <ParMd style={{ marginBottom: "2.4rem" }}>
           {getTcrDescription(tcrRecord.details)}
         </ParMd>
         <Link href={getTcrLink(tcrRecord.details)}>More details</Link>

@@ -5,7 +5,7 @@ import { ParMd, Theme } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
 import { Claim } from "./Claim";
-import { toWholeUnits } from "@daohaus/utils";
+import { formatValueTo, toWholeUnits } from "@daohaus/utils";
 import { useConnectedAddressVotes } from "../hooks/useTcrs";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
@@ -60,8 +60,17 @@ export const ClaimBalance = ({
       {connectedVoter?.balance ? (
         <BalanceContainer>
           <ParMd>
-            {toWholeUnits(connectedVoter?.balance)} /{" "}
-            {toWholeUnits(connectedVoter?.initialClaim || "0")} Points
+            {formatValueTo({
+              value: toWholeUnits(connectedVoter?.balance),
+              decimals: 2,
+              format: "number",
+            })}{" "}
+            / {/* {toWholeUnits(connectedVoter?.balance)} /{" "} */}
+            {formatValueTo({
+              value: toWholeUnits(connectedVoter?.initialClaim || "0"),
+              decimals: 2,
+              format: "number",
+            })}
           </ParMd>
         </BalanceContainer>
       ) : (
