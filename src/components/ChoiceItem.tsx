@@ -5,11 +5,13 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import {
   Button,
   Card,
   DataLg,
+  DataXs,
   Dialog,
   DialogContent,
   DialogTrigger,
@@ -20,11 +22,13 @@ import {
   Link,
   ParSm,
   ParXs,
+  Theme,
   useBreakpoint,
   widthQuery,
 } from "@daohaus/ui";
 import styled, { useTheme } from "styled-components";
 import { useParams } from "react-router-dom";
+import { RiZoomInLine } from "react-icons/ri";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import {
   isEmpty,
@@ -36,13 +40,12 @@ import { toBaseUnits, toWholeUnits } from "@daohaus/utils";
 import { ReleaseVotes } from "./ReleaseVotes";
 import { useDHConnect } from "@daohaus/connect";
 import { VoterList } from "./VoterList";
-import { useChampionRegistry } from "../hooks/useChampionRegistry";
-import { TARGET_DAO } from "../targetDao";
-import { HAUS_RPC } from "@daohaus/keychain-utils";
 import YoutubeEmbed from "./YouTubeEmbed";
 
 const ProposalCardContainer = styled(Card)`
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 3rem;
   width: 100%;
 
@@ -50,71 +53,57 @@ const ProposalCardContainer = styled(Card)`
   padding: 2.3rem 2.5rem;
   border: none;
   min-height: 23.8rem;
-  @media ${widthQuery.sm} {
-    gap: 2rem;
-    flex-direction: column;
-    height: auto;
-    margin-bottom: 2rem;
-  }
-
-  /* .short-input {
-    width: 30px;
-  } */
 `;
 
-const LeftCard = styled.div`
-  display: flex;
-  width: 60%;
-  @media ${widthQuery.sm} {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-  }
-`;
-
-const RightCard = styled.div`
+const StakeSection = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   justify-content: space-between;
-  width: 40%;
-
-  .subsection {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
 
   .point-input {
     align-items: flex-start;
+    margin-top: 1rem;
   }
+`;
 
-  @media ${widthQuery.sm} {
-    max-width: 100%;
-    min-width: 0;
-  }
+const StakeHeadline = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 const ChoiceContent = styled.div`
   display: flex;
   flex-direction: column;
-  padding-left: 5rem;
+  width: 100%;
 `;
 
 const Spaced = styled.div`
   margin-top: 2rem;
 `;
 
-const DataH1 = styled(H1)`
-  font-family: mono;
-`;
-
 const DataH2 = styled(H2)`
   font-family: mono;
 `;
 
-const VotesButton = styled(Button)`
-  min-width: 10.6rem;
+const TotalSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+`;
+
+const StakersIcon = styled(RiZoomInLine)`
+  color: ${({ theme }: { theme: Theme }) => theme.primary.step10};
+  font-size: 2rem;
+
+  :hover {
+    color: ${({ theme }: { theme: Theme }) => theme.primary.step12};
+    cursor: pointer;
+  }
 `;
 
 export const ChoiceItem = ({
@@ -133,17 +122,6 @@ export const ChoiceItem = ({
   const { tcr } = useParams();
   const { address } = useDHConnect();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
-  // const { data } = useChampionRegistry({
-  //   registryAddress: "0x76095061f675F4CcD86094b8ac9018fD96a70Fa3",
-  //   chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
-  //   rpcs: {
-  //     "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
-  //     "0x5": `https://${
-  //       import.meta.env.VITE_RIVET_KEY
-  //     }.goerli.rpc.rivet.cloud/`,
-  //     "0x64": HAUS_RPC["0x64"],
-  //   },
-  // });
   const { connectedVoter, refetch: refetchConnectedVoter } =
     useConnectedAddressVotes({
       tcrId: tcr,
@@ -151,6 +129,7 @@ export const ChoiceItem = ({
     });
   const theme = useTheme();
   const isMobile = useBreakpoint(widthQuery.sm);
+  const [touched, setTouched] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value === "" ? "0" : event.target.value;
@@ -160,6 +139,7 @@ export const ChoiceItem = ({
       setStakeAmounts((prevState: any) => {
         return { ...prevState, [choice.parsedContent.choiceId]: newAmount };
       });
+      setTouched(true);
     } else {
       setStakeAmounts((prevState: any) => {
         const newObj = { ...prevState };
@@ -178,119 +158,122 @@ export const ChoiceItem = ({
     }
   }, [stakeAmounts]);
 
-  // console.log(toWholeUnits(
-  //   totalStakeForChoice(
-  //     tcrRecord?.votes || [],
-  //     choice.parsedContent.choiceId
-  //   )
-  // ),
-  // choice.parsedContent.title)
-
-  console.log("choice", choice);
-
   return (
     <>
       <ProposalCardContainer>
-        <LeftCard>
-          <div>
-            <ParSm color={theme.secondary.step11}>Total Staked</ParSm>
-            <DataH2>
-              {Number(toWholeUnits(
-                totalStakeForChoice(
-                  tcrRecord?.votes || [],
-                  choice.parsedContent.choiceId
-                )
-              )).toFixed(1)}
-            </DataH2>
-            <Dialog>
-              <DialogTrigger asChild>
-                <VotesButton color="secondary" size="sm">
-                  Stakers
-                </VotesButton>
-              </DialogTrigger>
-              <DialogContent
-                alignButtons="end"
-                rightButton={{
-                  closeDialog: true,
-                  fullWidth: isMobile,
-                }}
-                title="Stakers"
-              >
-                <VoterList
-                  voters={tcrRecord?.voters}
-                  choiceId={choice.parsedContent.choiceId}
-                  // champions={data?.champions}
-                  champions={[]}
-                />
-              </DialogContent>
-            </Dialog>
-          </div>
-          <ChoiceContent>
-            <H3>{choice.parsedContent.title}</H3>
-            <Spaced>
-              <ParSm>{choice.parsedContent.description}</ParSm>
-            </Spaced>
-            {choice.parsedContent.imgur && (
-              <Spaced>
-                <img src={choice.parsedContent.imgur} width="200px" />
-              </Spaced>
-            )}
-            {choice.parsedContent.youtube && (
-              <Spaced>
-                <YoutubeEmbed embedId={choice.parsedContent.youtube} />
-              </Spaced>
-            )}
-            {choice.parsedContent.link && (
-              <Spaced>
-                <Link href={choice.parsedContent.link}>
-                  <ParXs>More details</ParXs>
-                </Link>
-              </Spaced>
-            )}
-          </ChoiceContent>
-        </LeftCard>
-        <RightCard>
+        <StakeSection>
+          <StakeHeadline>
+            <div>
+              <TotalSection>
+                <ParSm color={theme.secondary.step11}>Total Staked</ParSm>
+                {tcrRecord?.voters && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <div>
+                        <StakersIcon />
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent
+                      alignButtons="end"
+                      rightButton={{
+                        closeDialog: true,
+                        fullWidth: isMobile,
+                      }}
+                      title="Stakers"
+                    >
+                      <VoterList
+                        voters={tcrRecord?.voters}
+                        choiceId={choice.parsedContent.choiceId}
+                        champions={[]}
+                      />
+                    </DialogContent>
+                  </Dialog>
+                )}
+              </TotalSection>
+              <DataH2>
+                {Number(
+                  toWholeUnits(
+                    totalStakeForChoice(
+                      tcrRecord?.votes || [],
+                      choice.parsedContent.choiceId
+                    )
+                  )
+                ).toFixed(2)}
+              </DataH2>
+            </div>
+            <H2 style={{ marginBottom: "2rem" }}>
+              {choice.parsedContent.title}
+            </H2>
+          </StakeHeadline>
+
           <div className="subsection">
             <ParSm color={theme.secondary.step11}>Your Stake</ParSm>
             <DataLg>
-              {toWholeUnits(
-                totalStakeForChoice(
+              {Number(
+                toWholeUnits(
+                  totalStakeForChoice(
+                    connectedVoter?.votes || [],
+                    choice.parsedContent.choiceId
+                  )
+                )
+              ).toFixed(2)}
+            </DataLg>
+            {!hasEnded && (
+              <ReleaseVotes
+                label={`Release`}
+                size="sm"
+                voteIds={voteIdsForChoice(
                   connectedVoter?.votes || [],
                   choice.parsedContent.choiceId
-                )
-              )}
-            </DataLg>
-          </div>
-          <ReleaseVotes
-            label={`Release`}
-            size="sm"
-            voteIds={voteIdsForChoice(
-              connectedVoter?.votes || [],
-              choice.parsedContent.choiceId
-            )}
-            onSuccess={() => {
-              refetchConnectedVoter();
-            }}
-          />
-          <div className="subsection point-input">
-            {pointsAvailable && (
-              <ParSm>Add Points ({pointsAvailable} available)</ParSm>
-            )}
-            {!pointsAvailable && (
-              <ParSm color={theme.warning.step9}>Not enough points</ParSm>
-            )}
-            {!hasEnded && (
-              <Input
-                id={choice.parsedContent.choiceId}
-                placeholder="0"
-                onChange={handleChange}
-                className="short-input"
-                disabled={!connectedVoter}
-                ref={pointInput}
+                )}
+                onSuccess={() => {
+                  refetchConnectedVoter();
+                }}
               />
             )}
+            <div className="subsection point-input">
+              {pointsAvailable && !hasEnded && (
+                <ParSm>Add Points ({pointsAvailable} available)</ParSm>
+              )}
+              {!pointsAvailable && !hasEnded && (
+                <ParSm color={theme.warning.step9}>Not enough points</ParSm>
+              )}
+              {!hasEnded && (
+                <>
+                  <Input
+                    id={choice.parsedContent.choiceId}
+                    placeholder="0"
+                    onChange={handleChange}
+                    className="short-input"
+                    disabled={!connectedVoter}
+                    ref={pointInput}
+                  />
+                  {touched && <DataXs>save button is below</DataXs>}
+                </>
+              )}
+            </div>
           </div>
-        </RightCard>
+        </StakeSection>
+        <ChoiceContent>
+          <ParSm>{choice.parsedContent.description}</ParSm>
+          {choice.parsedContent.imgur && (
+            <Spaced>
+              <img src={choice.parsedContent.imgur} width="200px" />
+            </Spaced>
+          )}
+          {choice.parsedContent.youtube && (
+            <Spaced>
+              <YoutubeEmbed embedId={choice.parsedContent.youtube} />
+            </Spaced>
+          )}
+          {choice.parsedContent.link && (
+            <Spaced>
+              <Link href={choice.parsedContent.link}>
+                <ParXs>More details</ParXs>
+              </Link>
+            </Spaced>
+          )}
+        </ChoiceContent>
       </ProposalCardContainer>
     </>
   );
