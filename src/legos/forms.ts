@@ -60,7 +60,7 @@ export const FORM: Record<string, CustomFormLego> = {
     tx: TX.ADD_TCR_CHOICE,
     fields: [
       { ...FIELD.TITLE, label: "Choice Title" },
-      { ...FIELD.DESCRIPTION, label: "Choice Description" },
+      { ...FIELD.DESCRIPTION, label: "Choice Description (markdown)" },
       // {
       //   id: "stakeAmount",
       //   type: "stakeAmount",
