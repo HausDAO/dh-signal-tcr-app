@@ -1,6 +1,6 @@
 import React from "react";
 
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 import { ParMd, Theme } from "@daohaus/ui";
 import { useDHConnect } from "@daohaus/connect";
 import { useDaoTokens } from "../hooks/useDaoTokens";
@@ -12,7 +12,7 @@ import { TARGET_DAO } from "../targetDao";
 import { HAUS_RPC } from "@daohaus/keychain-utils";
 
 const BalanceContainer = styled.div`
-  background: ${({ theme }: { theme: Theme }) => theme.success.step9};
+  background: ${({ theme }: { theme: DefaultTheme }) => theme.success.step9};
   border-radius: 0.4rem;
   padding: 1rem;
   p {

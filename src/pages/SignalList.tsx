@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import { useDHConnect } from "@daohaus/connect";
-import { Link, ParMd, SingleColumnLayout, Spinner } from "@daohaus/ui";
+import { Link, Loading, ParMd, SingleColumnLayout } from "@daohaus/ui";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import {
@@ -43,7 +43,7 @@ export const SignalList = () => {
   if (!tcrRecord || !dao) {
     return (
       <SingleColumnLayout>
-        <Spinner />
+        <Loading />
       </SingleColumnLayout>
     );
   }

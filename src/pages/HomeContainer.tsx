@@ -8,7 +8,7 @@ import { TARGET_DAO } from "../targetDao";
 
 export function HomeContainer() {
   const location = useLocation();
-  const { provider, address } = useDHConnect();
+  const { publicClient, address } = useDHConnect();
   const { dao } = useDao({
     daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
     chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
@@ -21,7 +21,7 @@ export function HomeContainer() {
       leftNav={<H4>{dao?.name}</H4>}
     >
       <TXBuilder
-        provider={provider}
+        publicClient={publicClient}
         chainId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
         daoId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS}
         safeId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].SAFE_ADDRESS}

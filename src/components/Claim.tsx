@@ -2,7 +2,7 @@ import React from "react";
 import { handleErrorMessage, TXLego } from "@daohaus/utils";
 import { useDHConnect } from "@daohaus/connect";
 import { useTxBuilder } from "@daohaus/tx-builder";
-import { Spinner, useToast } from "@daohaus/ui";
+import { Loading, useToast } from "@daohaus/ui";
 
 import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
@@ -75,7 +75,7 @@ export const Claim = ({
       onClick={handleClaim}
       // centerAlign
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
+      {isLoading ? <Loading size={20} /> : label}
     </GatedButton>
   );
 };
