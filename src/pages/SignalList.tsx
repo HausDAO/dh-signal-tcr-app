@@ -14,6 +14,8 @@ import { useDao } from "../hooks/useDao";
 import { ChoiceList } from "../components/ChoiceList";
 import styled from "styled-components";
 import { useMemo } from "react";
+import { EthAddress } from "@daohaus/utils";
+import { ValidNetwork } from "@daohaus/keychain-utils";
 
 const DetailsContainer = styled.div`
   display: flex;
@@ -25,11 +27,11 @@ const DetailsContainer = styled.div`
 
 export const SignalList = () => {
   const { address } = useDHConnect();
-  const { tcr } = useParams();
+  const { chainid, daoid, tcr } = useParams();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
   const { dao } = useDao({
-    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
-    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    daoId: daoid as EthAddress,
+    chainId: chainid as ValidNetwork,
   });
 
   const hasEnded = useMemo(() => {

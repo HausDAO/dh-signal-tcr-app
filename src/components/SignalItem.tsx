@@ -19,7 +19,7 @@ import { formatDistanceToNowFromSeconds } from "@daohaus/utils";
 const ListItemContainer = styled.div`
   width: 100%;
   padding: 1rem 0;
-  border-top: 1px ${({ theme }: { theme: DefaultTheme }) => theme.secondary.step6}
+  border-top: 1px ${({ theme }) => theme.secondary.step6}
     solid;
 `;
 
@@ -33,16 +33,17 @@ const ListItemLink = styled(RouterLink)`
 `;
 
 // old border-radius was ${border.radius}
+// ${({ theme }) => theme.border};
 const ListItemHoverContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 1rem;
-  border-radius: 5;
+  border-radius: 5px;
 
   &:hover {
-    background: 1px ${({ theme }: { theme: DefaultTheme }) => theme.secondary.step3};
+    background: 1px ${({ theme }) => theme.secondary.step3};
   }
 `;
 
@@ -58,7 +59,7 @@ const Spaced = styled.div`
 `;
 
 const StyledIcon = styled(RiArrowRightSLine)`
-  fill: ${({ theme }: { theme: DefaultTheme }) => theme.primary.step9};
+  fill: ${({ theme }) => theme.primary.step9};
   font-size: 3rem;
 `;
 
@@ -70,7 +71,7 @@ export const SignalItem = ({ tcr }: { tcr: ListTcr }) => {
 
   return (
     <ListItemContainer>
-      <ListItemLink to={`/tcr/${tcr.id}`}>
+      <ListItemLink to={`tcr/${tcr.id}`}>
         <ListItemHoverContainer>
           <ListItem>
             <ParLg>

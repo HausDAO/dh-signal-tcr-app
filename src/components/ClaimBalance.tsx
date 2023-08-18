@@ -9,10 +9,10 @@ import { formatValueTo, toWholeUnits } from "@daohaus/utils";
 import { useConnectedAddressVotes } from "../hooks/useTcrs";
 import { useParams } from "react-router-dom";
 import { TARGET_DAO } from "../targetDao";
-import { HAUS_RPC } from "@daohaus/keychain-utils";
+import { HAUS_RPC, ValidNetwork } from "@daohaus/keychain-utils";
 
 const BalanceContainer = styled.div`
-  background: ${({ theme }: { theme: DefaultTheme }) => theme.success.step9};
+  background: ${( {theme} ) => theme.success.step9};
   border-radius: 0.4rem;
   padding: 1rem;
   p {
@@ -33,14 +33,14 @@ export const ClaimBalance = ({
   lootAddress: any;
 }) => {
   const { address } = useDHConnect();
-  const { tcr } = useParams();
+  const { chainid, tcr } = useParams();
   const { data } = useDaoTokens({
     sharesAddress: sharesAddress,
     lootAddress: lootAddress,
     sharesSnapshot: sharesSnapshot,
     lootSnapshot: lootSnapshot,
     userAddress: address,
-    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    chainId: chainid as ValidNetwork,
     rpcs: {
       "0x1": `https://${import.meta.env.VITE_RIVET_KEY}.eth.rpc.rivet.cloud/`,
       "0x5": `https://${

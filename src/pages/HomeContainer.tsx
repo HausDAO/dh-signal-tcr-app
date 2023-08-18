@@ -1,17 +1,19 @@
 import { DHLayout, useDHConnect } from "@daohaus/connect";
-import { HAUS_RPC } from "@daohaus/keychain-utils";
+import { HAUS_RPC, ValidNetwork } from "@daohaus/keychain-utils";
 import { TXBuilder } from "@daohaus/tx-builder";
 import { H1, H4 } from "@daohaus/ui";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import { useDao } from "../hooks/useDao";
 import { TARGET_DAO } from "../targetDao";
+import { EthAddress } from "@daohaus/utils";
 
 export function HomeContainer() {
   const location = useLocation();
   const { publicClient, address } = useDHConnect();
+  const {chainid, daoid} = useParams();
   const { dao } = useDao({
-    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
-    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    daoId: daoid as EthAddress,
+    chainId: chainid as ValidNetwork,
   });
 
   return (
@@ -22,9 +24,9 @@ export function HomeContainer() {
     >
       <TXBuilder
         publicClient={publicClient}
-        chainId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
-        daoId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS}
-        safeId={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].SAFE_ADDRESS}
+        chainId={chainid}
+        daoId={daoid}
+        safeId={dao?.safeAddress || TARGET_DAO[daoid as EthAddress].SAFE_ADDRESS}
         appState={{ dao, memberAddress: address }}
         rpcs={{
           "0x1": `https://${

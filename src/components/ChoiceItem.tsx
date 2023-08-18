@@ -105,11 +105,11 @@ const TotalSection = styled.div`
 `;
 
 const StakersIcon = styled(RiZoomInLine)`
-  color: ${({ theme }: { theme: DefaultTheme }) => theme.primary.step10};
+  color: ${({ theme }) => theme.primary.step10};
   font-size: 2rem;
 
   &:hover {
-    color: ${({ theme }: { theme: DefaultTheme }) => theme.primary.step12};
+    color: ${({ theme }) => theme.primary.step12};
     cursor: pointer;
   }
 `;

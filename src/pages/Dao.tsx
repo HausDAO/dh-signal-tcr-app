@@ -6,6 +6,9 @@ import { TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
 import { useDao } from "../hooks/useDao";
 import { SignalItem } from "../components/SignalItem";
+import { EthAddress } from "@daohaus/utils";
+import { ValidNetwork } from "@daohaus/keychain-utils";
+import { useParams } from "react-router-dom";
 
 const LinkBox = styled.div`
   display: flex;
@@ -18,12 +21,13 @@ const SlimParMd = styled(ParMd)`
 `;
 
 export function Dao() {
-  const { tcrList } = useTcrList({
-    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
-  });
+  const { chainid, daoid } = useParams();
   const { dao } = useDao({
-    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
-    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    daoId: daoid as EthAddress,
+    chainId: chainid as ValidNetwork,
+  });
+  const { tcrList } = useTcrList({
+    daoId: daoid as EthAddress,
   });
 
   console.log("tcrList", tcrList);
@@ -52,9 +56,7 @@ export function Dao() {
           </Link>
         )}
         <Link
-          href={`https://admin.daohaus.club/#/molochv3/${
-            TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
-          }/${TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS}`}
+          href={`https://admin.daohaus.club/#/molochv3/${chainid}/${daoid}`}
         >
           {dao?.name}
         </Link>

@@ -24,7 +24,7 @@ export const ReleaseVotes = ({
 }) => {
   const { fireTransaction } = useTxBuilder();
   const { chainId } = useDHConnect();
-  const { tcr } = useParams();
+  const { chainid, tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -67,7 +67,7 @@ export const ReleaseVotes = ({
   };
 
   const isConnectedToDao =
-    chainId === TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
+    chainId === chainid
       ? true
       : "You are not connected to the same network as the DAO";
 

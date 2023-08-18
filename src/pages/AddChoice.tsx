@@ -12,7 +12,7 @@ export const AddChoice = () => {
   const { chainId } = useDHConnect();
   const navigate = useNavigate();
   const client = useQueryClient();
-  const { tcr } = useParams();
+  const { chainid, tcr } = useParams();
 
   const onFormComplete = () => {
     navigate(`/tcr/${tcr}`);
@@ -31,7 +31,7 @@ export const AddChoice = () => {
   return (
     <FormBuilder
       form={FORM.ADD_TCR_CHOICE}
-      targetNetwork={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
+      targetNetwork={chainid}
       lifeCycleFns={{
         onPollSuccess: onFormComplete,
       }}
