@@ -12,10 +12,10 @@ export const AddChoice = () => {
   const { chainId } = useDHConnect();
   const navigate = useNavigate();
   const client = useQueryClient();
-  const { chainid, tcr } = useParams();
+  const { chainid, daoid, tcr } = useParams();
 
   const onFormComplete = () => {
-    navigate(`/tcr/${tcr}`);
+    navigate(`/${chainid}/${daoid}/tcr/${tcr}`);
     client.clear();
   };
 

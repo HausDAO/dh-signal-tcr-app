@@ -127,7 +127,7 @@ export const ChoiceList = ({
                 </Bold>
               )}
             </DataMd>
-            <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
+            <StyledRouterLink to={`add-choice`}>
               <Button
                 variant="ghost"
                 color="secondary"
