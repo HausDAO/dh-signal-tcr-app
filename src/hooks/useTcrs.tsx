@@ -48,7 +48,10 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
 
   return {
     tcrList: data?.registries.filter(
-      (r: any) => TARGET_DAO[import.meta.env.VITE_TARGET_KEY].HIDE_LIST !== r.id
+      (r: any) => {
+        if (!TARGET_DAO[daoId] || !TARGET_DAO[daoId].HIDE_LIST) return true;
+        TARGET_DAO[daoId].HIDE_LIST !== r.id
+      }
     ),
     ...rest,
   };

@@ -10,7 +10,7 @@ import { EthAddress } from "@daohaus/utils";
 export function HomeContainer() {
   const location = useLocation();
   const { publicClient, address } = useDHConnect();
-  const {chainid, daoid} = useParams();
+  const { chainid, daoid } = useParams();
   const { dao } = useDao({
     daoId: daoid as EthAddress,
     chainId: chainid as ValidNetwork,
@@ -26,7 +26,12 @@ export function HomeContainer() {
         publicClient={publicClient}
         chainId={chainid}
         daoId={daoid}
-        safeId={dao?.safeAddress || TARGET_DAO[daoid as EthAddress].SAFE_ADDRESS}
+        safeId={
+          dao?.safeAddress ||
+          (TARGET_DAO[daoid as EthAddress] &&
+            TARGET_DAO[daoid as EthAddress].SAFE_ADDRESS) ||
+          ""
+        }
         appState={{ dao, memberAddress: address }}
         rpcs={{
           "0x1": `https://${

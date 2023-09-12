@@ -5,7 +5,10 @@ import { MemberDisplay } from "@daohaus/moloch-v3-macro-ui";
 import { ValidNetwork } from "@daohaus/keychain-utils";
 import { DataMd, Tooltip, widthQuery } from "@daohaus/ui";
 
-import { totalVoterVotesForChoice } from "../utils/tcrDataHelpers";
+import {
+  totalVoterQuadraticVotesForChoice,
+  totalVoterVotesForChoice,
+} from "../utils/tcrDataHelpers";
 import { useMemo } from "react";
 
 import { RiMedalFill } from "react-icons/ri";
@@ -53,8 +56,12 @@ export const VoterList = ({ voters, choiceId, champions }: VoteListProps) => {
   const choiceVoters = useMemo(() => {
     return voters.reduce((acc, voter) => {
       const votesForChoice = totalVoterVotesForChoice(voter.votes, choiceId);
+      const quadraticVotesForChoice = totalVoterQuadraticVotesForChoice(
+        voter.votes,
+        choiceId
+      );
       if (Number(votesForChoice)) {
-        return [...acc, { ...voter, votesForChoice }];
+        return [...acc, { ...voter, votesForChoice, quadraticVotesForChoice }];
       }
       return acc;
     }, []);
@@ -85,7 +92,13 @@ export const VoterList = ({ voters, choiceId, champions }: VoteListProps) => {
                       content="DAO Elected Champion"
                     />
                   )}{" "}
-                  {toWholeUnits(voter.votesForChoice)}
+                  {toWholeUnits(voter.votesForChoice)} /
+                  <span style={{ color: "red" }}>
+                    {" "}
+                    {Number(
+                      toWholeUnits(voter.quadraticVotesForChoice)
+                    ).toFixed(2)}
+                  </span>
                 </>
               </DataMd>
             </VoteContainer>

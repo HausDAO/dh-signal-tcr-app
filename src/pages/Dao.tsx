@@ -1,8 +1,16 @@
 import styled from "styled-components";
 
-import { H2, ParMd, SingleColumnLayout, Link, Theme } from "@daohaus/ui";
+import {
+  H2,
+  ParMd,
+  SingleColumnLayout,
+  Link,
+  Theme,
+  Button,
+} from "@daohaus/ui";
+import { Link as RouterLink } from "react-router-dom";
 
-import { TARGET_DAO } from "../targetDao";
+import { REPO, TARGET_DAO } from "../targetDao";
 import { ListTcr, useTcrList } from "../hooks/useTcrs";
 import { useDao } from "../hooks/useDao";
 import { SignalItem } from "../components/SignalItem";
@@ -18,6 +26,10 @@ const LinkBox = styled.div`
 
 const SlimParMd = styled(ParMd)`
   width: 70%;
+`;
+
+const StyledRouterLink = styled(RouterLink)`
+  text-decoration: none;
 `;
 
 export function Dao() {
@@ -36,12 +48,13 @@ export function Dao() {
     <SingleColumnLayout>
       <H2>{dao?.name} Signals</H2>
       <SlimParMd style={{ marginBottom: "2.4rem", textAlign: "center" }}>
-        {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].HOME_PAR}{" "}
-        {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
-          <Link href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}>
-            Learn more
-          </Link>
-        )}
+        {daoid && TARGET_DAO[daoid]
+          ? TARGET_DAO[daoid].HOME_PAR
+          : "New DAO Signal Board. PR to this repo to add some more info."}{" "}
+        {daoid && TARGET_DAO[daoid] && TARGET_DAO[daoid].DAO_INFO_URL ? (
+          <Link href={TARGET_DAO[daoid].DAO_INFO_URL}>Learn more</Link>
+        ) : 
+        (<Link href={REPO}>REPO</Link>)}
       </SlimParMd>
       <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}></ParMd>
 
@@ -50,8 +63,8 @@ export function Dao() {
           return <SignalItem tcr={tcr} key={i} />;
         })}
       <LinkBox>
-        {TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL && (
-          <Link href={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].DAO_INFO_URL}>
+        {daoid && TARGET_DAO[daoid] && TARGET_DAO[daoid].DAO_INFO_URL && (
+          <Link href={TARGET_DAO[daoid].DAO_INFO_URL}>
             More {dao?.name} Info
           </Link>
         )}
@@ -60,9 +73,9 @@ export function Dao() {
         >
           {dao?.name}
         </Link>
-        {/* <Link href={`/create`}>
-          Create Signal
-        </Link> */}
+        <StyledRouterLink to={`create`}>
+          <Button>Create Signal</Button>
+        </StyledRouterLink>
       </LinkBox>
     </SingleColumnLayout>
   );

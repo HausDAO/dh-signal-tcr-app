@@ -1,5 +1,7 @@
 import { ValidNetwork } from "@daohaus/keychain-utils";
 
+export const REPO = "https://github.com/HausDAO/dh-signal-tcr-app/pulls";
+
 export const TARGETS: {
   TCR_FACTORIES: {
     [key: string]: string;
@@ -35,7 +37,7 @@ export const TARGET_DAO: {
     HOME_PAR:
       "This is where members signal on High Level Objectives (HILO) and ecosystem contribution and output (Retroactive Grading Events).",
   },
-  "0xf844": {
+  "0xf844b98df9ccdfbe5d460d0d7bdca232cf9da923": {
     NAME: "PublicHAUS Mainnet",
     ADDRESS: "0xf844b98df9ccdfbe5d460d0d7bdca232cf9da923",
     SAFE_ADDRESS: "0xeb0dc703b854791914f30b5a73dd04d8d22a9aff",
@@ -45,7 +47,7 @@ export const TARGET_DAO: {
     HOME_PAR:
       "This is where members signal on High Level Objectives (HILO) and ecosystem contribution and output (Retroactive Grading Events).",
   },
-  "0xaf52": {
+  "0xaf52e108fe716261c35051517ce235a1e67c695a": {
     NAME: "Amaro",
     ADDRESS: "0xaf52e108fe716261c35051517ce235a1e67c695a",
     SAFE_ADDRESS: "0x19cbb9c15b674089d589a6a4a97ff69695f09841",
@@ -54,7 +56,7 @@ export const TARGET_DAO: {
     DAO_INFO_URL: `https://en.wikipedia.org/wiki/Amaro_(liqueur)`,
     HOME_PAR: `We love Amaro! We also can't ever remember all of the names and types. As 2023 is the year of the TCR, we've dedicated ourselves to curating a list of Amaro varieties. You can watch the list grow right here.`,
   },
-  "0x1490": {
+  "0x140x1490062bcc6e421ef77568be9fa6f8b175e1d60390": {
     NAME: "Amaro Goerli",
     ADDRESS: "0x1490062bcc6e421ef77568be9fa6f8b175e1d603",
     SAFE_ADDRESS: "0x1755d0bce90dfc128c83d9fa234d119e46c94dd5",
@@ -63,7 +65,7 @@ export const TARGET_DAO: {
     DAO_INFO_URL: `https://en.wikipedia.org/wiki/Amaro_(liqueur)`,
     HOME_PAR: `Test out some signal TCRs below!`,
   },
-  "0xe11f": {
+  "0xe11f0eb60de58f62b77bda48bbda23056b2a5170": {
     NAME: "AUTOMATON Gnosis",
     ADDRESS: "0xe11f0eb60de58f62b77bda48bbda23056b2a5170",
     SAFE_ADDRESS: "0x4db5161f20572d44d09a034b601d85db7e809ae8",
