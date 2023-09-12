@@ -1,11 +1,10 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import styled, { useTheme } from "styled-components";
+import styled, { DefaultTheme, useTheme } from "styled-components";
 import { RiArrowRightSLine } from "react-icons/ri/index.js";
 
 import {
   Bold,
-  border,
   DataMd,
   DataSm,
   DataXs,
@@ -20,7 +19,7 @@ import { formatDistanceToNowFromSeconds } from "@daohaus/utils";
 const ListItemContainer = styled.div`
   width: 100%;
   padding: 1rem 0;
-  border-top: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step6}
+  border-top: 1px ${({ theme }) => theme.secondary.step6}
     solid;
 `;
 
@@ -28,21 +27,23 @@ const ListItemLink = styled(RouterLink)`
   text-decoration: none;
   width: 100%;
   color: unset;
-  :hover {
+  &:hover {
     text-decoration: none;
   }
 `;
 
+// old border-radius was ${border.radius}
+// ${({ theme }) => theme.border};
 const ListItemHoverContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 1rem;
-  border-radius: ${border.radius};
+  border-radius: 5px;
 
-  :hover {
-    background: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step3};
+  &:hover {
+    background: 1px ${({ theme }) => theme.secondary.step3};
   }
 `;
 
@@ -58,7 +59,7 @@ const Spaced = styled.div`
 `;
 
 const StyledIcon = styled(RiArrowRightSLine)`
-  fill: ${({ theme }: { theme: Theme }) => theme.primary.step9};
+  fill: ${({ theme }) => theme.primary.step9};
   font-size: 3rem;
 `;
 
@@ -70,7 +71,7 @@ export const SignalItem = ({ tcr }: { tcr: ListTcr }) => {
 
   return (
     <ListItemContainer>
-      <ListItemLink to={`/tcr/${tcr.id}`}>
+      <ListItemLink to={`tcr/${tcr.id}`}>
         <ListItemHoverContainer>
           <ListItem>
             <ParLg>

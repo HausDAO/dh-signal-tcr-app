@@ -26,13 +26,15 @@ import {
   useBreakpoint,
   widthQuery,
 } from "@daohaus/ui";
-import styled, { useTheme } from "styled-components";
+import styled, { DefaultTheme, useTheme } from "styled-components";
 import { useParams } from "react-router-dom";
 import { RiZoomInLine } from "react-icons/ri";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import {
   isEmpty,
+  totalQuadraticVotesForChoice,
   totalStakeForChoice,
+  totalVoterQuadraticVotesForChoice,
   voteIdsForChoice,
 } from "../utils/tcrDataHelpers";
 import { TChoice } from "../utils/types";
@@ -105,11 +107,11 @@ const TotalSection = styled.div`
 `;
 
 const StakersIcon = styled(RiZoomInLine)`
-  color: ${({ theme }: { theme: Theme }) => theme.primary.step10};
+  color: ${({ theme }) => theme.primary.step10};
   font-size: 2rem;
 
-  :hover {
-    color: ${({ theme }: { theme: Theme }) => theme.primary.step12};
+  &:hover {
+    color: ${({ theme }) => theme.primary.step12};
     cursor: pointer;
   }
 `;
@@ -206,7 +208,18 @@ export const ChoiceItem = ({
                       choice.parsedContent.choiceId
                     )
                   )
-                ).toFixed(2)}
+                ).toFixed(2)}{" "}
+                /{" "}
+                <span style={{ color: "red" }}>
+                  {Number(
+                    toWholeUnits(
+                      totalQuadraticVotesForChoice(
+                        tcrRecord?.voters,
+                        choice.parsedContent.choiceId
+                      )
+                    )
+                  ).toFixed(2)}
+                </span>
               </DataH2>
             </div>
             <H2 style={{ marginBottom: "2rem" }}>
@@ -223,6 +236,15 @@ export const ChoiceItem = ({
                     connectedVoter?.votes || [],
                     choice.parsedContent.choiceId
                   )
+                )
+              ).toFixed(2)}{" "}
+              /{" "}
+              {Number(
+                toWholeUnits(
+                  totalVoterQuadraticVotesForChoice(
+                    connectedVoter?.votes || [],
+                    choice.parsedContent.choiceId
+                  ).toString()
                 )
               ).toFixed(2)}
             </DataLg>

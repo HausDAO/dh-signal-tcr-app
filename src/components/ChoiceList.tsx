@@ -16,9 +16,10 @@ import {
   isEmpty,
   totalStakeForChoice,
 } from "../utils/tcrDataHelpers";
-import { toWholeUnits, formatDistanceToNowFromSeconds } from "@daohaus/utils";
+import { toWholeUnits, formatDistanceToNowFromSeconds, EthAddress } from "@daohaus/utils";
 import { useQueryClient } from "react-query";
 import { TChoice } from "../utils/types";
+import { ValidNetwork } from "@daohaus/keychain-utils";
 
 const TcrList = styled.div`
   margin: 5rem 0rem;
@@ -63,11 +64,11 @@ export const ChoiceList = ({
   hasEnded?: boolean;
 }) => {
   const { address } = useDHConnect();
-  const { tcr } = useParams();
+  const { chainid, daoid, tcr } = useParams();
 
   const { records } = useRecords({
-    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
-    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    daoId: daoid as EthAddress,
+    chainId: chainid as ValidNetwork,
     recordType: "signalTcrChoice",
     tcrId: tcrId,
   });
@@ -126,7 +127,7 @@ export const ChoiceList = ({
                 </Bold>
               )}
             </DataMd>
-            <StyledRouterLink to={`/tcr/${tcr}/add-choice`}>
+            <StyledRouterLink to={`add-choice`}>
               <Button
                 variant="ghost"
                 color="secondary"

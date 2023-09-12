@@ -4,7 +4,7 @@ import { CONTRACT_KEYCHAINS } from "@daohaus/keychain-utils";
 
 import TCR_FACTORY_ABI from "./../abis/TcrSummoner.json";
 import TCR_ABI from "./../abis/Tcr.json";
-import { TARGET_DAO } from "../targetDao";
+import { TARGETS, TARGET_DAO } from "../targetDao";
 
 export const CONTRACT: Record<string, ContractLego> = {
   POSTER: {
@@ -58,12 +58,7 @@ export const CONTRACT: Record<string, ContractLego> = {
     type: "static",
     contractName: "TCR_FACTORY",
     abi: TCR_FACTORY_ABI,
-    targetAddress: {
-      "0x1": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
-      "0x5": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
-      "0x64": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
-      "0xa": TARGET_DAO[import.meta.env.VITE_TARGET_KEY].TCR_FACTORY,
-    },
+    targetAddress: TARGETS.TCR_FACTORIES,
   },
   TCR: {
     type: "static",
