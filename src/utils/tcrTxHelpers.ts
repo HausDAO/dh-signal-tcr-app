@@ -10,10 +10,12 @@ type PollTest = (result?: any) => boolean;
 
 export const pollLastTcrTX: PollFetch = async ({
   txHash,
+  chainid
 }: {
   txHash: string;
+  chainid: string;
 }) => {
-  const { chainid } = useParams();
+  
   // TODO: is this inside bad?
   const API_URL = TCR_GRAPH_URL[chainid as ValidNetwork];
   const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
