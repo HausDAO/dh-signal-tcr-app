@@ -97,6 +97,7 @@ export function Daos() {
     <SingleColumnLayout>
       <ParXl>DAO Yardarms</ParXl>
       <ParXl>Community signal pools </ParXl>
+      <ParSm>This is a Proof of Concept. Use at your own risk</ParSm>
       <StyledRouterLink to="/selectDao">
         <Button>Create New</Button></StyledRouterLink>
       <StyledContainer>{daoList()}</StyledContainer>
