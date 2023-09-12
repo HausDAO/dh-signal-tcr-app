@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 
 import { useDHConnect } from "@daohaus/connect";
-import { Link, ParMd, SingleColumnLayout, Spinner } from "@daohaus/ui";
+import { Button, Link, Loading, ParMd, SingleColumnLayout } from "@daohaus/ui";
 import { useConnectedAddressVotes, useTcrData } from "../hooks/useTcrs";
 import { TARGET_DAO } from "../targetDao";
 import {
@@ -14,6 +14,9 @@ import { useDao } from "../hooks/useDao";
 import { ChoiceList } from "../components/ChoiceList";
 import styled from "styled-components";
 import { useMemo } from "react";
+import { EthAddress } from "@daohaus/utils";
+import { ValidNetwork } from "@daohaus/keychain-utils";
+import { RiArrowGoBackFill, RiPlayListAddFill, RiSendBackward } from "react-icons/ri";
 
 const DetailsContainer = styled.div`
   display: flex;
@@ -23,13 +26,17 @@ const DetailsContainer = styled.div`
   width: 100%;
 `;
 
+const StyledRouterLink = styled(RouterLink)`
+  text-decoration: none;
+`;
+
 export const SignalList = () => {
   const { address } = useDHConnect();
-  const { tcr } = useParams();
+  const { chainid, daoid, tcr } = useParams();
   const { tcrRecord } = useTcrData({ tcrId: tcr });
   const { dao } = useDao({
-    daoId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].ADDRESS,
-    chainId: TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID,
+    daoId: daoid as EthAddress,
+    chainId: chainid as ValidNetwork,
   });
 
   const hasEnded = useMemo(() => {
@@ -43,7 +50,7 @@ export const SignalList = () => {
   if (!tcrRecord || !dao) {
     return (
       <SingleColumnLayout>
-        <Spinner />
+        <Loading />
       </SingleColumnLayout>
     );
   }
@@ -69,6 +76,15 @@ export const SignalList = () => {
           {getTcrDescription(tcrRecord.details)}
         </ParMd>
         <Link href={getTcrLink(tcrRecord.details)}>More details</Link>
+        <StyledRouterLink to={`/${chainid}/${daoid}`}>
+          <Button
+            variant="ghost"
+            color="secondary"
+            IconLeft={RiArrowGoBackFill}
+          >
+            Back To Signal Board
+          </Button>
+        </StyledRouterLink>
       </DetailsContainer>
       {tcr && dao && <ChoiceList tcrId={tcr} hasEnded={hasEnded} />}
     </SingleColumnLayout>

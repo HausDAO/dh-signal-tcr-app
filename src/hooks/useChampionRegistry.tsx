@@ -1,8 +1,7 @@
 import { useQuery } from "react-query";
 
-import { createContract } from "@daohaus/tx-builder";
 import { ValidNetwork, Keychain, HAUS_RPC } from "@daohaus/keychain-utils";
-import { fromWei } from "@daohaus/utils";
+import { createViemClient, fromWei } from "@daohaus/utils";
 
 import ChampionRegistryAbi from "../abis/ChampionRegistry.json";
 import { useDebugValue } from "react";
@@ -17,19 +16,18 @@ const fetchChampions = async ({
   chainId: ValidNetwork;
   rpcs?: Keychain;
 }) => {
-  // todo: error?
-  const RegistryContract = createContract({
-    address: registryAddress,
-    abi: ChampionRegistryAbi,
+  const client = createViemClient({
     chainId,
-    rpcs,
   });
 
 
   try {
-    const champions: string[] = await RegistryContract.getMembers();
-
-    // console.log("champions reg", champions);
+    const champions: string[] = (await client.readContract({
+        abi: ChampionRegistryAbi,
+        address: registryAddress,
+        functionName: 'getMembers',
+        args: [],
+      })) as string[];
 
     return {
       champions: champions.map((c: any) => c.account.toLowerCase()),

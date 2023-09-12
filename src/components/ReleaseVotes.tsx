@@ -2,7 +2,7 @@ import React from "react";
 import { handleErrorMessage, TXLego } from "@daohaus/utils";
 import { useDHConnect } from "@daohaus/connect";
 import { useTxBuilder } from "@daohaus/tx-builder";
-import { Spinner, useToast } from "@daohaus/ui";
+import { Loading, useToast } from "@daohaus/ui";
 
 import { TX } from "../legos/tx";
 import { GatedButton } from "./GatedButton";
@@ -24,7 +24,7 @@ export const ReleaseVotes = ({
 }) => {
   const { fireTransaction } = useTxBuilder();
   const { chainId } = useDHConnect();
-  const { tcr } = useParams();
+  const { chainid, tcr } = useParams();
   const { errorToast, defaultToast, successToast } = useToast();
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -67,7 +67,7 @@ export const ReleaseVotes = ({
   };
 
   const isConnectedToDao =
-    chainId === TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID
+    chainId === chainid
       ? true
       : "You are not connected to the same network as the DAO";
 
@@ -84,7 +84,7 @@ export const ReleaseVotes = ({
       disabled={disabled}
       style={{ padding: "1.2rem" }}
     >
-      {isLoading ? <Spinner size="2rem" strokeWidth=".2rem" /> : label}
+      {isLoading ? <Loading size={20} /> : label}
     </GatedButton>
   );
 };

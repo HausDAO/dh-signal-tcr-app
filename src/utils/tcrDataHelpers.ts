@@ -1,5 +1,5 @@
-import { isJSON } from "@daohaus/utils";
-import { BigNumber } from "ethers";
+import { formatValueTo, isJSON, toWholeUnits } from "@daohaus/utils";
+import { BigNumber, utils } from "ethers";
 
 export const getTcrTitle = (details?: string): string => {
   if (!details || !isJSON(details)) return "Unnamed Signal";
@@ -29,6 +29,26 @@ export const totalStakeForChoice = (votes: any[], choiceId: string): string => {
 
   return total.toString();
 };
+
+export const totalQuadraticStakeForChoice = (
+  votes: any[],
+  choiceId: string
+): string => {
+  const total = votes.reduce((sum: BigNumber, vote: any) => {
+    if (vote.choiceId == parseInt(choiceId)) {
+      sum = sum.add(
+        utils.parseUnits(
+          Math.sqrt(Number(toWholeUnits(vote.amount.toString()))).toString(),
+          18
+        )
+      );
+    }
+    return sum;
+  }, BigNumber.from("0"));
+
+  return total.toString();
+};
+
 export const voteIdsForChoice = (votes: any[], choiceId: string): string[] => {
   return votes.reduce((acc: string[], vote: any) => {
     if (vote.choiceId == parseInt(choiceId)) {
@@ -75,3 +95,38 @@ export const totalVoterVotesForChoice = (votes: any[], choiceId: string) => {
 
   return total.toString();
 };
+
+export const totalVoterQuadraticVotesForChoice = (
+  votes: any[],
+  choiceId: string
+) => {
+  const total = votes.reduce((sum: BigNumber, vote: any) => {
+    if (vote.choiceId == parseInt(choiceId)) {
+      sum = sum.add(BigNumber.from(vote.amount));
+    }
+    return sum;
+  }, BigNumber.from("0"));
+
+  return utils.parseUnits(
+    Math.sqrt(Number(toWholeUnits(total.toString()))).toString(),
+    18
+  );
+};
+
+export const totalQuadraticVotesForChoice = (
+  voters: any[],
+  choiceId: string
+) => {
+  const total = voters.reduce((sum: BigNumber, voter: any) => {
+    console.log("voter", voter);
+    console.log("choiceId", choiceId);
+    
+      sum = sum.add(
+        totalVoterQuadraticVotesForChoice(voter.votes, choiceId)
+      );
+
+    return sum;
+  }, BigNumber.from("0"));
+
+  return total.toString();
+}

@@ -3,12 +3,8 @@ import { useQuery } from "react-query";
 import { GraphQLClient, gql } from "graphql-request";
 import { TARGET_DAO } from "../targetDao";
 import { DEFAULT_GRAPH_URL, TCR_GRAPH_URL } from "../utils/tcrContracts";
-
-console.log(TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID)
-const API_URL =
-  TCR_GRAPH_URL[TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID];
-
-const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
+import { useParams } from "react-router-dom";
+import { ValidNetwork } from "@daohaus/keychain-utils";
 
 export type ListTcr = {
   id: string;
@@ -21,6 +17,11 @@ export type ListTcr = {
 // TODO: types
 
 export const useTcrList = ({ daoId }: { daoId: string }) => {
+  const { chainid } = useParams();
+  // TODO: is this inside bad?
+  const API_URL = TCR_GRAPH_URL[chainid as ValidNetwork];
+  const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
+
   const { data, ...rest } = useQuery(
     ["get-tcr-list", { daoId }],
     () =>
@@ -47,13 +48,21 @@ export const useTcrList = ({ daoId }: { daoId: string }) => {
 
   return {
     tcrList: data?.registries.filter(
-      (r: any) => TARGET_DAO[import.meta.env.VITE_TARGET_KEY].HIDE_LIST !== r.id
+      (r: any) => {
+        if (!TARGET_DAO[daoId] || !TARGET_DAO[daoId].HIDE_LIST) return true;
+        TARGET_DAO[daoId].HIDE_LIST !== r.id
+      }
     ),
     ...rest,
   };
 };
 
 export const useTcrData = ({ tcrId }: { tcrId?: string }) => {
+  const { chainid } = useParams();
+  // TODO: is this inside bad?
+  const API_URL = TCR_GRAPH_URL[chainid as ValidNetwork];
+  const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
+
   const { data, ...rest } = useQuery(
     ["get-tcr", { tcrId }],
     () =>
@@ -107,6 +116,11 @@ export const useConnectedAddressVotes = ({
   tcrId?: string;
   address: string | undefined | null;
 }) => {
+  const { chainid } = useParams();
+  // TODO: is this inside bad?
+  const API_URL = TCR_GRAPH_URL[chainid as ValidNetwork];
+  const graphQLClient = new GraphQLClient(API_URL || DEFAULT_GRAPH_URL);
+
   const { data, ...rest } = useQuery(
     ["get-connected-address-votes", { address, tcrId }],
     () =>

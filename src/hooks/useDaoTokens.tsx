@@ -1,8 +1,7 @@
 import { useQuery } from "react-query";
 
-import { createContract } from "@daohaus/tx-builder";
 import { ValidNetwork, Keychain, HAUS_RPC } from "@daohaus/keychain-utils";
-import { fromWei } from "@daohaus/utils";
+import { createViemClient, fromWei } from "@daohaus/utils";
 
 import DaoTokenAbi from "../abis/DaoToken.json";
 import { useDebugValue } from "react";
@@ -25,29 +24,31 @@ const fetchUserBalance = async ({
   rpcs?: Keychain;
 }) => {
   // todo: error?
-  const SharesContract = createContract({
-    address: sharesAddress,
-    abi: DaoTokenAbi,
+  const client = createViemClient({
     chainId,
-    rpcs,
-  });
-  const LootContract = createContract({
-    address: lootAddress,
-    abi: DaoTokenAbi,
-    chainId,
-    rpcs,
   });
 
   try {
-    const sharesAt: string = await SharesContract.balanceOfAt(
-      userAddress,
+    const sharesAt: string = (await client.readContract({
+      abi: DaoTokenAbi,
+      address: sharesAddress,
+      functionName: 'balanceOfAt',
+      args: [
+        userAddress,
       sharesSnapshot
-    );
+      ],
+    })) as string;
 
-    const lootAt: string = await LootContract.balanceOfAt(
-      userAddress,
-      lootSnapshot
-    );
+
+    const lootAt: string = (await client.readContract({
+      abi: DaoTokenAbi,
+      address: lootAddress,
+      functionName: 'balanceOfAt',
+      args: [
+        userAddress,
+      sharesSnapshot
+      ],
+    })) as string;
 
     return {
       sharesAt: sharesAt,

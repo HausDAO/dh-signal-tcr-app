@@ -2,7 +2,7 @@ import { useDHConnect } from "@daohaus/connect";
 import { FormBuilder } from "@daohaus/form-builder";
 import { ParXl, SingleColumnLayout } from "@daohaus/ui";
 import { useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CustomFields } from "../legos/config";
 
 import { FORM } from "../legos/forms";
@@ -12,13 +12,12 @@ export const Create = () => {
   const { chainId } = useDHConnect();
   const navigate = useNavigate();
   const client = useQueryClient();
+  const { chainid, daoid } = useParams();
 
   const onFormComplete = () => {
-    navigate(`/`);
+    navigate(`/${chainid}/${daoid}`);
     client.clear();
   };
-
-  console.log("chainId", chainId);
 
   if (!chainId)
     return (
@@ -27,10 +26,17 @@ export const Create = () => {
       </SingleColumnLayout>
     );
 
+  if (chainId !== chainid)
+      return (
+        <SingleColumnLayout>
+          <ParXl>Wrong network</ParXl>
+        </SingleColumnLayout>
+      );
+
   return (
     <FormBuilder
       form={FORM.SUMMON_TCR}
-      targetNetwork={TARGET_DAO[import.meta.env.VITE_TARGET_KEY].CHAIN_ID}
+      targetNetwork={chainid}
       lifeCycleFns={{
         onPollSuccess: onFormComplete,
       }}
