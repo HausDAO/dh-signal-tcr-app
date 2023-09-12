@@ -43,6 +43,14 @@ export function SelectDao() {
             name: "Optimism",
             value: "0xa",
           },
+          {
+            name: "Gnosis Chain",
+            value: "0x64",
+          },
+          {
+            name: "Goerli Testnet",
+            value: "0x5",
+          },
         ]}
       />
 
