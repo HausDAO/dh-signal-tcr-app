@@ -17,6 +17,8 @@ import { SignalItem } from "../components/SignalItem";
 import { EthAddress } from "@daohaus/utils";
 import { ValidNetwork } from "@daohaus/keychain-utils";
 import { useParams } from "react-router-dom";
+import { useDaoProposals } from "@daohaus/moloch-v3-hooks";
+import { ProposalTypeIds } from "../legos/tx";
 
 const LinkBox = styled.div`
   display: flex;
@@ -42,7 +44,14 @@ export function Dao() {
     daoId: daoid as EthAddress,
   });
 
+  const { proposals } = useDaoProposals({
+    daoId: daoid as EthAddress,
+    daoChain: chainid as ValidNetwork,
+  });
+
   console.log("tcrList", tcrList);
+  console.log("dao", dao);
+  console.log("proposals", proposals);
 
   return (
     <SingleColumnLayout>
@@ -53,10 +62,25 @@ export function Dao() {
           : "New DAO Signal Board. PR to this repo to add some more info."}{" "}
         {daoid && TARGET_DAO[daoid] && TARGET_DAO[daoid].DAO_INFO_URL ? (
           <Link href={TARGET_DAO[daoid].DAO_INFO_URL}>Learn more</Link>
-        ) : 
-        (<Link href={REPO}>REPO</Link>)}
+        ) : (
+          <Link href={REPO}>REPO</Link>
+        )}
       </SlimParMd>
-      <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}></ParMd>
+      <ParMd style={{ marginBottom: "3rem", textAlign: "center" }}>
+        {proposals &&
+          proposals.filter(
+            (proposal) =>
+              proposal.proposalType === ProposalTypeIds.Signal &&
+              (proposal.status == "Voting" ||
+                proposal.status == "Ready for Execution")
+          ).length > 0 && (
+            <Link
+              href={`https://admin.daohaus.club/#/molochv3/${chainid}/${daoid}/proposals`}
+            >
+              Looks like there is a proposal pending vote
+            </Link>
+          )}
+      </ParMd>
 
       {tcrList &&
         tcrList.map((tcr: ListTcr, i: number) => {
