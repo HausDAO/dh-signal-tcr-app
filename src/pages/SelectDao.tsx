@@ -65,7 +65,7 @@ export function SelectDao() {
 
       {chainId && daoId && (
         <RouterLink to={`/${chainId}/${daoId}`}>
-          <Button>Create Signal</Button>
+          <Button>Load DAO</Button>
         </RouterLink>
       )}
     </SingleColumnLayout>
