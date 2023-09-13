@@ -4,7 +4,7 @@ import { CONTRACT } from "./contract";
 import { pollLastTcrTX, testLastTcrTX } from "../utils/tcrTxHelpers";
 
 export enum ProposalTypeIds {
-  Signal = "SIGNAL",
+  Signal = "SIGNALPOLL",
   IssueSharesLoot = "ISSUE",
   AddShaman = "ADD_SHAMAN",
   TransferErc20 = "TRANSFER_ERC20",
@@ -58,6 +58,7 @@ export const TX = {
   }),
   SUMMON_TCR: buildMultiCallTX({
     id: "SUMMON_TCR",
+    gasBufferPercentage: 5, // estimation was way off here
     JSONDetails: {
       type: "JSONDetails",
       jsonSchema: {
