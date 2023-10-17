@@ -127,7 +127,7 @@ export const TX = {
           choiceId: `.formValues.choiceId`,
         },
       },
-      { type: "static", value: POSTER_TAGS.daoDatabaseShares },
+      { type: "static", value: POSTER_TAGS.daoDatabaseSharesOrLoot },
     ],
   },
   CLAIM: {
