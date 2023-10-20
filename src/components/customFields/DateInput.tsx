@@ -12,10 +12,11 @@ import { useFormContext } from "react-hook-form";
 
 import DatePicker from "react-datepicker";
 
-// import "react-datepicker/dist/react-datepicker.css";
-import "./datepicker.css";
-import { RiArrowDropDownFill, RiCalendar2Fill } from "react-icons/ri";
+import "react-datepicker/dist/react-datepicker.css";
 
+import { RiArrowDropDownFill, RiCalendar2Fill } from "react-icons/ri";
+import { createGlobalStyle } from "styled-components";
+import { setHours } from "date-fns";
 
 export const DateInput = (props: Buildable<Field>) => {
   const { setValue, watch } = useFormContext();
@@ -25,9 +26,21 @@ export const DateInput = (props: Buildable<Field>) => {
     setStartDate(date);
     setValue(props.id, +date / 1000);
   };
+
+  const DatePickerWrapperStyles = createGlobalStyle`
+    .datePicker {}
+        .react-datepicker {
+          font-size: 2rem;
+        }
+        .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+          width: 5rem;
+        }
+        .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box, .react-datepicker__time-container {
+          width: 150px;
+        }
+
+`;
   interface Props {
-    children?: ReactNode;
-    type?: "submit" | "button";
     onClick?: () => void;
     value?: string | number;
   }
@@ -45,8 +58,9 @@ export const DateInput = (props: Buildable<Field>) => {
     )
   );
 
+  // TODO: how to check if required?
   return (
-    <FieldWrapper id={props.id} label={props?.label || "End Date"}>
+    <FieldWrapper id={props.id} label={props?.label}>
       <DatePicker
         id={props.id}
         selected={startDate}
@@ -54,7 +68,9 @@ export const DateInput = (props: Buildable<Field>) => {
         showTimeSelect
         customInput={<ExampleCustomInput />}
         wrapperClassName="datePicker"
+        dateFormat="Pp"
       />
+      <DatePickerWrapperStyles />
     </FieldWrapper>
   );
 };
