@@ -24,16 +24,14 @@ export const FORM: Record<string, CustomFormLego> = {
     title: "Create Signal",
     description: "Make a proposal to the DAO to create a Signal TCR",
     requiredFields: { title: true, endDate: true, description: true },
-    log: false,
+    log: true,
     tx: TX.SUMMON_TCR,
     fields: [
       { ...FIELD.TITLE, label: "Signal Title" },
       { ...FIELD.DESCRIPTION, label: "Signal Description" },
-      {
+      { ...FIELD.DATE_FIELD, 
         id: "endDate",
-        type: "input",
-        label: "End Date/Time (seconds)",
-        placeholder: "0",
+        label: "End Date",
       },
       FIELD.LINK,
       {

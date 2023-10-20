@@ -46,4 +46,9 @@ export const FIELD: Record<string, CustomFieldLego> = {
     label: "Test Field",
     placeholder: "Enter something",
   },
+  DATE_FIELD: {
+    id: "date",
+    type: "dateField",
+    label: "Date Field",
+  },
 };
