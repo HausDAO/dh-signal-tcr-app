@@ -35,6 +35,7 @@ export const StyledCard = styled(Card)`
   background-color: ${({ theme }) => theme.secondary.step3};
   border: 1px solid white;
   padding: 3rem;
+  margin: 1rem;
   width: 100%;
 `;
 
