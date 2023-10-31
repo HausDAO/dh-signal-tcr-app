@@ -91,4 +91,13 @@ export const TARGET_DAO: {
     DAO_INFO_URL: `https://publichaus.club/`,
     HOME_PAR: `OP PublicHAUS Signal Sessions`,
   },
+  "0xf02fd4286917270cb94fbc13a0f4e1ed76f7e986": {
+    NAME: "RaidGuild",
+    ADDRESS: "0xf02fd4286917270cb94fbc13a0f4e1ed76f7e986",
+    SAFE_ADDRESS: "0x181ebdb03cb4b54f4020622f1b0eacd67a8c63ac",
+    CHAIN_ID: "0x64",
+    TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
+    DAO_INFO_URL: `https://raidguild.org`,
+    HOME_PAR: `RaidGuild Signal Sessions`,
+  },
 };

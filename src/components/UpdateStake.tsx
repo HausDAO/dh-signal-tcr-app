@@ -28,7 +28,7 @@ export const UpdateStake = ({
     return [choiceId, stakeAmounts[choiceId]];
   });
 
-  const handleClaim = () => {
+  const handleStake = () => {
     setIsLoading(true);
     fireTransaction({
       tx: { ...TX.STAKE, staticArgs: [stakeArg] } as TXLego,
@@ -38,14 +38,15 @@ export const UpdateStake = ({
           const errMsg = handleErrorMessage({
             error,
           });
-          errorToast({ title: "Claim Failed", description: errMsg });
+          errorToast({ title: "Stake Failed", description: errMsg });
           setIsLoading(false);
         },
         onTxSuccess: () => {
           defaultToast({
-            title: "Claim Success",
+            title: "Stake Success",
             description: "Please wait for subgraph to sync",
           });
+          setIsLoading(false);
         },
         onPollError: (error) => {
           const errMsg = handleErrorMessage({
@@ -56,8 +57,8 @@ export const UpdateStake = ({
         },
         onPollSuccess: () => {
           successToast({
-            title: "Claim Success",
-            description: "Claim success",
+            title: "Stake Success",
+            description: "Stake success",
           });
           onSuccess();
           setIsLoading(false);
@@ -74,7 +75,7 @@ export const UpdateStake = ({
     <GatedButton
       color="primary"
       rules={[isConnectedToDao]}
-      onClick={handleClaim}
+      onClick={handleStake}
       disabled={disabled}
       style={{ padding: "1.2rem" }}
     >

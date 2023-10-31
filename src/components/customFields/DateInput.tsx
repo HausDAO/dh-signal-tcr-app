@@ -27,17 +27,23 @@ export const DateInput = (props: Buildable<Field>) => {
     setValue(props.id, +date / 1000);
   };
 
-  const DatePickerWrapperStyles = createGlobalStyle`
-    .datePicker {}
+  const DatePickerWrapperStylesLg = createGlobalStyle`
+
         .react-datepicker {
           font-size: 2rem;
         }
         .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
           width: 5rem;
+          height: 3rem;
         }
         .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box, .react-datepicker__time-container {
           width: 150px;
+          height: 200px;
         }
+        .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {
+          height: 200px;
+        }
+
 
 `;
   interface Props {
@@ -60,17 +66,17 @@ export const DateInput = (props: Buildable<Field>) => {
 
   // TODO: how to check if required?
   return (
-    <FieldWrapper id={props.id} label={props?.label}>
+    <FieldWrapper id={props.id} label={props?.label} rules={props?.rules}>
       <DatePicker
         id={props.id}
         selected={startDate}
         onChange={(date: Date) => handleChange(date)}
         showTimeSelect
         customInput={<ExampleCustomInput />}
-        wrapperClassName="datePicker"
+        wrapperClassName={props?.className}
         dateFormat="Pp"
       />
-      <DatePickerWrapperStyles />
+      {props?.className === "lg" && <DatePickerWrapperStylesLg />}
     </FieldWrapper>
   );
 };

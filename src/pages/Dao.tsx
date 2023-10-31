@@ -49,9 +49,9 @@ export function Dao() {
     daoChain: chainid as ValidNetwork,
   });
 
-  console.log("tcrList", tcrList);
-  console.log("dao", dao);
-  console.log("proposals", proposals);
+  // console.log("tcrList", tcrList);
+  // console.log("dao", dao);
+  // console.log("proposals", proposals);
 
   return (
     <SingleColumnLayout>
