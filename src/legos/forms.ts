@@ -32,6 +32,7 @@ export const FORM: Record<string, CustomFormLego> = {
       { ...FIELD.DATE_FIELD, 
         id: "endDate",
         label: "End Date",
+        className: "lg"
       },
       FIELD.LINK,
       {
