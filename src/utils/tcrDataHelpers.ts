@@ -118,8 +118,8 @@ export const totalQuadraticVotesForChoice = (
   choiceId: string
 ) => {
   const total = voters.reduce((sum: BigNumber, voter: any) => {
-    console.log("voter", voter);
-    console.log("choiceId", choiceId);
+    // console.log("voter", voter);
+    // console.log("choiceId", choiceId);
     
       sum = sum.add(
         totalVoterQuadraticVotesForChoice(voter.votes, choiceId)

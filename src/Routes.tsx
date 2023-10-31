@@ -11,13 +11,13 @@ export const Routes = () => {
   return (
     <Router>
       <Route path="/" element={<Daos />} />
-      <Route path="/selectDao" element={<SelectDao />} />
-      <Route path="/:chainid/:daoid/" element={<HomeContainer />}>
+      <Route path="selectDao" element={<SelectDao />} />
+      <Route path=":chainid/:daoid" element={<HomeContainer />}>
         <Route index element={<Dao />} />
 
         <Route path="create" element={<Create />} />
         <Route path="tcr/:tcr" element={<SignalList />} />
-        <Route path="tcr/:tcr/add-choice/" element={<AddChoice />} />
+        <Route path="tcr/:tcr/add-choice" element={<AddChoice />} />
 
       </Route>
     </Router>
