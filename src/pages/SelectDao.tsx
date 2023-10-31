@@ -17,13 +17,11 @@ export function SelectDao() {
   const [error, setError] = useState<string>();
 
   const handleSelectChain = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(e);
 
     setChainId(e.target.value);
   };
 
   const handleSelectDao = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
 
     setDaoId(e.target.value);
   };

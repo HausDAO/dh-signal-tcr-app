@@ -3,7 +3,10 @@ import { useQuery } from "react-query";
 import { ValidNetwork } from "@daohaus/keychain-utils";
 import { findDao, MolochV3Dao } from "@daohaus/moloch-v3-data";
 
-const graphApiKeys = { "0x1": import.meta.env.VITE_GRAPH_API_KEY_MAINNET };
+const graphApiKeys = { 
+  "0x1": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
+  "0x64": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
+ };
 
 const fetchDao = async ({
   daoId,

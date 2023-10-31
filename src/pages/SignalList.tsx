@@ -38,6 +38,11 @@ export const SignalList = () => {
     daoId: daoid as EthAddress,
     chainId: chainid as ValidNetwork,
   });
+  
+  // console.log("dao", daoid);
+  // console.log("dao", dao);
+
+
 
   const hasEnded = useMemo(() => {
     if (tcrRecord) {
