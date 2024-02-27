@@ -186,7 +186,7 @@ export const ChoiceItem = ({
                     <DialogContent
                       alignButtons="end"
                       rightButton={{
-                        closeDialog: true,
+                        $closeDialog: true,
                         fullWidth: isMobile,
                       }}
                       title="Stakers"
