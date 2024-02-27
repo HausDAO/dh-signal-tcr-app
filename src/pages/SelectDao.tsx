@@ -49,6 +49,10 @@ export function SelectDao() {
             name: "Goerli Testnet",
             value: "0x5",
           },
+          {
+            name: "Sepolia Testnet",
+            value: "0xaa36a7",
+          }
         ]}
       />
 
