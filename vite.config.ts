@@ -15,6 +15,7 @@ export default ({ mode }) => {
         NX_WALLET_CONNECT_ID: process.env.VITE_WALLET_CONNECT_ID,
         NX_OPTIMISM_ALCHEMY_KEY: process.env.VITE_OPTIMISM_ALCHEMY_KEY,
         NX_ARBITRUM_ALCHEMY_KEY: process.env.VITE_ARBITRUM_ALCHEMY_KEY,
+        NX_SEPOLIA_RPC: process.env.VITE_SEPOLIA_RPC,
         NODE_ENV: "16.6.0",
       },
     },
