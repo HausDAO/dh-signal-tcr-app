@@ -5,6 +5,7 @@ import { findDao, MolochV3Dao } from "@daohaus/moloch-v3-data";
 
 const graphApiKeys = { 
   "0x1": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
+  "0xa":  import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
   "0x64": import.meta.env.VITE_GRAPH_API_KEY_MAINNET,
  };
 
