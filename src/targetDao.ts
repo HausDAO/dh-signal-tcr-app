@@ -29,7 +29,7 @@ export const TARGET_DAO: {
   };
 } = {
   "0xf5d6b637a9185707f52d40d452956ca49018247a": {
-    NAME: "PublicHAUS Optimism",
+    NAME: "PublicHAUS Optimism (Head Quarters)",
     ADDRESS: "0xf5d6b637a9185707f52d40d452956ca49018247a",
     SAFE_ADDRESS: "0xf84f1ad490029716d8a599613bb8671f56bfbbdc",
     CHAIN_ID: "0xa",
