@@ -28,6 +28,15 @@ export const TARGET_DAO: {
     HIDE_LIST?: string;
   };
 } = {
+  "0xf5d6b637a9185707f52d40d452956ca49018247a": {
+    NAME: "PublicHAUS Optimism",
+    ADDRESS: "0xf5d6b637a9185707f52d40d452956ca49018247a",
+    SAFE_ADDRESS: "0xf84f1ad490029716d8a599613bb8671f56bfbbdc",
+    CHAIN_ID: "0xa",
+    TCR_FACTORY: "0x29ff7b9c945158ccd973b7c190a73ab9e110fc74",
+    DAO_INFO_URL: `https://publichaus.club/`,
+    HOME_PAR: `OP PublicHAUS Signal Sessions`,
+  },
   "0x3dea7058a19bf6854bb63384707139636efb99ea": {
     NAME: "RAIDBROOD Goerli",
     ADDRESS: "0x3dea7058a19bf6854bb63384707139636efb99ea",
@@ -82,15 +91,6 @@ export const TARGET_DAO: {
     TCR_FACTORY: "0x3F0443a6985b0AB585D376cC84f6d42e74A3e1F1",
     HOME_PAR: `We make lists of beers!`,
     HIDE_LIST: "0x2cf1bdc2d0267d1790a50672acefece59d48305d",
-  },
-  "0xf5d6b637a9185707f52d40d452956ca49018247a": {
-    NAME: "PublicHAUS Optimism",
-    ADDRESS: "0xf5d6b637a9185707f52d40d452956ca49018247a",
-    SAFE_ADDRESS: "0xf84f1ad490029716d8a599613bb8671f56bfbbdc",
-    CHAIN_ID: "0xa",
-    TCR_FACTORY: "0x29ff7b9c945158ccd973b7c190a73ab9e110fc74",
-    DAO_INFO_URL: `https://publichaus.club/`,
-    HOME_PAR: `OP PublicHAUS Signal Sessions`,
   },
   "0xf02fd4286917270cb94fbc13a0f4e1ed76f7e986": {
     NAME: "RaidGuild",
